@@ -43,7 +43,7 @@ Then simply launch JupyterLab as below
 After installing **JupyDeep** for the first time, you'll need to configure a few settings to get the engine running:
 
 1. **Locate Settings:** Open the JupyterLab Settings Editor and look for the options prefixed with `jupydeep`.
-2. **Configure Your LLM (Required):** Naturally, the agent engine cannot function without an LLM backend. Set up your model provider by following this schema:
+2. **Configure Your LLM (Required):** Naturally, the agent engine cannot function without an LLM backend. Set up your model provider by following this schema (for example):
 
 <!--
 ![LLM Configuration](https://github.com/yezhenqing/jupydeep/tree/main/assets/images/jupydeep_llm.png)
