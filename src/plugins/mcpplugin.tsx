@@ -3,8 +3,7 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
-import { ServerConnection } from '@jupyterlab/services';
-import { URLExt } from '@jupyterlab/coreutils';
+import { SettingsSyncer } from '../lib/utils';
 import { Notification } from '@jupyterlab/apputils';
 import { Debouncer } from '@lumino/polling';
 
@@ -20,28 +19,27 @@ const mcpPlugin: JupyterFrontEndPlugin<void> = {
 
       const debouncer = new Debouncer(async () => {
         const currentSettings = mcpSettings.composite;
-        const serverSettings = ServerConnection.makeSettings();
-        const requestUrl = URLExt.join(serverSettings.baseUrl, 'jupydeep/mcp');
-        const response = await ServerConnection.makeRequest(
-          requestUrl,
-          {
-            method: 'POST',
-            body: JSON.stringify(currentSettings)
-          },
-          serverSettings
-        );
+        try {
+          const data = await SettingsSyncer.sync(
+            'jupydeep/mcp',
+            currentSettings
+          );
 
-        if (!response.ok) {
-          Notification.error('Failed to update MCP Setting on server.', {
+          if (data?.status === 'success') {
+            Notification.success('Success: ' + (data?.message || ''), {
+              autoClose: 3000
+            });
+          } else {
+            Notification.error('Warning: ' + (data?.message || ''), {
+              autoClose: 3000
+            });
+          }
+        } catch (error) {
+          Notification.error('Failed to update MCPs Setting on server.', {
             autoClose: 3000
           });
-        } else {
-          Notification.success(
-            'Congratulations, MCP setting updated on server successfully.',
-            { autoClose: 3000 }
-          );
         }
-      }, 800);
+      }, 1200);
 
       mcpSettings.changed.connect(() => {
         void debouncer.invoke();

@@ -42,15 +42,18 @@ Then simply launch JupyterLab as below
 
 After installing **JupyDeep** for the first time, you'll need to configure a few settings to get the engine running:
 
-1. **Locate Settings:** Open the JupyterLab Settings Editor and look for the options prefixed with `jupydeep`.
-2. **Configure Your LLM (Required):** Naturally, the agent engine cannot function without an LLM backend. Set up your model provider by following this schema (for example):
+1. **Locate Settings:** Open the JupyterLab Settings Editor and search for options prefixed with `jupydeep`.
+2. **Configure Your LLM (Required) and MCP (Recommended):** The agent engine requires an LLM backend to function. Set up your model provider (e.g., OpenAI) and the Jupyter MCP by following the configurations below:
 
 <!--
 ![LLM Configuration](https://github.com/yezhenqing/jupydeep/tree/main/assets/images/jupydeep_llm.png)
 -->
-<div align="center">
-<img src="./assets/images/jupydeep_llm.png" width="400" height="400">
-</div>
+<table align="center">
+  <tr>
+    <td><img src="./assets/images/jupydeep_llm.png" width="400"></td>
+    <td><img src="./assets/images/jupydeep_mcp.png" width="400"></td>
+  </tr>
+</table>
 
 3. **Meet Your Built-in Agents:** Once your LLM is connected, two default agents will instantly populate your `jupydeep.agent` panel:
    - 🐵 **Wu Kong:** Built for heavy-lifting code execution and technical problem-solving.
@@ -59,7 +62,7 @@ After installing **JupyDeep** for the first time, you'll need to configure a few
      ![Agent Configuration](https://github.com/yezhenqing/jupydeep/tree/main/assets/images/jupydeep_agent.png)
      -->
      <div align="center">
-     <img src="./assets/images/jupydeep_agent.png" width="400" height="400">
+     <img src="./assets/images/jupydeep_agent.png" width="450" height="400">
      </div>
 
 > 💡 **Go Beyond the Defaults:** You can easily tweak their skillsets or register your own custom agents in the workspace. Head over to our [Documentation](https://yezhenqing.github.io/jupydeep/) for the full customization guide. If the agents aren't visible, try refreshing the page; that might help.

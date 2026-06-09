@@ -53,7 +53,7 @@ const skillPlugin: JupyterFrontEndPlugin<void> = {
             });
           }
         }
-      }, 1500);
+      }, 1200);
 
       skillsSettings.changed.connect(() => {
         void debouncer.invoke();
