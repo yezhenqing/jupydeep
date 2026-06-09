@@ -1,6 +1,6 @@
 {
     "name": "jupydeep",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Jupyter-Native AI Agent Engine",
     "keywords": [
         "jupyter",
