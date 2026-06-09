@@ -41,7 +41,8 @@ jobs:
         id: finalize-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          TWINE_REPOSITORY_URL: "https://test.pypi.org/legacy/"
+          # TestPyPI validation successful, ready for PyPI
+          #TWINE_REPOSITORY_URL: "https://test.pypi.org/legacy/"
         #uses: jupyter-server/jupyter_releaser/.github/actions/finalize-release@v2
         uses: yezhenqing/jupyter_releaser/.github/actions/finalize-release@main
         with:
