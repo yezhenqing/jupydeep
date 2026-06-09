@@ -55,7 +55,6 @@ After installing **JupyDeep** for the first time, you'll need to configure a few
   </tr>
 </table>
 
-
 3. **Meet Your Built-in Agents:** Once your LLM is connected, two default agents will instantly populate your `jupydeep.agent` panel:
    - 🐵 **Wu Kong:** Built for heavy-lifting code execution and technical problem-solving.
    - 🐴 **Monk Tang:** Built for high-level tactical planning and orchestration.
