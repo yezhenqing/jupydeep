@@ -1,0 +1,46 @@
+{
+  "title": "jupydeep.skill",
+  "description": "Standardized Skills configuration.",
+  "type": "object",
+  "properties": {
+    "skills": {
+      "type": "object",
+      "title": "Agent Skills",
+      "description": "List of LLM model configurations",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "category", "version"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the skill"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of skills"
+          },
+          "version": {
+            "type": "string",
+            "description": "The version of these skills"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether these skills are enabled for use."
+          },
+          "description": {
+            "type": "string",
+            "default": "",
+            "description": "A brief description for these skills"
+          },
+          "base_dir": {
+            "type": "string",
+            "default": "",
+            "description": "The root path of these skills"
+          }
+        }
+      },
+      "default": {}
+    }
+  }
+}

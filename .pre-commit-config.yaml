@@ -1,0 +1,27 @@
+fail_fast: false
+
+repos:
+  # ----------------------------------------------------
+  # 1. General Base Checks (Formatting, syntax, and file constraints)
+  # ----------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0  # Recommended to keep up-to-date
+    hooks:
+      - id: trailing-whitespace      
+      - id: end-of-file-fixer  
+      - id: check-case-conflict     
+      - id: check-yaml               
+      - id: check-json              
+      - id: check-toml
+      - id: debug-statements
+      - id: check-added-large-files 
+
+  # ----------------------------------------------------
+  # 2. Python Backend Linting & Formatting (Powered by Ruff)
+  # ----------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.12
+    hooks:
+      - id: ruff         
+        args: [ --fix ]  
+      - id: ruff-format  

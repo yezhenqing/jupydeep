@@ -1,0 +1,91 @@
+{
+  "title": "jupydeep.agent",
+  "description": "Configurable agents from server",
+  "type": "object",
+  "jupyter.lab.transform": true,
+  "properties": {
+    "agents": {
+      "type": "object",
+      "title": "Available Agents",
+      "properties": {}
+    },
+    "additionalProperties": false
+  },
+  "definitions": {
+    "AgentConfig": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "model": {
+          "type": "string",
+          "title": "The Language model of this agent",
+          "default": ""
+        },
+        "deep_mcps": {
+          "type": "array",
+          "title": "MCP servers",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": []
+          },
+          "default": []
+        },
+        "capabilities": {
+          "type": "array",
+          "title": "Capabilities and Toolsets",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "include_todo",
+              "include_filesystem",
+              "include_subagents",
+              "include_plan",
+              "include_liteparse",
+              "context_manager",
+              "web_search",
+              "web_fetch",
+              "cost_tracking",
+              "include_checkpoints",
+              "include_teams",
+              "include_memory"
+            ]
+          },
+          "default": []
+        },
+        "deep_skills": {
+          "type": "array",
+          "title": "Skills",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "pydantic-agent/v0.3.19/refactor",
+              "pydantic-agent/v0.3.19/code-review",
+              "pydantic-agent/v0.3.19/test-writer",
+              "pydantic-agent/v0.3.19/build-and-compile",
+              "pydantic-agent/v0.3.19/git-workflow",
+              "pydantic-agent/v0.3.19/skill-creator",
+              "pydantic-agent/v0.3.19/environment-discovery",
+              "pydantic-agent/v0.3.19/systematic-debugging",
+              "pydantic-agent/v0.3.19/verification-strategy",
+              "pydantic-agent/v0.3.19/performant-code",
+              "pydantic-agent/v0.3.19/data-formats"
+            ]
+          },
+          "default": []
+        },
+        "enabled": {
+          "type": "boolean",
+          "title": "Whether to enable this agent",
+          "default": true
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

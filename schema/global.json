@@ -1,0 +1,64 @@
+{
+  "title": "jupydeep.global",
+  "description": "JupyDeep Base Configuration",
+  "type": "object",
+  "properties": {
+    "_root": {
+      "type": "object",
+      "title": " ",
+      "properties": {
+        "default_agent": {
+          "type": "string",
+          "default": "",
+          "title": "Default Agent ID",
+          "description": "Default agent identifier for routing requests"
+        },
+        "default_model": {
+          "type": "string",
+          "default": "",
+          "title": "Default Model",
+          "description": "Default LLM model for agents"
+        },
+        "usage_limit_usd": {
+          "type": ["number", "null"],
+          "default": null,
+          "title": "Usage Limit",
+          "description": "Total budget limit in USD (null for unlimited)"
+        },
+        "request_limit": {
+          "type": ["number", "null"],
+          "default": 50,
+          "title": "Request Limit",
+          "description": "The maximum number of requests allowed to the model"
+        },
+        "total_tokens_limit": {
+          "type": ["number", "null"],
+          "default": null,
+          "title": "Total Tokens Limit",
+          "description": "The maximum number of tokens allowed in requests and responses combined"
+        },
+        "tool_timeout": {
+          "type": "integer",
+          "default": 200,
+          "minimum": 1,
+          "maximum": 600,
+          "title": "Tool Timeout",
+          "description": "Default timeout for tool execution"
+        },
+        "backend": {
+          "type": "string",
+          "default": "LocalBackend",
+          "title": "Backend Type",
+          "description": "Storage backend for agent state and file persistence",
+          "enum": [
+            "LocalBackend",
+            "StateBackend",
+            "DockerSandbox",
+            "CompositeBackend"
+          ]
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

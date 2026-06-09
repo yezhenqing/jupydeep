@@ -1,0 +1,57 @@
+{
+  "title": "jupydeep.mcp",
+  "description": "Configure Model Context Protocol servers",
+  "type": "object",
+  "properties": {
+    "mcpServers": {
+      "type": "object",
+      "description": "MCP Server Config List",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["transport"],
+        "properties": {
+          "name": { "type": "string", "description": "Server name / prefix" },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to enable this server"
+          },
+          "env": {
+            "type": "object",
+            "additionalProperties": { "type": "string" },
+            "description": "Environment variables"
+          }
+        },
+        "oneOf": [
+          {
+            "title": "Stdio mode",
+            "properties": {
+              "transport": { "const": "stdio" },
+              "command": {
+                "type": "string",
+                "description": "Command to start MCP server"
+              },
+              "args": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Command line arguments"
+              }
+            },
+            "required": ["command"]
+          },
+          {
+            "title": "HTTP mode",
+            "properties": {
+              "transport": { "enum": ["streamable-http", "sse"] },
+              "url": {
+                "type": "string",
+                "description": "MCP server base_url"
+              }
+            },
+            "required": ["url"]
+          }
+        ]
+      }
+    }
+  }
+}

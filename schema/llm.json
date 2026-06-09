@@ -1,0 +1,51 @@
+{
+  "title": "jupydeep.llm",
+  "description": "Standardized LLM model configuration",
+  "type": "object",
+  "properties": {
+    "llmModels": {
+      "type": "object",
+      "title": "LLM Models",
+      "description": "List of LLM model configurations",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "provider"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the model (e.g., 'gpt-4o', 'claude-3-5-sonnet')."
+          },
+          "provider": {
+            "type": "string",
+            "description": "The model provider (e.g., 'openai', 'anthropic', 'google')."
+          },
+          "llm_api_key": {
+            "type": "string",
+            "default": "",
+            "description": "API key for the model provider."
+          },
+          "llm_api_base": {
+            "type": "string",
+            "default": "",
+            "description": "The base URL for the API requests (useful for local proxies or Ollama)."
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "multipleOf": 0.1,
+            "default": 0.2,
+            "description": "Controls randomness. Lower is more deterministic, higher is more creative."
+          },
+          "top_p": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.9,
+            "description": "Nucleus sampling: considers tokens with top_p probability mass."
+          }
+        }
+      }
+    }
+  }
+}
