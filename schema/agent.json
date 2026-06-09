@@ -64,17 +64,17 @@
           "items": {
             "type": "string",
             "enum": [
-              "pydantic-agent/v0.3.19/refactor",
-              "pydantic-agent/v0.3.19/code-review",
-              "pydantic-agent/v0.3.19/test-writer",
-              "pydantic-agent/v0.3.19/build-and-compile",
-              "pydantic-agent/v0.3.19/git-workflow",
-              "pydantic-agent/v0.3.19/skill-creator",
-              "pydantic-agent/v0.3.19/environment-discovery",
-              "pydantic-agent/v0.3.19/systematic-debugging",
-              "pydantic-agent/v0.3.19/verification-strategy",
-              "pydantic-agent/v0.3.19/performant-code",
-              "pydantic-agent/v0.3.19/data-formats"
+              "pydantic-agent/v0.3.28/refactor",
+              "pydantic-agent/v0.3.28/code-review",
+              "pydantic-agent/v0.3.28/test-writer",
+              "pydantic-agent/v0.3.28/build-and-compile",
+              "pydantic-agent/v0.3.28/git-workflow",
+              "pydantic-agent/v0.3.28/skill-creator",
+              "pydantic-agent/v0.3.28/environment-discovery",
+              "pydantic-agent/v0.3.28/systematic-debugging",
+              "pydantic-agent/v0.3.28/verification-strategy",
+              "pydantic-agent/v0.3.28/performant-code",
+              "pydantic-agent/v0.3.28/data-formats"
             ]
           },
           "default": []

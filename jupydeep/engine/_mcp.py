@@ -92,9 +92,7 @@ class MCPComponent(BaseComponent):
                 self._is_initialized = True
         except Exception as e:
             error_msg = str(e).splitlines()[0] if str(e) else "No detailed message"
-            logger.error(
-                f"CRITICAL error in MCP materialize: {error_msg}"
-            )
+            logger.error(f"CRITICAL error in MCP materialize: {error_msg}")
 
     async def reload_mcps(self, mcp_keys: list[str]):
         """
@@ -231,7 +229,6 @@ class MCPComponent(BaseComponent):
         try:
             async with asyncio.timeout(timeout):
                 async with client as session:
-                    # 执行一个轻量级操作来验证
                     response = await session.list_tools()
                     tools = getattr(
                         response,

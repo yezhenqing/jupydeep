@@ -88,28 +88,6 @@ const GlobalField: React.FC<FieldProps> = props => {
         </select>
       </div>
 
-      {/* Usage Limit
-      <div className="mb-4">
-        <label className="text-sm font-bold text-[var(--jp-ui-font-color1)] mb-2 block">
-          Usage Limit (USD)
-        </label>
-        <input
-          type="number"
-          step="0.01"
-          className="w-full p-2 text-sm border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color1)] text-[var(--jp-ui-font-color1)]"
-          value={config.usage_limit_usd === null ? '' : config.usage_limit_usd}
-          onChange={e => {
-            const val = e.target.value;
-            handleChange(
-              'usage_limit_usd',
-              val === '' ? null : parseFloat(val)
-            );
-          }}
-          placeholder="Unlimited"
-          disabled={disabled || readonly}
-        />
-      </div>
-      */}
       {/* Usage Limits Section */}
       <div className="mb-4">
         <label className="text-sm font-bold text-[var(--jp-ui-font-color1)] mb-2 block">
