@@ -232,7 +232,7 @@ class SkillComponent(BaseComponent):
             return {
                 name: {
                     "status": "failed",
-                    "message": f"Critical error: {msg}",
+                    "message": f"Critical error: {error_msg}",
                     "details": {},
                 }
                 for name in skill_keys

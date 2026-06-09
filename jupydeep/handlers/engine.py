@@ -146,7 +146,10 @@ class LLMUpdateHandler(APIHandler):
             error_msg = str(e).splitlines()[0] if str(e) else "No detailed message"
             logger.error(f"CRITICAL error in LLMUpdateHandler-post: {error_msg}")
             return self.finish(
-                {"status": "error", "message": f"CRITICAL error in LLM updating: {error_msg}"}
+                {
+                    "status": "error",
+                    "message": f"CRITICAL error in LLM updating: {error_msg}",
+                }
             )
 
 
@@ -186,7 +189,7 @@ class SkillsUpdateHandler(APIHandler):
             return self.finish(
                 {
                     "status": "error",
-                    "message": f"CRITICAL error in Skill updating: {msg}",
+                    "message": f"CRITICAL error in Skill updating: {error_msg}",
                 }
             )
 
@@ -226,7 +229,10 @@ class MCPUpdateHandler(APIHandler):
             error_msg = str(e).splitlines()[0] if str(e) else "No detailed message"
             logger.error(f"CRITICAL error in MCP UpdateHandler-post: {error_msg}")
             return self.finish(
-                {"status": "error", "message": f"CRITICAL error in MCP updating: {error_msg}"}
+                {
+                    "status": "error",
+                    "message": f"CRITICAL error in MCP updating: {error_msg}",
+                }
             )
 
 
