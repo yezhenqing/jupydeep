@@ -6,7 +6,7 @@
     "skills": {
       "type": "object",
       "title": "Agent Skills",
-      "description": "List of LLM model configurations",
+      "description": "List of skill configurations",
       "additionalProperties": {
         "type": "object",
         "required": ["name", "category", "version"],

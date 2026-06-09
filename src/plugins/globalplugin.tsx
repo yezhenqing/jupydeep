@@ -57,7 +57,7 @@ const globalPlugin: JupyterFrontEndPlugin<void> = {
             autoClose: 3000
           });
         }
-      }, 800);
+      }, 1200);
 
       globalSetting.changed.connect(() => {
         void debouncer.invoke();

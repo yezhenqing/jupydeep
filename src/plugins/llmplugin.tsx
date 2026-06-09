@@ -3,8 +3,6 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
-//import { ServerConnection } from '@jupyterlab/services';
-//import { URLExt } from '@jupyterlab/coreutils';
 import { SettingsSyncer } from '../lib/utils';
 import { Notification } from '@jupyterlab/apputils';
 import { Debouncer } from '@lumino/polling';
@@ -41,7 +39,7 @@ const llmPlugin: JupyterFrontEndPlugin<void> = {
             autoClose: 3000
           });
         }
-      }, 800);
+      }, 1200);
 
       llmSettings.changed.connect(() => {
         void debouncer.invoke();
