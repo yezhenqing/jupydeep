@@ -1,0 +1,20 @@
+Developer Guide
+===============
+
+Welcome to the JupyDeep Developer Guide!
+
+First off, thank you for choosing to contribute to JupyDeep. We believe that the future of computational notebooks 
+lies in the seamless integration of intelligent AI agents and interactive workspaces. It is the creativity, passion, 
+and code of community contributors like you that turn this vision into reality.
+
+Whether you are here to fix a bug, implement a new feature, or enhance the capabilities of our AI agents, your efforts 
+make this project more robust and valuable for the entire data science and AI community. This guide is designed to help 
+you get your development environment up and running quickly. Let's build the future of interactive AI computing together!
+
+How to contribute codes
+-----------------------
+
+This section is a work in progress (WIP) and will be available in an upcoming release.
+
+
+

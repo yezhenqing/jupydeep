@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        var userLang = navigator.language || navigator.userLanguage; 
+        if (userLang.startsWith('zh')) {
+            window.location.href = './zh/';
+        } else {
+            window.location.href = './en/';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting... If it doesn't work, please choose:</p>
+    <a href="./zh/">中文版</a> | <a href="./en/">English</a>
+</body>
+</html>

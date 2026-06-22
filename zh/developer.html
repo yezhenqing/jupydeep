@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>开发者指南 &mdash; JupyDeep-Documentation 0.1.3 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e0ccff72"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=beaddf03"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="prev" title="如何自定义智能体" href="howto_agent.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id1">安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> 安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">用户指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#getting-started">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#locate-settings">1. 定位设置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-mcp">3. 配置您的 MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#meet-your-built-in-agents">4. 认识内置智能体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#global-setting">5. 全局设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">使用指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto_llm.html">如何添加额外的大语言模型（LLM）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama 配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_skill.html">如何添加额外的技能（Skills）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">如何自定义智能体</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">开发者指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-contribute-codes">如何贡献代码</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">开发者指南</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/developer.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="developer-guide">
+<h1>开发者指南<a class="headerlink" href="#developer-guide" title="Link to this heading"></a></h1>
+<p>欢迎阅读 JupyDeep 开发者指南！</p>
+<p>首先，衷心感谢您选择为 JupyDeep 做出贡献。我们坚信，计算笔记本的未来在于 AI 智能体与交互式工作空间的无缝整合。正是像您一样充满创意、热情和代码能力的社区贡献者，才让这一愿景变为现实。</p>
+<p>无论您来这里是为了修复漏洞、实现新功能，还是为了增强我们 AI 智能体的能力，您的努力都将使这个项目变得更加健壮，并为整个数据科学和 AI 社区带来更大的价值。本指南旨在帮助您快速搭建并运行您的开发环境。让我们携手共创交互式 AI 计算的未来！</p>
+<section id="how-to-contribute-codes">
+<h2>如何贡献代码<a class="headerlink" href="#how-to-contribute-codes" title="Link to this heading"></a></h2>
+<p>本章节内容目前正在推进中（WIP），将在后续版本中提供。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="howto_agent.html" class="btn btn-neutral float-left" title="如何自定义智能体" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Zhenqing Ye。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

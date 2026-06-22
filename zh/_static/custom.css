@@ -1,0 +1,12 @@
+.wy-side-nav-search > a, 
+.wy-side-nav-search .wy-dropdown > a {
+    color: #222222 !important;
+}
+
+.wy-side-nav-search > a:hover {
+    color: #444444 !important;
+}
+
+.wy-side-nav-search input[type="text"]::placeholder {
+    color: #666666;
+}

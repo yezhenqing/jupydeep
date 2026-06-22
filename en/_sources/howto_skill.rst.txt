@@ -1,0 +1,4 @@
+How to add extra skills
+-----------------------
+
+*This section is a work in progress (WIP) and will be available in an upcoming release.*

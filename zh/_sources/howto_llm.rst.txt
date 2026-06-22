@@ -1,0 +1,6 @@
+How to add extra LLM models
+---------------------------
+
+.. toctree::
+   howto_llm_openrouter
+   howto_llm_ollama

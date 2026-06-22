@@ -1,0 +1,45 @@
+.. JupyDeep documentation master file, created by
+   sphinx-quickstart on Wed Jun 21 09:48:52 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+JupyDeep: Your AI partner in Jupyter
+====================================
+
+.. image:: _static/images/jupydeep_demo.png
+   :scale: 38%
+   :align: center
+
+| 
+
+**JupyDeep** bridges the gap between large language models and complex, high-performance data analysis workflows. By integrating an intelligent 
+agent engine directly into the Jupyter ecosystem, it transforms your standard workspace into a reactive, collaborative, and AI-assisted 
+environment. Crucially, instead of piping your Jupyter context to external third-party services, JupyDeep is designed to embed AI agents as native
+citizens within your local Jupyter environment. With it, you can configure diverse agents by simply binding them to specific MCP tools, custom 
+skills, and a wide array of underlying features.
+
+
+.. note::
+
+   **JupyDeep** is an active proof of concept under rapid development. Because its underlying foundation—including Pydantic AI/Agents—is also evolving quickly, unexpected issues may arise. We appreciate your patience as we lay the groundwork for a mature future.
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+Contents
+--------
+
+.. toctree::
+   install
+   guide
+   howto
+   developer
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

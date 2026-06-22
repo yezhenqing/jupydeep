@@ -1,0 +1,44 @@
+Installation
+============
+
+Installation
+------------
+
+JupyDeep is available on PyPI and can be installed via pip (including within uv or conda environments). 
+
+``uv`` installation
+~~~~~~~~~~~~~~~~~~~
+
+Using ``uv`` as an example, we can set up a project in a new directory named ``tutorial``. 
+
+Ensure you have ``uv`` is installed. If not, please refer to the `uv installation guide <https://docs.astral.sh/uv/getting-started/installation/>`_.
+
+.. code-block:: console
+
+   $ cd tutorial
+   $ uv init
+   $ uv add jupyterlab jupydeep
+
+
+Then simply launch JupyterLab as below:
+
+.. code-block:: console
+
+   $ uv run jupyter lab --ip=0.0.0.0
+
+The JupyterLab main panel should now display the JupyDeep icon in the right sidebar.
+
+
+``conda`` installation
+~~~~~~~~~~~~~~~~~~~~~~
+
+For ``conda``, you can create a new environment and then install JupyDeep using ``pip`` inside it.
+
+.. code-block:: console
+
+   $ conda create -n jupydeep jupyterlab
+   $ conda activate jupydeep
+   $ (jupydeep) pip install jupydeep
+
+
+In both ``uv`` and ``conda``, you can install any additional packages you need (such as ``seaborn`` for data analysis).

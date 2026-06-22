@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>用户指南 &mdash; JupyDeep-Documentation 0.1.3 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e0ccff72"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=beaddf03"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="使用指南" href="howto.html" />
+    <link rel="prev" title="安装" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id1">安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> 安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">用户指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#locate-settings">1. 定位设置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-your-mcp">3. 配置您的 MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meet-your-built-in-agents">4. 认识内置智能体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-setting">5. 全局设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">使用指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto_llm.html">如何添加额外的大语言模型（LLM）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama 配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_skill.html">如何添加额外的技能（Skills）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">如何自定义智能体</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">开发者指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#how-to-contribute-codes">如何贡献代码</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">用户指南</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="user-guide">
+<h1>用户指南<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
+<section id="getting-started">
+<h2>快速入门<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>首次安装 <strong>JupyDeep</strong> 后，您需要配置一些设置以启动引擎：</p>
+<section id="locate-settings">
+<h3>1. 定位设置项<a class="headerlink" href="#locate-settings" title="Link to this heading"></a></h3>
+<p>打开 JupyterLab 设置编辑器（Settings Editor），搜索以 <code class="docutils literal notranslate"><span class="pre">jupydeep</span></code> 为前缀的选项。</p>
+</section>
+<section id="configure-your-llm">
+<h3>2. 配置大语言模型（LLM）<a class="headerlink" href="#configure-your-llm" title="Link to this heading"></a></h3>
+<p>智能体引擎需要大语言模型（LLM）后端才能运行。请按照以下配置设置您的模型提供商（例如 OpenAI）（<strong>必填</strong>）。</p>
+<a class="reference internal image-reference" href="_images/jupydeep_llm.png"><img alt="_images/jupydeep_llm.png" class="align-center" src="_images/jupydeep_llm.png" style="width: 676.8000000000001px; height: 601.6px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>虽然此处以 OpenAI 为例，但您有权访问的任何其他受支持的 LLM 提供商都能完美运行。请参阅 <a class="reference external" href="https://pydantic.dev/docs/ai/api/models/base/">Pydantic AI (KnownModelName 章节)</a> 中列出的可用模型。您还可以配置本地代理——例如在本地机器或网络上运行的 <code class="docutils literal notranslate"><span class="pre">Ollama</span></code>。</p>
+</div>
+</section>
+<section id="configure-your-mcp">
+<h3>3. 配置您的 MCP<a class="headerlink" href="#configure-your-mcp" title="Link to this heading"></a></h3>
+<p>为了在 Jupyter 工作空间中最大化提高生产力，强烈建议按照以下指南配置 Jupyter MCP（<strong>推荐</strong>）。</p>
+<a class="reference internal image-reference" href="_images/jupydeep_mcp.png"><img alt="_images/jupydeep_mcp.png" class="align-center" src="_images/jupydeep_mcp.png" style="width: 560.8000000000001px; height: 604.8000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>请确保 URL 前缀和端口与浏览器地址栏中的内容相匹配。</p>
+</div>
+</section>
+<section id="meet-your-built-in-agents">
+<h3>4. 认识内置智能体<a class="headerlink" href="#meet-your-built-in-agents" title="Link to this heading"></a></h3>
+<p>一旦您的 LLM 连接成功，两个默认智能体将立即加载到您的 <cite>jupydeep.agent</cite> 面板中。</p>
+<a class="reference internal image-reference" href="_images/jupydeep_agent.png"><img alt="_images/jupydeep_agent.png" class="align-center" src="_images/jupydeep_agent.png" style="width: 727.2px; height: 898.4000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p>🐵 <strong>Wu Kong (悟空)：</strong> 专为繁重的代码执行和技术问题解决而设计。</p></li>
+<li><p>🐴 <strong>Monk Tang (唐僧)：</strong> 专为高层级的战术规划和工具编排而设计。</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>您可以轻松定制他们的技能集和能力以满足您的需求。如果智能体没有出现，请尝试刷新页面。</p>
+</div>
+</section>
+<section id="global-setting">
+<h3>5. 全局设置<a class="headerlink" href="#global-setting" title="Link to this heading"></a></h3>
+<p>本部分主要配置引擎和智能体的全局行为。其中包括默认智能体与模型的设置、Token 使用限制、工具调用（tool-call）超时以及后端配置。</p>
+<a class="reference internal image-reference" href="_images/jupydeep_global.png"><img alt="_images/jupydeep_global.png" class="align-center" src="_images/jupydeep_global.png" style="width: 787.5px; height: 588.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>其中部分参数目前仅为占位符，尚未实际实现。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="install.html" class="btn btn-neutral float-left" title="安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="howto.html" class="btn btn-neutral float-right" title="使用指南" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Zhenqing Ye。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
