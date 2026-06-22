@@ -14,7 +14,7 @@
         "url": "https://github.com/yezhenqing/jupydeep/issues"
     },
     "license": "BSD-3-Clause",
-    "author": "Zheqning Ye <iamyezheqning@gmail.com>",
+    "author": "Zhenqing Ye <iamyezhenqing@gmail.com>",
     "files": [
         "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
         "style/**/*.{css,js,eot,gif,html,jpg,json,png,svg,woff2,ttf}",

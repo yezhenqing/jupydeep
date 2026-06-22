@@ -3,7 +3,7 @@ import { LabIcon } from '@jupyterlab/ui-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient, closeSSE } from '../hooks/useEngine';
 
-import prozenSvgstr from '../../style/icons/prozen.svg';
+import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
 import { Shimmer } from '../components/ai-elements/shimmer';
 
@@ -37,7 +37,7 @@ const ChatPanel = (): JSX.Element => {
           backgroundColor: 'var(--jp-layout-color2)',
           borderColor: 'var(--jp-border-color1)'
         }}
-        className="flex items-center justify-center gap-1 border-2 rounded-full 
+        className="flex items-center justify-center gap-1 border-2 rounded-full
                    p-1 flex-nowrap whitespace-nowrap max-w-full overflow-hidden"
       >
         <Shimmer
@@ -51,7 +51,7 @@ const ChatPanel = (): JSX.Element => {
           href="https://github.com/yezhenqing/jupydeep"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[var(--jp-ui-font-color1)] hover:opacity-70 
+          className="text-[var(--jp-ui-font-color1)] hover:opacity-70
                      inline-flex items-center justify-center flex-shrink-0"
           title="View on GitHub"
         >

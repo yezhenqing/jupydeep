@@ -29,7 +29,9 @@ class AgentEngineExtension(ExtensionApp):
 
     name = "jupydeep"
     load_other_extensions = True
-    description = "JupyDeep: Your AI partner in Jupyter, powered by Pydantic agents — and beyond."
+    description = (
+        "JupyDeep: Your AI partner in Jupyter, powered by Pydantic agents — and beyond."
+    )
     extension_url = "/jupydeep"
 
     @property
@@ -49,7 +51,7 @@ class AgentEngineExtension(ExtensionApp):
         "intent" to "active instance" depends on resource availability and system constraints.
         """
         super().initialize()  # self.serverapp will be available after this
-  
+
         logger.info("Initializing JupyDeep Agent Engine.")
 
         # Environment injection (for agent dependency injection lately)
@@ -77,15 +79,16 @@ class AgentEngineExtension(ExtensionApp):
     def initialize_settings(self):
         """
         Initialize and configure the extension runtime environment.
-        
-        Configures system-wide logging and registers immutable singletons 
+
+        Configures system-wide logging and registers immutable singletons
         or settings required by the extension lifecycle.
         """
         setup_logging(debug=False, log_to_file=False)
+        # setup_logging(debug=True, log_to_file=True)
         logger.info("Initializing extension settings...")
-        
+
         # NOTE: `_agentEngine` acts as a global/thread-safe singleton within the process.
-        # Direct registration to `self.settings` is skipped to prevent redundant references 
+        # Direct registration to `self.settings` is skipped to prevent redundant references
         # and enforce single-source-of-truth access.
         # self.settings['agent_engine'] = self._agentEngine
 
@@ -106,12 +109,11 @@ class AgentEngineExtension(ExtensionApp):
             ]
         )
 
-
     async def start_extension(self):
         """
         Start the JupyDeep extension and trigger post-server-start lifecycles.
-        
-        This hook is invoked asynchronously once the Jupyter Server has fully 
+
+        This hook is invoked asynchronously once the Jupyter Server has fully
         initialized, making it the ideal entry point to materialize heavy resources.
         """
         try:
@@ -119,7 +121,7 @@ class AgentEngineExtension(ExtensionApp):
             # now that the server's event loop is active and stable.
             await self._agentEngine.materialize()
         except Exception as e:
-            # Fail-fast approach: Log and propagate the exception to prevent 
+            # Fail-fast approach: Log and propagate the exception to prevent
             # the server from running in a corrupted or half-baked state.
             logger.error(f"Fatal error during agent engine materialization: {e}")
             raise
@@ -129,14 +131,14 @@ class AgentEngineExtension(ExtensionApp):
     async def stop_extension(self):
         """
         Gracefully tear down the extension and release managed resources.
-        
-        Invoked during the Jupyter Server shutdown sequence to ensure clean 
+
+        Invoked during the Jupyter Server shutdown sequence to ensure clean
         termination of active agent sessions and background processes.
         """
         logger.info("Stopping JupyDeep Extension...")
 
         if self._agentEngine:
-            # Asynchronously dematerialize the agent engine, terminating 
+            # Asynchronously dematerialize the agent engine, terminating
             # active MCP connections, flushing skills, and freeing hardware resources.
             await self._agentEngine.shutdown()
 
@@ -187,7 +189,7 @@ class AgentEngineExtension(ExtensionApp):
 
             logger.info(
                 "JupyterContext successfully constructed:\n%s",
-                json.dumps(_context_info, indent=2, ensure_ascii=False)
+                json.dumps(_context_info, indent=2, ensure_ascii=False),
             )
 
             return _context
