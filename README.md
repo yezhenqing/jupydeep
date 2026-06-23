@@ -23,7 +23,7 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 - **Cross-Domain Data Analysis Demos** (Bioinformatics, network algorithm, etc.)
 - **And much more...**
 
-Please visit our [Documentation](https://yezhenqing.github.io/jupydeep/) for installation, guides, examples, and more (link coming soon).
+Please visit our [Documentation](https://yezhenqing.github.io/jupydeep/) for installation, guides, examples, and more.
 
 ## 🚀 Getting Started
 
