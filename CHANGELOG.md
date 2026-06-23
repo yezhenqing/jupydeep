@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.4
+
+([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.3...94517b52ac502cf81e50d41accd3ca69b7b60d21))
+
+### Documentation improvements
+
+- chore: correct typo and update assets/docs [#3](https://github.com/yezhenqing/jupydeep/pull/3) ([@yezhenqing](https://github.com/yezhenqing))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-06-09&to=2026-06-23&type=c))
+
+@yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-06-09..2026-06-23&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.3
 
 ([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.2...f88a3458e3a9368de46d5448dd51b09c404b9715))
@@ -18,8 +37,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-06-09&to=2026-06-09&type=c))
 
 @yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-06-09..2026-06-09&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.2
 
