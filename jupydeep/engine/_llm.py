@@ -94,9 +94,7 @@ class LLMComponent(BaseComponent):
                 await self.post_initialize()
         except Exception as e:
             error_msg = str(e).splitlines()[0] if str(e) else "No detailed message"
-            logger.error(
-                f"CRITICAL error in LLM materialize: {error_msg}"
-            )
+            logger.error(f"CRITICAL error in LLM materialize: {error_msg}")
 
     async def _create_llm_model(self, name, config):
         provider = OpenAIProvider(
@@ -109,7 +107,10 @@ class LLMComponent(BaseComponent):
             # max_tokens=int(config.max_tokens),
         )
         model = OpenAIChatModel(
-            model_name=config.name, provider=provider, settings=settings
+            # model= OpenAIResponsesModel(
+            model_name=config.name,
+            provider=provider,
+            settings=settings,
         )
         return model
 
