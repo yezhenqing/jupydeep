@@ -31,9 +31,7 @@ Please install it via pip or uv first (here we use uv as an example)
 
 ```bash
   uv init
-  uv add jupyterlab
-  uv pip install git+https://github.com/yezhenqing/jupyter-mcp-server.git
-  uv add jupydeep
+  uv add jupyterlab jupydeep "jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"
 ```
 
 Then simply launch JupyterLab as below
