@@ -149,7 +149,7 @@
 <p>Ensure you have <code class="docutils literal notranslate"><span class="pre">uv</span></code> is installed. If not, please refer to the <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">uv installation guide</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>tutorial
 <span class="gp">$ </span>uv<span class="w"> </span>init
-<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep
+<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span>
 </pre></div>
 </div>
 <p>Then simply launch JupyterLab as below:</p>
@@ -163,8 +163,13 @@
 <p>For <code class="docutils literal notranslate"><span class="pre">conda</span></code>, you can create a new environment and then install JupyDeep using <code class="docutils literal notranslate"><span class="pre">pip</span></code> inside it.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>jupydeep<span class="w"> </span>jupyterlab
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>jupydeep
-<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>jupydeep
+<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The original <code class="docutils literal notranslate"><span class="pre">jupyter-mcp-server</span></code> rely on <code class="docutils literal notranslate"><span class="pre">jupyter-server-nbmodel</span></code>, which suffers from several known issues.
+In particular, <a class="reference external" href="https://github.com/datalayer/jupyter-server-nbmodel/issues/65">Issue #65</a> prevents notebooks from executing smoothly.</p>
 </div>
 <p>In both <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">conda</span></code>, you can install any additional packages you need (such as <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> for data analysis).</p>
 </section>

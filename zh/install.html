@@ -150,7 +150,7 @@
 <p>请确保您已安装 <code class="docutils literal notranslate"><span class="pre">uv</span></code>。如果尚未安装，请参考 <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">uv 安装指南</a>。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>tutorial
 <span class="gp">$ </span>uv<span class="w"> </span>init
-<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep
+<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span>
 </pre></div>
 </div>
 <p>然后只需按如下方式启动 JupyterLab：</p>
@@ -164,8 +164,13 @@
 <p>对于 <code class="docutils literal notranslate"><span class="pre">conda</span></code>，您可以创建一个新环境，然后在该环境中通过 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 安装 JupyDeep。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>jupydeep<span class="w"> </span>jupyterlab
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>jupydeep
-<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>jupydeep
+<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>The original <code class="docutils literal notranslate"><span class="pre">jupyter-mcp-server</span></code> rely on <code class="docutils literal notranslate"><span class="pre">jupyter-server-nbmodel</span></code>, which suffers from several known issues.
+In particular, <a class="reference external" href="https://github.com/datalayer/jupyter-server-nbmodel/issues/65">Issue #65</a> prevents notebooks from executing smoothly.</p>
 </div>
 <p>无论在 <code class="docutils literal notranslate"><span class="pre">uv</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">conda</span></code> 中，您都可以根据需要安装任何额外的依赖包（例如用于数据分析的 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>）。</p>
 </section>

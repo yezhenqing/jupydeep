@@ -17,7 +17,7 @@ Ensure you have ``uv`` is installed. If not, please refer to the `uv installatio
 
    $ cd tutorial
    $ uv init
-   $ uv add jupyterlab jupydeep
+   $ uv add jupyterlab jupydeep "jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"
 
 
 Then simply launch JupyterLab as below:
@@ -38,7 +38,12 @@ For ``conda``, you can create a new environment and then install JupyDeep using 
 
    $ conda create -n jupydeep jupyterlab
    $ conda activate jupydeep
-   $ (jupydeep) pip install jupydeep
+   $ (jupydeep) pip install "jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git" jupydeep
 
+
+.. note::
+
+   The original ``jupyter-mcp-server`` rely on ``jupyter-server-nbmodel``, which suffers from several known issues. 
+   In particular, `Issue #65 <https://github.com/datalayer/jupyter-server-nbmodel/issues/65>`_ prevents notebooks from executing smoothly.
 
 In both ``uv`` and ``conda``, you can install any additional packages you need (such as ``seaborn`` for data analysis).
