@@ -31,13 +31,15 @@ Please install it via pip or uv first (here we use uv as an example)
 
 ```bash
   uv init
-  uv add jupyterlab jupydeep
+  uv add jupyterlab
+  uv pip install git+https://github.com/yezhenqing/jupyter-mcp-server.git
+  uv add jupydeep
 ```
 
 Then simply launch JupyterLab as below
 
 ```bash
-  uv run jupyter lab
+  uv run jupyter lab --ip=0.0.0.0
 ```
 
 After installing **JupyDeep** for the first time, you'll need to configure a few settings to get the engine running:
@@ -50,8 +52,8 @@ After installing **JupyDeep** for the first time, you'll need to configure a few
 -->
 <table align="center">
   <tr>
-    <td><img src="./assets/images/jupydeep_llm.png" width="400"></td>
-    <td><img src="./assets/images/jupydeep_mcp.png" width="400"></td>
+    <td><img src="https://yezhenqing.github.io/jupydeep/en/_images/jupydeep_llm.png" width="400"></td>
+    <td><img src="https://yezhenqing.github.io/jupydeep/en/_images/jupydeep_mcp.png" width="400"></td>
   </tr>
 </table>
 
@@ -62,7 +64,7 @@ After installing **JupyDeep** for the first time, you'll need to configure a few
      ![Agent Configuration](https://github.com/yezhenqing/jupydeep/tree/main/assets/images/jupydeep_agent.png)
      -->
      <div align="center">
-     <img src="./assets/images/jupydeep_agent.png" width="450" height="400">
+     <img src="https://yezhenqing.github.io/jupydeep/en/_images/jupydeep_agent.png" width="450" height="400">
      </div>
 
 > 💡 **Go Beyond the Defaults:** You can easily tweak their skillsets or register your own custom agents in the workspace. Head over to our [Documentation](https://yezhenqing.github.io/jupydeep/) for the full customization guide. If the agents aren't visible, try refreshing the page; that might help.
@@ -73,7 +75,7 @@ We welcome all forms of contributions—whether it's fixing bugs, improving docu
 
 ### Local Development Setup
 
-JupyDeep consists of a Python backend (`Hatch` / `uv`) and a TypeScript-based JupyterLab frontend extension (`yarn` / `jlpm`). Follow the steps below to set up your local development environment:
+JupyDeep consists of a Python backend (`hatch` / `uv`) and a TypeScript-based JupyterLab frontend extension (`yarn` / `jlpm`). Follow the steps below to set up your local development environment:
 
 **Clone the repository:**
 
