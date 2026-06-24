@@ -5,7 +5,6 @@ from deepdiff import DeepDiff
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from pydantic_deep import create_deep_agent, DeepAgentDeps, LocalBackend
 from pydantic_deep.toolsets.skills import SkillsToolset
-from pydantic_deep import create_summarization_processor
 from pydantic import BaseModel, Field, ConfigDict, model_validator, model_serializer
 from pydantic_ai import AgentSpec, Agent
 
@@ -270,17 +269,18 @@ class DeepAgentManager:
             if skills:
                 toolsets.append(SkillsToolset(skills=skills))
 
-        processor = create_summarization_processor(
-            trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
-            keep=("messages", 20),  # Keep last 20 messages after summarization
-        )
+        # processor = create_summarization_processor(
+        #    trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
+        #    keep=("messages", 20),  # Keep last 20 messages after summarization
+        # )
         _agent = create_deep_agent(
             **_config_dict,
             model=llm_model,
             toolsets=toolsets,
             # include_skills=True,
             include_skills=False,  # we will set skills through SkillsToolset
-            history_processors=[processor],
+            # TODO: Temporarily disabled due to breaking changes in the pydantic-ai 2.0 upgrade.
+            # history_processors=[processor],
         )
 
         _deps = self.build_deps(config.opts)
