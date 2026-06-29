@@ -67,6 +67,7 @@ const agentPlugin: JupyterFrontEndPlugin<void> = {
         const availableSkills = engineInfo?.payload?.skills?.length
           ? engineInfo.payload.skills
           : ['N/A'];
+
         if (schema.definitions?.AgentConfig?.properties?.deep_skills?.items) {
           const oldEnum =
             schema.definitions.AgentConfig.properties.deep_skills.items.enum ||

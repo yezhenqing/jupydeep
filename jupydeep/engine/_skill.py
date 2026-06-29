@@ -206,7 +206,6 @@ class SkillComponent(BaseComponent):
                         "details": {},
                     }
                     continue
-
                 _config = self._current_settings[_key]
                 _source = SkillsDirectory(path=_config.base_dir)
                 key_last_part = Path(_key).name

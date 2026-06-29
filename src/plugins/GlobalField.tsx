@@ -20,7 +20,7 @@ const GlobalField: React.FC<FieldProps> = props => {
 
   const { data: engineData } = useEngineCatalog();
   const llmsEnum = engineData?.payload?.llms || EMPTY_ARRAY;
-  const agentsEnum = Object.keys(engineData?.payload?.agents) || EMPTY_ARRAY;
+  const agentsEnum = Object.keys(engineData?.payload?.agents ?? {});
 
   const handleChange = (field: keyof IGlobalConfig, value: any) => {
     onChange({
