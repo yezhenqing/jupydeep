@@ -6,9 +6,10 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to add extra skills &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+  <title>JupyDeep Gallery &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-gallery.css?v=26227f6e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
 
   
@@ -21,8 +22,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to customize agents" href="howto_agent.html" />
-    <link rel="prev" title="How to add extra MCP servers" href="howto_mcp.html" /> 
+    <link rel="next" title="Conda Env for NVIDIA-BioNeMo" href="notebooks/biology/bioenv.html" />
+    <link rel="prev" title="Developer Guide" href="developer.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -97,14 +98,14 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="howto.html">How To</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="howto.html">How To</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howto_llm.html">How to add extra LLM models</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama Configuration</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">How to add extra skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to customize agents</a></li>
 </ul>
 </li>
@@ -112,12 +113,12 @@
 <li class="toctree-l2"><a class="reference internal" href="developer.html#how-to-contribute-codes">How to contribute codes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="gallery.html">JupyDeep Gallery</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gallery.html#computational-biology">Computational Biology</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">JupyDeep Gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#computational-biology">Computational Biology</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/biology/bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="gallery.html#miscellaneous">Miscellaneous</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -138,10 +139,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="howto.html">How To</a></li>
-      <li class="breadcrumb-item active">How to add extra skills</li>
+      <li class="breadcrumb-item active">JupyDeep Gallery</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/howto_skill.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/gallery.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -149,83 +149,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="how-to-add-extra-skills">
-<h1>How to add extra skills<a class="headerlink" href="#how-to-add-extra-skills" title="Link to this heading"></a></h1>
-<p>In the context of AI agents, <strong>Skills</strong> represent the discrete, executable capabilities or tools that an agent can leverage to
-interact with the environment and accomplish specific tasks. They inherently enable <strong>progressive disclosure</strong> by only loading
-detailed instructions and execution logic when explicitly needed, thereby optimizing the agent’s context window. Architecturally,
-a skill is defined as a self-contained directory containing, at minimum, a <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> file. For comprehensive details and
-implementation standards, please refer to the <a class="reference external" href="https://agentskills.io/specification">Agent Skills Specification</a>.</p>
-<p>Expanding the agent’s capabilities in <strong>JupyDeep</strong> is straightforward and highly extensible. To add extra skills, you simply
-need to specify the source directories where those skills reside. JupyDeep automatically scans and registers any valid skill
-folders defined within these target paths, making them instantly discoverable and ready for the agent to invoke.</p>
-<p>Below, I will demonstrate this process using a simple example. Let’s create a <strong>“tell-a-joke”</strong> skill.</p>
-<p>First, create a directory that exactly matches the skill’s name (<cite>tell-a-joke</cite>):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~
-<span class="gp">$ </span>mkdir<span class="w"> </span>-p<span class="w"> </span>skills/tell-a-joke
-</pre></div>
-</div>
-<p>Then, save the skill content from below into the file: ~/skills/tell-a-joke/SKILL.md</p>
-<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>---
-name: tell-a-joke
-description: A simple skill used to tell a quick, humorous joke to lighten the mood.
-license: Apache-2.0
-metadata:
-author: yezhenqing
-version: &quot;1.0&quot;
-<span class="gu">tags: &quot;entertainment, humor, joke&quot;</span>
-<span class="gu">---</span>
-
-<span class="gh"># Joke Bot</span>
-
-You are a humorous assistant specializing in telling short, funny jokes.
-
-<span class="gu">## Core Workflow</span>
-
-When a user asks for a joke, please strictly follow these steps:
-
-<span class="k">1.</span> <span class="gs">**Select a Category**</span>: If the user does not specify a topic, default to a joke about programmers or technology.
-<span class="k">2.</span> <span class="gs">**Keep it Concise**</span>: The joke must not exceed 3 sentences. Keep it crisp and clean.
-<span class="k">3.</span> <span class="gs">**Add Agent Signature**</span>: Always append a sign-off at the very end of your response (e.g., &quot;- Delivered by <span class="gs">**tell-a-joke Agent**</span>&quot;).
-
-<span class="gu">## Constraints</span>
-
-<span class="k">-</span><span class="w"> </span>Absolutely no vulgar, offensive, or personal attack jokes.
-<span class="k">-</span><span class="w"> </span>After telling the joke, you must NEVER explain why it is funny. Just end the response immediately.
-
-<span class="gu">## Trigger Example</span>
-
-User: &quot;Work is exhausting today, tell me a joke to help me relax.&quot;
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To verify that the joke is generated by the agent’s skill, I specifically added a rule: <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">Agent</span> <span class="pre">Signature</span></code>.
-This serves as a clear identifier.</p>
-</div>
-<p>Once the file is saved, we are ready to load the skill into JupyDeep. Launch JupyterLab with JupyDeep enabled,
-open the Settings editor, and navigate to the Skills panel as shown below:</p>
-<a class="reference internal image-reference" href="_images/joke_skill_setting.png"><img alt="_images/joke_skill_setting.png" class="align-center" src="_images/joke_skill_setting.png" style="width: 667.8000000000001px; height: 584.1px;" />
+  <section id="jupydeep-gallery">
+<h1>JupyDeep Gallery<a class="headerlink" href="#jupydeep-gallery" title="Link to this heading"></a></h1>
+<section id="computational-biology">
+<h2>Computational Biology<a class="headerlink" href="#computational-biology" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound" id="biology-gallery">
+<p class="caption" role="heading"><span class="caption-text">Practical computational biology workflows</span></p>
+<div class="nbsphinx-gallery">
+<a class="reference internal" href="notebooks/biology/bioenv.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Conda Env for NVIDIA-BioNeMo</div>
 </a>
-<p>Next, switch to the Agents panel, where the joke skill should now be available. You can verify that it works by
-enabling or disabling it, as shown in the image below:</p>
-<a class="reference internal image-reference" href="_images/joke_skill_demo.png"><img alt="_images/joke_skill_demo.png" class="align-center" src="_images/joke_skill_demo.png" style="width: 1068.0px; height: 1040.0px;" />
-</a>
-<div class="line-block">
-<div class="line"><br /></div>
 </div>
-<p>With this guide, you should now be able to set up skills in JupyDeep. As I mentioned earlier, skills are a powerful
-way to extend your agents’ capabilities for different tasks. The example above shows just the regular form, but you
-can enhance it by adding scripts, reference materials, and more. To learn how to build highly customized skills,
-please refer to the <a class="reference external" href="https://agentskills.io/specification">Agent Skills Specification</a>.</p>
+</div>
+</section>
+<section id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound" id="misc-gallery">
+<div class="nbsphinx-gallery">
+</div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="howto_mcp.html" class="btn btn-neutral float-left" title="How to add extra MCP servers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="howto_agent.html" class="btn btn-neutral float-right" title="How to customize agents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="developer.html" class="btn btn-neutral float-left" title="Developer Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notebooks/biology/bioenv.html" class="btn btn-neutral float-right" title="Conda Env for NVIDIA-BioNeMo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

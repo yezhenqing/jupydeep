@@ -1,0 +1,20 @@
+JupyDeep Gallery
+================
+
+Computational Biology
+---------------------
+
+.. nbgallery::
+   :caption: Practical computational biology workflows
+   :name: biology-gallery
+
+   notebooks/biology/bioenv
+
+
+Miscellaneous
+-------------
+
+.. nbgallery::
+   :caption: General utilities, benchmarks, and miscellaneous examples
+   :name: misc-gallery
+

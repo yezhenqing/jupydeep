@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conda Env for NVIDIA-BioNeMo &mdash; JupyDeep-Documentation 0.1.3 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=cf229479" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=e0ccff72"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=beaddf03"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="prev" title="JupyDeep Gallery" href="../../gallery.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="../../_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#id1">安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> 安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide.html">用户指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#getting-started">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#locate-settings">1. 定位设置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-mcp">3. 配置您的 MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#meet-your-built-in-agents">4. 认识内置智能体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#global-setting">5. 全局设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../howto.html">使用指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_llm.html">如何添加额外的大语言模型（LLM）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_openrouter.html">OpenRouter 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_ollama.html">Ollama 配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_skill.html">如何添加额外的技能（Skills）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">如何自定义智能体</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">开发者指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../developer.html#how-to-contribute-codes">如何贡献代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../gallery.html">JupyDeep Gallery</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../gallery.html#computational-biology">Computational Biology</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Conda Env for NVIDIA-BioNeMo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../gallery.html#miscellaneous">Miscellaneous</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../gallery.html">JupyDeep Gallery</a></li>
+      <li class="breadcrumb-item active">Conda Env for NVIDIA-BioNeMo</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/notebooks/biology/bioenv.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="conda-env-for-nvidia-bionemo">
+<h1>Conda Env for NVIDIA-BioNeMo<a class="headerlink" href="#conda-env-for-nvidia-bionemo" title="Link to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Zhenqing Ye</p>
+</dd>
+<dt class="field-even">Date<span class="colon">:</span></dt>
+<dd class="field-even"><p>June 28, 2026</p>
+</dd>
+<dt class="field-odd">Revision<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Draft</p>
+</dd>
+</dl>
+<p>Recently, NVIDIA released the <a class="reference external" href="https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit">bionemo-agent-toolkit</a> —
+a specialized suite of tools and models for drug discovery and protein design. In this guide, we will leverage these
+powerful resources to demonstrate how JupyDeep can seamlessly integrate intelligent agents into your scientific workflows
+to accelerate your research.</p>
+<p>Essentially, JupyDeep agents are capable of dynamically configuring environments by installing necessary Python packages
+on demand. However, computational biology workflows are inherently complex and often require dependencies beyond standard
+Python libraries, such as pre-compiled binary tools. To reduce the agent’s overhead and optimize token usage, it is best
+practice to prepare the base computational environment in advance. Accordingly, this guide focuses on setting up a dedicated
+Conda environment tailored for the NVIDIA-BioNeMo toolkit.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>We have opted not to use <code class="docutils literal notranslate"><span class="pre">uv</span></code> in this guide, as it is not optimized for the installation of non-Python binary dependencies
+within the environment.</p>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">conda</span></code>, we will create a new environment and then install JupyDeep using <code class="docutils literal notranslate"><span class="pre">pip</span></code> inside it.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONNOUSERSITE</span><span class="o">=</span><span class="m">1</span>
+<span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>bionemo<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.12<span class="w"> </span>jupyterlab<span class="w"> </span>jupyter_console<span class="w"> </span>nglview<span class="w"> </span>rdkit<span class="w"> </span>biopython<span class="w"> </span>requests<span class="w"> </span>pandas<span class="w"> </span>ipywidgets<span class="w"> </span>mdanalysis<span class="w"> </span>MDAnalysisTests<span class="w"> </span>-c<span class="w"> </span>conda-forge
+<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>bionemo
+<span class="gp">$ </span><span class="o">(</span>bionemo<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
+</pre></div>
+</div>
+<p>For molecule and protein structure visualization, we utilize the <a class="reference external" href="https://github.com/nglviewer/nglview">nglview package</a>, which is
+an excellent tool for this purpose. However, there is an <a class="reference external" href="https://github.com/nglviewer/nglview/issues/1172">ongoing issue</a> affecting
+the latest version (v4.0.1) that has not yet been resolved. Consequently, we need to apply a few minor adjustments to ensure compatibility
+and stable operation.</p>
+<div class="highlight-consoley notranslate"><div class="highlight"><pre><span></span># Ensure the bionemo environment is activated
+# Apply hotfix to the nglview frontend version
+$ (bionemo) sed -i &quot;s/__frontend_version__ = &#39;4.0&#39;/__frontend_version__ = &#39;3.1.5&#39;/&quot; $(python -c &quot;import site; print(site.getsitepackages()[0])&quot;)/nglview/_frontend.py
+</pre></div>
+</div>
+<p>Now, let’s activate the Conda environment and launch JupyterLab to verify that everything is working correctly.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Ensure<span class="w"> </span>the<span class="w"> </span>bionemo<span class="w"> </span>environment<span class="w"> </span>is<span class="w"> </span>activated
+<span class="gp">$ </span><span class="o">(</span>bionemo<span class="o">)</span><span class="w"> </span>jupyter<span class="w"> </span>lab<span class="w"> </span>--ip<span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span>--no-browser
+</pre></div>
+</div>
+<p>Navigate to the JupyterLab URL and open a new notebook. Once you run the test code, you should see results similar to the figure below:</p>
+<p>Navigate to the JupyterLab URL and open a new notebook. Once you run the test code, you should see results similar to the figure below,
+confirming that your BioNemo Conda environment has been successfully installed. Congratulations!</p>
+<a class="reference internal image-reference" href="../../_images/bionemo_conda_env.png"><img alt="../../_images/bionemo_conda_env.png" class="align-center" src="../../_images/bionemo_conda_env.png" style="width: 762.3000000000001px; height: 699.3000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file is provided to help you set up your Conda environment. You can access it via the following link:
+<a class="reference external" href="https://github.com/yezhenqing/jupydeep-gallery/blob/main/BioNeMo_Conda_Env/environment.yml">environment.yml</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../../gallery.html" class="btn btn-neutral float-left" title="JupyDeep Gallery" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Zhenqing Ye。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

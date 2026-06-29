@@ -36,6 +36,7 @@ Contents
    guide
    howto
    developer
+   gallery
 
 Indices and tables
 ==================
