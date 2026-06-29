@@ -3,7 +3,7 @@ from importlib.metadata import version
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Dict, List, Optional, TYPE_CHECKING
 import pydantic_deep.bundled_skills as bundled
-from pydantic_deep.toolsets.skills import Skill as SkillEntity, SkillsDirectory
+from pydantic_deep.features.skills import Skill as SkillEntity, SkillsDirectory
 
 from ._base import BaseComponent, ConfigLoader
 
