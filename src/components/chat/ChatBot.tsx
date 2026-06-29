@@ -40,7 +40,7 @@ import { Separator } from '../ui/separator';
 import { Part } from './parts/Part';
 import { ToolUIPart } from 'ai';
 
-import { Bot as BotIcon } from 'lucide-react';
+import { Bot as BotIcon, Trash2 } from 'lucide-react';
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { toast } from 'sonner';
 
@@ -87,7 +87,8 @@ const ChatBot = () => {
     status,
     error,
     stop,
-    addToolApprovalResponse
+    addToolApprovalResponse,
+    setMessages
   } = useChat({
     transport: new DefaultChatTransport({
       api: '/jupydeep/chat',
@@ -159,6 +160,14 @@ const ChatBot = () => {
     },
     [messages]
   );
+
+  // Create the callback to clear messages
+  const handleClearChat = useCallback(() => {
+    //if (window.confirm('Are you sure you want to clear the conversation?')) {
+      setMessages([]);
+      setText(''); // Also clear the unsent input text
+    //}
+  }, [setMessages]);
 
   const hasPendingToolCalls = useMemo(() => {
     if (status !== 'streaming') {
@@ -279,6 +288,20 @@ const ChatBot = () => {
         <Separator orientation="vertical" className="h-4" />
       </div>
       */}
+
+      <div className="flex items-center gap-2 px-2">
+        <button
+          type="button"
+          onClick={handleClearChat}
+          disabled={messages.length === 0}
+          className="flex items-center justify-center p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          title="Clear conversation & Start new session"
+        >
+          <Trash2 size={16} className="text-muted-foreground" />
+        </button>
+      </div>
+
+
       <div className="flex shrink-0 flex-col p-[2px]">
         <div className="w-full p-0">
           <PromptInput globalDrop multiple onSubmit={handleSubmit}>
