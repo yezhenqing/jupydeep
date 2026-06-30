@@ -50,8 +50,6 @@ Now, let’s activate the Conda environment and launch JupyterLab to verify that
    # Ensure the bionemo environment is activated
    $ (bionemo) jupyter lab --ip=0.0.0.0 --no-browser
 
-Navigate to the JupyterLab URL and open a new notebook. Once you run the test code, you should see results similar to the figure below: 
-
 Navigate to the JupyterLab URL and open a new notebook. Once you run the test code, you should see results similar to the figure below, 
 confirming that your BioNemo Conda environment has been successfully installed. Congratulations!
 

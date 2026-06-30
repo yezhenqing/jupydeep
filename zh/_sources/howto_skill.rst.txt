@@ -74,7 +74,8 @@ Next, switch to the Agents panel, where the joke skill should now be available. 
 enabling or disabling it, as shown in the image below:
 
 .. image:: _static/images/howto_skills/joke_skill_demo.png
-   :scale: 100%
+   :scale: 90%
+   :height: 650px
    :align: center
 
 | 
