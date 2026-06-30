@@ -7,7 +7,7 @@ Conda Env for NVIDIA-BioNeMo
 
 
 Recently, NVIDIA released the `bionemo-agent-toolkit <https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit>`_ — 
-a specialized suite of tools and models for drug discovery and protein design. In this guide, we will leverage these 
+a specialized suite of tools and models for drug discovery and protein design. In this series of guides, we will leverage these 
 powerful resources to demonstrate how JupyDeep can seamlessly integrate intelligent agents into your scientific workflows 
 to accelerate your research.
 
@@ -59,5 +59,5 @@ confirming that your BioNemo Conda environment has been successfully installed. 
 
 |
 
-An ``environment.yml`` file is provided to help you set up your Conda environment. You can access it via the following link:
-`environment.yml <https://github.com/yezhenqing/jupydeep-gallery/blob/main/BioNeMo_Conda_Env/environment.yml>`_
+An ``environment.yml`` file is provided to help you set up your Conda environment. 
+Please refer to the BioNeMo_Conda_Env example in the `jupydeep-gallery. <https://github.com/yezhenqing/jupydeep-gallery/tree/main/BioNeMo_Conda_Env>`_

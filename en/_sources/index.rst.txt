@@ -21,7 +21,7 @@ skills, and a wide array of underlying features.
 
 .. note::
 
-   **JupyDeep** is an active proof of concept under rapid development. Because its underlying foundation—including Pydantic AI/Agents—is also evolving quickly, unexpected issues may arise. We appreciate your patience as we lay the groundwork for a mature future.
+   **JupyDeep** is an active proof of concept under rapid development. Because its underlying foundation—including Pydantic AI/Agents—is also evolving quickly, unexpected issues may arise. We appreciate your patience as we lay the groundwork for a mature future. If JupyDeep is helpful to you, please consider starring ⭐️ the repository!
 
 
 .. toctree::
