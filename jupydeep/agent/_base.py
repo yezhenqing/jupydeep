@@ -310,7 +310,7 @@ class DeepAgentManager:
         Returns:
             dict: {
                 'status': 'success' or 'failed' or 'warning',
-                'message': '描述信息',
+                'message': 'description',
                 'details': {
                     'updated': [],
                     'removed': [],
