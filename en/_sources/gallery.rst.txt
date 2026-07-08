@@ -9,6 +9,7 @@ Computational Biology
    :name: biology-gallery
 
    notebooks/biology/bioenv
+   notebooks/biology/genmol
 
 
 Miscellaneous
