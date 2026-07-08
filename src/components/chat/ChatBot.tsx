@@ -164,8 +164,8 @@ const ChatBot = () => {
   // Create the callback to clear messages
   const handleClearChat = useCallback(() => {
     //if (window.confirm('Are you sure you want to clear the conversation?')) {
-      setMessages([]);
-      setText(''); // Also clear the unsent input text
+    setMessages([]);
+    setText(''); // Also clear the unsent input text
     //}
   }, [setMessages]);
 
@@ -300,7 +300,6 @@ const ChatBot = () => {
           <Trash2 size={16} className="text-muted-foreground" />
         </button>
       </div>
-
 
       <div className="flex shrink-0 flex-col p-[2px]">
         <div className="w-full p-0">
