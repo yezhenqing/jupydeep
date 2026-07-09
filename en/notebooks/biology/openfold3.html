@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenFold3 Skill Demonstration &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=cf229479" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=360bc84d"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="GenMol Skill Demonstration" href="genmol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="../../_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#id1">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#locate-settings">1. Locate Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-llm">2. Configure Your LLM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-mcp">3. Configure Your MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#meet-your-built-in-agents">4. Meet Your Built-in Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#global-setting">5. Global Setting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../howto.html">How To</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_llm.html">How to add extra LLM models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_openrouter.html">OpenRouter Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_ollama.html">Ollama Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_mcp.html">How to add extra MCP servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_skill.html">How to add extra skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">How to customize agents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../developer.html#how-to-contribute-codes">How to contribute codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../gallery.html">JupyDeep Gallery</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../gallery.html#computational-biology">Computational Biology</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="genmol.html">GenMol Skill Demonstration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">OpenFold3 Skill Demonstration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../gallery.html#miscellaneous">Miscellaneous</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../gallery.html">JupyDeep Gallery</a></li>
+      <li class="breadcrumb-item active">OpenFold3 Skill Demonstration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/notebooks/biology/openfold3.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="OpenFold3-Skill-Demonstration">
+<h1>OpenFold3 Skill Demonstration<a class="headerlink" href="#OpenFold3-Skill-Demonstration" title="Link to this heading"></a></h1>
+<p>In this section, we will demonstrate how to utilize the OpenFold3 skill provided by the <code class="docutils literal notranslate"><span class="pre">bionemo-agent-toolkit</span></code> package. This skill enables high-accuracy biomolecular structure prediction, supporting proteins, DNA, RNA, small-molecule ligands, and complex multi-entity assemblies. For more comprehensive details, please refer to the <a class="reference external" href="https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit/blob/main/nim-skills/openfold3-nim/SKILL.md">detailed documentation</a>.</p>
+<p>Before getting started, we need configure the OpenFold3 skill for JupyDeep. Please consult the <a class="reference external" href="../../howto_skill.html">“How-to Skill”</a> guide for general setup instructions, and ensure you have an active Conda environment alongside a valid NVIDIA NGC_API_KEY. Below is our configuration for the OpenFold3 skill. Make sure the skill name and the base_dir suffix are identical.</p>
+<p><img alt="openfold3_skill_setting" src="../../_images/openfold3_skill.png" /></p>
+<p>Subsequently, we prepared the below prompt and integrated it into the JupyterLab-JupyDeep context, with a primary focus on optimizing data processing and visualization.</p>
+<blockquote>
+<div><p>Generate a Jupyter Notebook script that implements a complete protein structural alignment and visualization pipeline. All required dependencies (<code class="docutils literal notranslate"><span class="pre">biopython</span></code>, <code class="docutils literal notranslate"><span class="pre">nglview</span></code>, <code class="docutils literal notranslate"><span class="pre">mdanalysis</span></code>) are pre-installed in the environment. Pipeline Steps</p>
+<ol class="arabic simple">
+<li><p>Structure Prediction: Call the OpenFold3 model via the NVIDIA API (using env <code class="docutils literal notranslate"><span class="pre">NGC_API_KEY</span></code>) to predict the 3D structure of human ubiquitin using the following target sequence. Save the predicted structure as <code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3.pdb</span></code>. <code class="docutils literal notranslate"><span class="pre">MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG</span></code></p></li>
+<li><p>Reference Fetching: Download the experimental ubiquitin structure from the RCSB PDB database (PDB ID: <code class="docutils literal notranslate"><span class="pre">1UBQ</span></code>) to serve as the ground-truth reference, and save it as <code class="docutils literal notranslate"><span class="pre">ubiquitin_reference.pdb</span></code>.</p></li>
+<li><p>Rigid Structural Alignment: Perform a rigid body alignment of the predicted OpenFold3 structure onto the reference structure (<code class="docutils literal notranslate"><span class="pre">1UBQ</span></code>) based on common C-alpha (<span class="math notranslate nohighlight">\(C_\alpha\)</span>) residues using <code class="docutils literal notranslate"><span class="pre">MDAnalysis.analysis.align</span></code>. Print out the final calculated RMSD value.</p></li>
+<li><p>Interactive Visualization: Render the aligned structures using <code class="docutils literal notranslate"><span class="pre">nglview</span></code> in a cartoon representation. Ensure that the coordinates are properly translated/centered for optimal viewing. Color the OpenFold3 predicted structure red and the 1UBQ reference structure blue to highlight structural discrepancies.</p></li>
+</ol>
+</div></blockquote>
+<hr class="docutils" />
+<p>Paste the prompt above into the chat input box. The content below demonstrates the subsequent output generated by JupyDeep via OpenAI GPT-5.2 and the OpenFold3 skill (with slight adjustments made for visual clarity). For the complete example, please refer to this case in the <a class="reference external" href="https://github.com/yezhenqing/jupydeep-gallery/tree/main/BioNeMo_Agent_Toolkit/openfold3-nim">JupyDeep gallery</a>.</p>
+<hr class="docutils" />
+<section id="Ubiquitin-structure-prediction,-alignment,-and-visualization">
+<h2>Ubiquitin structure prediction, alignment, and visualization<a class="headerlink" href="#Ubiquitin-structure-prediction,-alignment,-and-visualization" title="Link to this heading"></a></h2>
+<p>This notebook implements an end-to-end pipeline:</p>
+<ol class="arabic simple">
+<li><p>Predict human ubiquitin structure with <strong>OpenFold3</strong> via the NVIDIA API (auth via <code class="docutils literal notranslate"><span class="pre">NGC_API_KEY</span></code>).</p></li>
+<li><p>Download the experimental reference structure (<strong>PDB: 1UBQ</strong>).</p></li>
+<li><p>Perform rigid-body alignment using <strong>MDAnalysis</strong> on common <span class="math notranslate nohighlight">\(C_\alpha\)</span> atoms and report RMSD.</p></li>
+<li><p>Visualize aligned structures interactively with <strong>nglview</strong>.</p></li>
+</ol>
+<blockquote>
+<div><p>Outputs:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3.pdb</span></code> (predicted)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ubiquitin_reference.pdb</span></code> (reference)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3_aligned.pdb</span></code> (predicted after alignment into reference frame)</p></li>
+</ul>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Core imports</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">MDAnalysis</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mda</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">MDAnalysis.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">align</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">nglview</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nv</span>
+
+<span class="c1"># Constants / file paths</span>
+<span class="n">UBIQUITIN_SEQ</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG&quot;</span>
+<span class="p">)</span>
+
+<span class="n">PRED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_openfold3.pdb&quot;</span><span class="p">)</span>
+<span class="n">REF_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_reference.pdb&quot;</span><span class="p">)</span>
+<span class="n">ALIGNED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_openfold3_aligned.pdb&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sequence length:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">UBIQUITIN_SEQ</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Working directory:&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Will write:&quot;</span><span class="p">,</span> <span class="n">PRED_PDB</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/yezhe/.local/lib/python3.12/site-packages/Bio/Application/__init__.py:39: BiopythonDeprecationWarning: The Bio.Application modules and modules relying on it have been deprecated.
+
+Due to the on going maintenance burden of keeping command line application
+wrappers up to date, we have decided to deprecate and eventually remove these
+modules.
+
+We instead now recommend building your command line and invoking it directly
+with the subprocess module.
+  warnings.warn(
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6f7273d7d655451ba508d683e13a3553", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Sequence length: 76
+Working directory: /home/yezhe/Developer/jupyterdev/github/jupydeep_docs/source/notebooks/biology
+Will write: ubiquitin_openfold3.pdb ubiquitin_reference.pdb ubiquitin_openfold3_aligned.pdb
+</pre></div></div>
+</div>
+</section>
+<section id="1)-Predict-ubiquitin-structure-with-OpenFold3-(NVIDIA-hosted-API)">
+<h2>1) Predict ubiquitin structure with OpenFold3 (NVIDIA hosted API)<a class="headerlink" href="#1)-Predict-ubiquitin-structure-with-OpenFold3-(NVIDIA-hosted-API)" title="Link to this heading"></a></h2>
+<p>This cell calls the hosted OpenFold3 endpoint:</p>
+<ul class="simple">
+<li><p>URL: <code class="docutils literal notranslate"><span class="pre">https://health.api.nvidia.com/v1/biology/openfold/openfold3/predict</span></code></p></li>
+<li><p>Auth: <code class="docutils literal notranslate"><span class="pre">Authorization:</span> <span class="pre">Bearer</span> <span class="pre">$NGC_API_KEY</span></code></p></li>
+</ul>
+<p>It writes the first returned structure sample to <code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3.pdb</span></code>.</p>
+<p>If you do not have an API key, set it in the environment before running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">NGC_API_KEY</span><span class="o">=</span><span class="s1">&#39;...&#39;</span>
+</pre></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">predict_ubiquitin_openfold3</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">out_pdb</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">diffusion_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Call hosted OpenFold3 and save the first returned structure as PDB.</span>
+
+<span class="sd">    Returns the full JSON response (parsed).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Validate API key presence (do not print its value)</span>
+    <span class="k">if</span> <span class="s2">&quot;NGC_API_KEY&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;NGC_API_KEY&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">EnvironmentError</span><span class="p">(</span>
+            <span class="s2">&quot;NGC_API_KEY is not set. Please export NGC_API_KEY in your environment to call the hosted API.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://health.api.nvidia.com/v1/biology/openfold/openfold3/predict&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NGC_API_KEY&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Minimal payload with an explicit single-sequence A3M MSA (works as a smoke-test MSA)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;input_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ubiquitin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;output_format&quot;</span><span class="p">:</span> <span class="s2">&quot;pdb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;molecules&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;protein&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;sequence&quot;</span><span class="p">:</span> <span class="n">sequence</span><span class="p">,</span>
+                        <span class="s2">&quot;diffusion_samples&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">diffusion_samples</span><span class="p">),</span>
+                        <span class="s2">&quot;msa&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;main&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;a3m&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;alignment&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&gt;query</span><span class="se">\n</span><span class="si">{</span><span class="n">sequence</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;a3m&quot;</span><span class="p">,</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="c1"># Provide more helpful error info if available</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OpenFold3 request failed: HTTP </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="c1"># Extract the first sample structure</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">outputs</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No outputs in response keys=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">structures</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structures_with_scores&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">structures</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No structures_with_scores returned by OpenFold3&quot;</span><span class="p">)</span>
+
+    <span class="n">sample0</span> <span class="o">=</span> <span class="n">structures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;pdb&quot;</span><span class="p">)</span>
+    <span class="n">structure_txt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structure&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">structure_txt</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Returned structure is empty&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">fmt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;pdb&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected PDB output but got format=</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">out_pdb</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">structure_txt</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Print a compact confidence summary (not required, but helpful)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved:&quot;</span><span class="p">,</span> <span class="n">out_pdb</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Scores:&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;confidence_score&quot;</span><span class="p">,</span> <span class="s2">&quot;complex_plddt_score&quot;</span><span class="p">,</span> <span class="s2">&quot;ptm_score&quot;</span><span class="p">,</span> <span class="s2">&quot;iptm_score&quot;</span><span class="p">,</span> <span class="s2">&quot;complex_pde_score&quot;</span><span class="p">]},</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># Run prediction only if the output file is missing (idempotent)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">PRED_PDB</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">_openfold3_response</span> <span class="o">=</span> <span class="n">predict_ubiquitin_openfold3</span><span class="p">(</span><span class="n">UBIQUITIN_SEQ</span><span class="p">,</span> <span class="n">PRED_PDB</span><span class="p">,</span> <span class="n">diffusion_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PRED_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping OpenFold3 call.&quot;</span><span class="p">)</span>
+    <span class="n">_openfold3_response</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Quick sanity check: first few lines</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PRED_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ubiquitin_openfold3.pdb already exists; skipping OpenFold3 call.
+ATOM      1  N   MET A   1       3.415  -5.733  10.696  1.00 81.24           N
+ATOM      2  CA  MET A   1       2.864  -6.843   9.883  1.00 81.19           C
+ATOM      3  C   MET A   1       3.346  -6.692   8.454  1.00 82.07           C
+ATOM      4  O   MET A   1       3.697  -5.585   8.060  1.00 79.09           O
+ATOM      5  CB  MET A   1       1.329  -6.896   9.962  1.00 78.16           C
+</pre></div></div>
+</div>
+</section>
+<section id="2)-Fetch-experimental-reference-structure-(RCSB-PDB:-1UBQ)">
+<h2>2) Fetch experimental reference structure (RCSB PDB: 1UBQ)<a class="headerlink" href="#2)-Fetch-experimental-reference-structure-(RCSB-PDB:-1UBQ)" title="Link to this heading"></a></h2>
+<p>We download PDB ID <code class="docutils literal notranslate"><span class="pre">1UBQ</span></code> from RCSB and save it to <code class="docutils literal notranslate"><span class="pre">ubiquitin_reference.pdb</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download 1UBQ from RCSB</span>
+<span class="n">pdb_id</span> <span class="o">=</span> <span class="s2">&quot;1UBQ&quot;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://files.rcsb.org/download/</span><span class="si">{</span><span class="n">pdb_id</span><span class="si">}</span><span class="s2">.pdb&quot;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">REF_PDB</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">REF_PDB</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved:&quot;</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">REF_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping download.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Quick sanity check</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">REF_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ubiquitin_reference.pdb already exists; skipping download.
+HEADER    CHROMOSOMAL PROTEIN                     02-JAN-87   1UBQ
+TITLE     STRUCTURE OF UBIQUITIN REFINED AT 1.8 ANGSTROMS RESOLUTION
+COMPND    MOL_ID: 1;
+COMPND   2 MOLECULE: UBIQUITIN;
+COMPND   3 CHAIN: A;
+</pre></div></div>
+</div>
+</section>
+<section id="3)-Rigid-body-structural-alignment-(MDAnalysis)">
+<h2>3) Rigid-body structural alignment (MDAnalysis)<a class="headerlink" href="#3)-Rigid-body-structural-alignment-(MDAnalysis)" title="Link to this heading"></a></h2>
+<p>We align the predicted OpenFold3 structure onto the 1UBQ reference using the intersection of <span class="math notranslate nohighlight">\(C_\alpha\)</span> atoms.</p>
+<ul class="simple">
+<li><p><strong>Mobile</strong>: <code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3.pdb</span></code></p></li>
+<li><p><strong>Reference</strong>: <code class="docutils literal notranslate"><span class="pre">ubiquitin_reference.pdb</span></code></p></li>
+</ul>
+<p>We also write an aligned PDB (<code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3_aligned.pdb</span></code>) so it can be visualized directly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">MDAnalysis.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">rms</span>
+
+<span class="c1"># Load structures</span>
+<span class="n">u_ref</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">REF_PDB</span><span class="p">))</span>
+<span class="n">u_mob</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PRED_PDB</span><span class="p">))</span>
+
+<span class="c1"># Select common C-alpha atoms</span>
+<span class="n">sel</span> <span class="o">=</span> <span class="s2">&quot;protein and name CA&quot;</span>
+<span class="n">ref_ca</span> <span class="o">=</span> <span class="n">u_ref</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
+<span class="n">mob_ca</span> <span class="o">=</span> <span class="n">u_mob</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reference CA atoms:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mobile CA atoms:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;C-alpha selection returned 0 atoms; check input PDBs.&quot;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: CA atom counts differ; aligning first </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> atoms.&quot;</span><span class="p">)</span>
+
+<span class="c1"># AlignTraj modifies the mobile coordinates in memory.</span>
+<span class="c1"># We set in_memory=True to avoid writing a trajectory.</span>
+<span class="n">aligner</span> <span class="o">=</span> <span class="n">align</span><span class="o">.</span><span class="n">AlignTraj</span><span class="p">(</span>
+    <span class="n">u_mob</span><span class="p">,</span>
+    <span class="n">u_ref</span><span class="p">,</span>
+    <span class="n">select</span><span class="o">=</span><span class="n">sel</span><span class="p">,</span>
+    <span class="n">in_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Run alignment; results.rmsd is an array (frames x 1) for trajectories.</span>
+<span class="n">aligner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="c1"># Compute RMSD after alignment (single frame) using the matched CA sets</span>
+<span class="n">rmsd_after</span> <span class="o">=</span> <span class="n">rms</span><span class="o">.</span><span class="n">rmsd</span><span class="p">(</span><span class="n">mob_ca</span><span class="o">.</span><span class="n">positions</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ref_ca</span><span class="o">.</span><span class="n">positions</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">superposition</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final RMSD (CA, Å): </span><span class="si">{</span><span class="n">rmsd_after</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save aligned mobile structure (now in reference frame)</span>
+<span class="n">u_mob</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ALIGNED_PDB</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved aligned PDB:&quot;</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Reference CA atoms: 76
+Mobile CA atoms: 76
+Final RMSD (CA, Å): 0.604
+Saved aligned PDB: ubiquitin_openfold3_aligned.pdb
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/yezhe/.conda/envs/bionemo2/lib/python3.12/site-packages/MDAnalysis/core/universe.py:939: UserWarning: Reader has no dt information, set to 1.0 ps
+  dt=self.trajectory.ts.dt * step,
+/home/yezhe/.conda/envs/bionemo2/lib/python3.12/site-packages/MDAnalysis/coordinates/PDB.py:885: UserWarning: Unit cell dimensions not found. CRYST1 record set to unitary values.
+  warnings.warn(
+</pre></div></div>
+</div>
+</section>
+<section id="4)-Interactive-visualization-(nglview)">
+<h2>4) Interactive visualization (nglview)<a class="headerlink" href="#4)-Interactive-visualization-(nglview)" title="Link to this heading"></a></h2>
+<p>We visualize:</p>
+<ul class="simple">
+<li><p><strong>Reference (1UBQ)</strong> in <strong>blue</strong></p></li>
+<li><p><strong>OpenFold3 (aligned)</strong> in <strong>red</strong></p></li>
+</ul>
+<p>To ensure good viewing, we explicitly <code class="docutils literal notranslate"><span class="pre">center()</span></code> and <code class="docutils literal notranslate"><span class="pre">zoom()</span></code> the view.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the aligned predicted structure for visualization</span>
+<span class="n">u_ref_vis</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">REF_PDB</span><span class="p">))</span>
+<span class="n">u_pred_vis</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ALIGNED_PDB</span><span class="p">))</span>
+
+<span class="c1"># Create an NGLView widget with the reference as the base</span>
+<span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_mdanalysis</span><span class="p">(</span><span class="n">u_ref_vis</span><span class="p">)</span>
+
+<span class="c1"># Add the aligned prediction as a second component</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">nv</span><span class="o">.</span><span class="n">MDAnalysisTrajectory</span><span class="p">(</span><span class="n">u_pred_vis</span><span class="p">))</span>
+
+<span class="c1"># Clean default representations (if any) and add cartoons with colors</span>
+<span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Component indices: 0 -&gt; reference, 1 -&gt; aligned prediction</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">&quot;protein&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">&quot;protein&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Center/zoom for optimal viewing</span>
+<span class="n">view</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+
+<span class="c1"># Different nglview versions expose different helpers; fall back to NGL&#39;s autoView.</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;zoom_to&quot;</span><span class="p">):</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">zoom_to</span><span class="p">()</span>
+<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;zoom&quot;</span><span class="p">):</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;_remote_call&quot;</span><span class="p">):</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">_remote_call</span><span class="p">(</span><span class="s2">&quot;autoView&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/yezhe/.conda/envs/bionemo2/lib/python3.12/site-packages/MDAnalysis/coordinates/PDB.py:479: UserWarning: 1 A^3 CRYST1 record, this is usually a placeholder. Unit cell dimensions will be set to None.
+  warnings.warn(
+/home/yezhe/.conda/envs/bionemo2/lib/python3.12/site-packages/MDAnalysis/coordinates/PDB.py:479: UserWarning: 1 A^3 CRYST1 record, this is usually a placeholder. Unit cell dimensions will be set to None.
+  warnings.warn(
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="s1">&#39;100%&#39;</span>
+<span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="s1">&#39;500px&#39;</span>
+<span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "bb5fdb3984ec429891f8c8bcec18b263", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+
+<span class="n">view</span><span class="o">.</span><span class="n">render_image</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">view</span><span class="o">.</span><span class="n">_image_data</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">_image_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">img_bytes</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">_image_data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">img_bytes</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">_image_data</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">img_bytes</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Image data not populated. Please re-run this cell.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_biology_openfold3_12_0.png" class="no-scaled-link" src="../../_images/notebooks_biology_openfold3_12_0.png" style="width: 100%;" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="genmol.html" class="btn btn-neutral float-left" title="GenMol Skill Demonstration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Zhenqing Ye.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

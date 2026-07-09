@@ -24,6 +24,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="OpenFold3 Skill Demonstration" href="openfold3.html" />
     <link rel="prev" title="Conda Env for NVIDIA-BioNeMo" href="bioenv.html" /> 
 </head>
 
@@ -118,6 +119,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../../gallery.html#computational-biology">Computational Biology</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">GenMol Skill Demonstration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openfold3.html">OpenFold3 Skill Demonstration</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../gallery.html#miscellaneous">Miscellaneous</a><ul class="simple">
@@ -155,7 +157,7 @@
   <section id="GenMol-Skill-Demonstration">
 <h1>GenMol Skill Demonstration<a class="headerlink" href="#GenMol-Skill-Demonstration" title="Link to this heading"></a></h1>
 <p>In this section, we will demonstrate how to use the GenMol skill from the <code class="docutils literal notranslate"><span class="pre">bionemo-agent-toolkit</span></code> package. This skill enables the generation of novel drug-like molecules, alongside capabilities for scaffold decoration, motif extension, lead optimization, SAFE notation processing, and QED or LogP ranking. Please refer to the <a class="reference external" href="https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit/blob/main/nim-skills/genmol-nim/SKILL.md">detailed documentation</a> for further information.</p>
-<p>Before getting started, we must configure the GenMol skill for JupyDeep. Please consult the <a class="reference external" href="../../howto_skill.html">“How-to Skill”</a> guide for general setup instructions, and ensure you have a properly configured Conda environment ready. Below is our configuration for the GenMol skill. Make sure the skill name and the base_dir suffix are identical.</p>
+<p>Before getting started, we must configure the GenMol skill for JupyDeep. Please consult the <a class="reference external" href="../../howto_skill.html">“How-to Skill”</a> guide for general setup instructions, and ensure you have a properly configured Conda environment ready, alongside a valid NVIDIA NGC_API_KEY. Below is our configuration for the GenMol skill. Make sure the skill name and the base_dir suffix are identical.</p>
 <p><img alt="genmol_skill_setting" src="../../_images/genmol_skill_setting.png" /></p>
 <p>Subsequently, we modified the prompt derived from the package’s <a class="reference external" href="https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit/blob/main/nim-skills/genmol-nim/evals/evals.json">eval case: id-1</a> and integrated it into the JupyterLab-JupyDeep context, with a primary focus on optimizing data processing and visualization.</p>
 <blockquote>
@@ -486,6 +488,7 @@ Wrote:
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bioenv.html" class="btn btn-neutral float-left" title="Conda Env for NVIDIA-BioNeMo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="openfold3.html" class="btn btn-neutral float-right" title="OpenFold3 Skill Demonstration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

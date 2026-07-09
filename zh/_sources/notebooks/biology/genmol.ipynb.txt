@@ -9,7 +9,7 @@
     "\n",
     "In this section, we will demonstrate how to use the GenMol skill from the `bionemo-agent-toolkit` package. This skill enables the generation of novel drug-like molecules, alongside capabilities for scaffold decoration, motif extension, lead optimization, SAFE notation processing, and QED or LogP ranking. Please refer to the [detailed documentation](https://github.com/NVIDIA-BioNeMo/bionemo-agent-toolkit/blob/main/nim-skills/genmol-nim/SKILL.md) for further information. \n",
     "\n",
-    "Before getting started, we must configure the GenMol skill for JupyDeep. Please consult the [\"How-to Skill\"](../../howto_skill.html) guide for general setup instructions, and ensure you have a properly configured Conda environment ready. Below is our configuration for the GenMol skill. Make sure the skill name and the base_dir suffix are identical.\n",
+    "Before getting started, we must configure the GenMol skill for JupyDeep. Please consult the [\"How-to Skill\"](../../howto_skill.html) guide for general setup instructions, and ensure you have a properly configured Conda environment ready, alongside a valid NVIDIA NGC_API_KEY. Below is our configuration for the GenMol skill. Make sure the skill name and the base_dir suffix are identical.\n",
     "\n",
     "![genmol_skill_setting](_images/genmol_skill_setting.png)\n",
     "\n",

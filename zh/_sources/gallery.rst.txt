@@ -10,6 +10,7 @@ Computational Biology
 
    notebooks/biology/bioenv
    notebooks/biology/genmol
+   notebooks/biology/openfold3
 
 
 Miscellaneous
