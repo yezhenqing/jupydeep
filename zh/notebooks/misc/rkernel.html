@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R Kernel Spec Demonstration &mdash; JupyDeep-Documentation 0.1.3 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=cf229479" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=e0ccff72"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=beaddf03"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="prev" title="OpenFold3 Skill Demonstration" href="../biology/openfold3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="../../_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#id1">安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> 安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide.html">用户指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#getting-started">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#locate-settings">1. 定位设置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#configure-your-mcp">3. 配置您的 MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#meet-your-built-in-agents">4. 认识内置智能体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guide.html#global-setting">5. 全局设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../howto.html">使用指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_llm.html">如何添加额外的大语言模型（LLM）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_openrouter.html">OpenRouter 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_llm_ollama.html">Ollama 配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_skill.html">如何添加额外的技能（Skills）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">如何自定义智能体</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">开发者指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../developer.html#how-to-contribute-codes">如何贡献代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../gallery.html">JupyDeep Gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../gallery.html#computational-biology">Computational Biology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../biology/bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../biology/genmol.html">GenMol Skill Demonstration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../biology/openfold3.html">OpenFold3 Skill Demonstration</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../gallery.html#miscellaneous">Miscellaneous</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">R Kernel Spec Demonstration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../gallery.html">JupyDeep Gallery</a></li>
+      <li class="breadcrumb-item active">R Kernel Spec Demonstration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/notebooks/misc/rkernel.ipynb.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="R-Kernel-Spec-Demonstration">
+<h1>R Kernel Spec Demonstration<a class="headerlink" href="#R-Kernel-Spec-Demonstration" title="Link to this heading"></a></h1>
+<p>JupyterLab is not restricted to Python alone. Architecturally, the Jupyter framework natively supports a wide variety of programming languages through language-specific kernel specifications and runtimes.</p>
+<p>By extending this language-agnostic execution model to the Jupyter MCP capability, JupyDeep enables seamless multi-language workflows. Users can now harness the full power of JupyDeep for data science with unparalleled flexibility, efficiency, and intelligence across diverse runtime environments.</p>
+<p>In this section, we demonstrate how to leverage this capability to run an R kernel in JupyterLab using JupyDeep.</p>
+<p>To get started, we need to set up the appropriate environment. We will use <a class="reference external" href="https://pixi.prefix.dev/latest/">Pixi</a> as our environment manager—please make sure it is installed on your system before proceeding. Afterward, you can clone the example repository - Misc_RKernel - from the <a class="reference external" href="https://github.com/yezhenqing/jupydeep-gallery/tree/main/Misc_RKernel">JupyDeep Gallery</a>.</p>
+<p>Next, navigate into the cloned directory and start the environment by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yezhenqing/jupydeep-gallery.git
+<span class="nb">cd</span><span class="w"> </span>./jupydeep-gallery/Misc_RKernel
+pixi<span class="w"> </span>install
+pixi<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab<span class="w"> </span>--ip<span class="o">=</span><span class="m">0</span>.0.0.0
+</pre></div>
+</div>
+<p>Once executed, you will have a ready-to-go JupyterLab environment with both the <strong>R kernel</strong> and <strong>JupyDeep</strong> pre-installed. If you don’t see Agents appear, please try refreshing the web page or restarting the Jupyter server.</p>
+<blockquote>
+<div><p><em>Create a new R Notebook plotting sine and cosine curves with tidyverse (do not overwrite existing notebooks).</em></p>
+</div></blockquote>
+<hr class="docutils" />
+<p>Paste the prompt above into the chat input box. The content below demonstrates the subsequent output generated by JupyDeep via WuKong agent with z-ai/glm-5.2 LLM model. For the complete example and additional files, please refer to this case in the <a class="reference external" href="https://github.com/yezhenqing/jupydeep-gallery/tree/main/Misc_RKernel">JupyDeep Gallery</a>.</p>
+<p>Brilliant! Enjoy your data science journey with both R and Python in JupyDeep!</p>
+<iframe width="600" height="400" src="https://www.youtube.com/embed/lRVRAP13DTY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><hr class="docutils" />
+<section id="Sine-and-Cosine-Curves-in-R">
+<h2>Sine and Cosine Curves in R<a class="headerlink" href="#Sine-and-Cosine-Curves-in-R" title="Link to this heading"></a></h2>
+<p>This notebook plots <strong>sine</strong> and <strong>cosine</strong> curves using the <code class="docutils literal notranslate"><span class="pre">tidyverse</span></code> ecosystem in R, leveraging <code class="docutils literal notranslate"><span class="pre">tibble</span></code>, <code class="docutils literal notranslate"><span class="pre">dplyr</span></code>, and <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>.</p>
+<p>The mathematical functions plotted are:</p>
+<div class="math notranslate nohighlight">
+\[\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1}\]</div>
+<div class="math notranslate nohighlight">
+\[\cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install tidyverse if not already installed</span>
+<span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;tidyverse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;tidyverse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://cloud.r-project.org&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Load tidyverse</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tidyverse loaded successfully.\n&quot;</span><span class="p">)</span>
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;R version:&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">R.version.string</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+── Attaching core tidyverse packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2
+── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+tidyverse loaded successfully.
+R version: R version 4.5.3 (2026-03-11)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate x values from 0 to 2*pi (1000 points for smooth curves)</span>
+<span class="c1"># Use tibble and dplyr to build a tidy dataset</span>
+<span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">sin_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+<span class="w">    </span><span class="n">cos_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="c1"># Pivot into long format for easy ggplotting with color aesthetics</span>
+<span class="n">data_long</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">|&gt;</span>
+<span class="w">  </span><span class="nf">pivot_longer</span><span class="p">(</span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sin_x</span><span class="p">,</span><span class="w"> </span><span class="n">cos_x</span><span class="p">),</span>
+<span class="w">    </span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;function&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;y&quot;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">`function`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">recode</span><span class="p">(</span><span class="n">`function`</span><span class="p">,</span>
+<span class="w">    </span><span class="n">sin_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sin(x)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">cos_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cos(x)&quot;</span>
+<span class="w">  </span><span class="p">))</span>
+
+<span class="c1"># Preview the data</span>
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Wide format:\n&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\nLong format:\n&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">data_long</span><span class="p">))</span>
+
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\nSummary ranges:\n&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="w"> </span><span class="o">|&gt;</span>
+<span class="w">  </span><span class="nf">summarise</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">x_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+<span class="w">    </span><span class="n">sin_range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">sin_x</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;to&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">sin_x</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">)),</span>
+<span class="w">    </span><span class="n">cos_range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">cos_x</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;to&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">cos_x</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">))</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Wide format:
+# A tibble: 6 × 3
+        x   sin_x cos_x
+    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 0       0       1
+2 0.00629 0.00629 1.000
+3 0.0126  0.0126  1.000
+4 0.0189  0.0189  1.000
+5 0.0252  0.0252  1.000
+6 0.0314  0.0314  1.000
+
+Long format:
+# A tibble: 6 × 3
+        x `function`       y
+    &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+1 0       sin(x)     0
+2 0       cos(x)     1
+3 0.00629 sin(x)     0.00629
+4 0.00629 cos(x)     1.000
+5 0.0126  sin(x)     0.0126
+6 0.0126  cos(x)     1.000
+
+Summary ranges:
+# A tibble: 1 × 4
+  x_min x_max sin_range cos_range
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;
+1     0  6.28 -1 to 1   -1 to 1
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define nice pi-based break labels</span>
+<span class="n">pi_breaks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kc">pi</span><span class="p">)</span>
+<span class="n">pi_labels</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;π/2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;π&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3π/2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2π&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot sine and cosine curves with ggplot2</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data_long</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">`function`</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="n">linewidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="c1"># Highlight intersection points (sin(x) == cos(x) at π/4 and 5π/4)</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span>
+<span class="w">    </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">4</span><span class="p">),</span>
+<span class="w">      </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="m">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kc">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">4</span><span class="p">)),</span>
+<span class="w">      </span><span class="n">`function`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;intersection&quot;</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">),</span>
+<span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;green&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span>
+<span class="w">    </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">19</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Function&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;sin(x)&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cos(x)&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_continuous</span><span class="p">(</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi_breaks</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi_labels</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1.2</span><span class="p">,</span><span class="w"> </span><span class="m">1.2</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span>
+<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sine and Cosine Curves&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;x (radians)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;y&quot;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_minimal</span><span class="p">(</span><span class="n">base_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">13</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span>
+<span class="w">    </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span>
+<span class="w">    </span><span class="n">panel.grid.minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_line</span><span class="p">(</span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dotted&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;grey80&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_misc_rkernel_4_0.png" src="../../_images/notebooks_misc_rkernel_4_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../biology/openfold3.html" class="btn btn-neutral float-left" title="OpenFold3 Skill Demonstration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Zhenqing Ye。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

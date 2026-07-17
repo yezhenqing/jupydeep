@@ -20,3 +20,5 @@ Miscellaneous
    :caption: General utilities, benchmarks, and miscellaneous examples
    :name: misc-gallery
 
+   notebooks/misc/rkernel
+
