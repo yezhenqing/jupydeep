@@ -3,6 +3,8 @@ import { ReactWidget } from '@jupyterlab/ui-components';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient, closeSSE } from '../hooks/useEngine';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
 
 import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
@@ -29,7 +31,10 @@ const ChatPanel = (): JSX.Element => {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    const eventSource = new EventSource('/jupydeep/engine-sse');
+    const settings = ServerConnection.makeSettings();
+    const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
+    const urlWithToken = `${sseUrl}?token=${settings.token}`;
+    const eventSource = new EventSource(urlWithToken);
 
     eventSource.onmessage = event => {
       try {
@@ -145,7 +150,10 @@ const ChatPanel = (): JSX.Element => {
           {/* 2. Transparent overlay: Floating loading content */}
           {!isReady && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 w-full h-full min-h-[200px] bg-transparent">
-              <h3 className="m-0 text-lg font-semibold text-slate-800 dark:text-slate-100 drop-shadow-sm">
+              <h3
+                className="m-0 text-lg font-semibold drop-shadow-sm"
+                style={{ color: 'var(--jp-ui-font-color0)' }}
+              >
                 Welcome to JupyDeep!
               </h3>
               <img

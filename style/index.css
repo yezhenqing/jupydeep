@@ -19,6 +19,8 @@
     --color-orange-600: oklch(64.6% 0.222 41.116);
     --color-orange-700: oklch(55.3% 0.195 38.402);
     --color-orange-900: oklch(40.8% 0.123 38.172);
+    --color-amber-400: oklch(82.8% 0.189 84.429);
+    --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-yellow-100: oklch(97.3% 0.071 103.193);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-yellow-600: oklch(68.1% 0.162 75.834);
@@ -40,7 +42,6 @@
     --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-indigo-200: oklch(87% 0.065 274.039);
     --color-indigo-400: oklch(67.3% 0.182 276.935);
-    --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-purple-200: oklch(90.2% 0.063 306.703);
     --color-slate-100: oklch(96.8% 0.007 247.896);
     --color-slate-800: oklch(27.9% 0.041 260.031);
@@ -1405,6 +1406,12 @@
   .bg-\[var\(--jp-success-color1\)\] {
     background-color: var(--jp-success-color1);
   }
+  .bg-amber-400 {
+    background-color: var(--color-amber-400);
+  }
+  .bg-amber-500 {
+    background-color: var(--color-amber-500);
+  }
   .bg-background {
     background-color: var(--background);
   }
@@ -1458,12 +1465,6 @@
   }
   .bg-green-500 {
     background-color: var(--color-green-500);
-  }
-  .bg-indigo-400 {
-    background-color: var(--color-indigo-400);
-  }
-  .bg-indigo-500 {
-    background-color: var(--color-indigo-500);
   }
   .bg-input {
     background-color: var(--input);
@@ -1983,9 +1984,6 @@
   }
   .text-slate-100 {
     color: var(--color-slate-100);
-  }
-  .text-slate-800 {
-    color: var(--color-slate-800);
   }
   .text-transparent {
     color: transparent;
@@ -5163,11 +5161,6 @@
   .dark\:text-red-400 {
     &:is(.dark *) {
       color: var(--color-red-400);
-    }
-  }
-  .dark\:text-slate-100 {
-    &:is(.dark *) {
-      color: var(--color-slate-100);
     }
   }
   .dark\:text-yellow-400 {
