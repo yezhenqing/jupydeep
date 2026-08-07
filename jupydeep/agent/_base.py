@@ -11,7 +11,7 @@ from pydantic_deep import (
     LocalBackend,
     create_summarization_processor,
 )
-from pydantic_deep.toolsets.skills import SkillsToolset
+from pydantic_deep.features.skills import SkillsToolset
 from pydantic import BaseModel, Field, ConfigDict, model_validator, model_serializer
 from pydantic_ai import AgentSpec, Agent
 
