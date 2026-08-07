@@ -61,7 +61,9 @@ const ChatPanel = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (isReady) return;
+    if (isReady) {
+      return;
+    }
 
     const timer = setInterval(() => {
       setSeconds(prev => prev + 1);

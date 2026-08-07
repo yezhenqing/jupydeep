@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-interface CountdownProps {
+interface ICountdownProps {
   targetDate: number;
   title?: string;
   className?: string;
@@ -10,7 +10,7 @@ export default function CountdownTimer({
   targetDate,
   title = 'Initialization Timeout',
   className = ''
-}: CountdownProps) {
+}: ICountdownProps) {
   const [timeLeft, setTimeLeft] = useState<number>(() =>
     Math.max(0, targetDate - Date.now())
   );
