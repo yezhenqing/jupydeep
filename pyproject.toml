@@ -35,6 +35,7 @@ dependencies = [
     "deepdiff>=9.0.0",
     "jupyter-mcp-server",
     "seaborn>=0.13.2",
+    "pre-commit>=4.6.0",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
