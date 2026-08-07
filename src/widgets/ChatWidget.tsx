@@ -31,7 +31,7 @@ const ChatPanel = (): JSX.Element => {
   useEffect(() => {
     const eventSource = new EventSource('/jupydeep/engine-sse');
 
-    eventSource.onmessage = (event) => {
+    eventSource.onmessage = event => {
       try {
         const data = JSON.parse(event.data);
         console.log('📨 SSE received:', data);
@@ -50,7 +50,7 @@ const ChatPanel = (): JSX.Element => {
       }
     };
 
-    eventSource.onerror = (error) => {
+    eventSource.onerror = error => {
       console.error('SSE error:', error);
     };
 
@@ -130,7 +130,6 @@ const ChatPanel = (): JSX.Element => {
         }}
         className="rounded-lg border-dashed border-gray-400"
       >
-
         <div className="relative h-full w-full flex-1 flex flex-col min-h-0 overflow-hidden">
           {/* 1. ChatBot remains clearly visible with pointer events disabled */}
           <div
@@ -170,11 +169,11 @@ const ChatPanel = (): JSX.Element => {
               />
 
               {isTimeout && (
-                <p 
-                  style={{ 
-                    color: 'var(--jp-error-color1)', 
+                <p
+                  style={{
+                    color: 'var(--jp-error-color1)',
                     fontSize: '14px',
-                    textShadow: '0 1px 2px rgba(0,0,0,0.2)' 
+                    textShadow: '0 1px 2px rgba(0,0,0,0.2)'
                   }}
                 >
                   Timed out. Please verify your LLM settings...
@@ -183,8 +182,6 @@ const ChatPanel = (): JSX.Element => {
             </div>
           )}
         </div>
-
-
       </div>
     </div>
   );
