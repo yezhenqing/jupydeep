@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ReactWidget } from '@jupyterlab/ui-components';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -6,6 +7,7 @@ import { queryClient, closeSSE } from '../hooks/useEngine';
 import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
 import { Shimmer } from '../components/ai-elements/shimmer';
+import CountdownTimer from '../components/extra/CountdownTimer';
 
 const prozenIcon = new LabIcon({
   name: 'jupydeep:prozen',
@@ -20,6 +22,56 @@ const prozenIcon = new LabIcon({
 import ChatBot from '../components/chat/ChatBot';
 
 const ChatPanel = (): JSX.Element => {
+  const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(prozenSvgstr)}`;
+  const [futureTime] = useState(() => Date.now() + 2 * 60 * 1000);
+
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const eventSource = new EventSource('/jupydeep/engine-sse');
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        console.log('📨 SSE received:', data);
+
+        if (data.event === 'materialization_complete') {
+          const payload = data.payload || data.data;
+          const agents = payload?.agents;
+
+          if (agents && Object.keys(agents).length > 0) {
+            console.log('✅ Jupydeep Agents ready!', Object.keys(agents));
+            setIsReady(true);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to parse SSE data:', error);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('SSE error:', error);
+    };
+
+    return () => {
+      console.log('Closing SSE connection');
+      eventSource.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isReady) return;
+
+    const timer = setInterval(() => {
+      setSeconds(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isReady]);
+
+  const isTimeout = seconds >= 80;
+
   return (
     <div
       style={{
@@ -78,9 +130,61 @@ const ChatPanel = (): JSX.Element => {
         }}
         className="rounded-lg border-dashed border-gray-400"
       >
-        <div className="h-full w-full flex-1 flex flex-col min-h-0">
-          <ChatBot />
+
+        <div className="relative h-full w-full flex-1 flex flex-col min-h-0 overflow-hidden">
+          {/* 1. ChatBot remains clearly visible with pointer events disabled */}
+          <div
+            className={`w-full h-full flex-1 transition-opacity duration-300 ${
+              !isReady ? 'pointer-events-none opacity-85 select-none' : ''
+            }`}
+          >
+            <ChatBot />
+          </div>
+
+          {/* 2. Transparent overlay: Floating loading content */}
+          {!isReady && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 w-full h-full min-h-[200px] bg-transparent">
+              <h3 className="m-0 text-lg font-semibold text-slate-800 dark:text-slate-100 drop-shadow-sm">
+                Welcome to JupyDeep!
+              </h3>
+              <img
+                src={svgDataUrl}
+                alt="loading"
+                style={{ width: '90px', height: '90px' }}
+              />
+
+              <div
+                style={{
+                  fontSize: '15px',
+                  fontWeight: 500,
+                  color: 'var(--jp-ui-font-color1)',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                }}
+              >
+                ⏳ Initializing agents...
+              </div>
+
+              <CountdownTimer
+                targetDate={futureTime}
+                title="Estimated Ready In:"
+              />
+
+              {isTimeout && (
+                <p 
+                  style={{ 
+                    color: 'var(--jp-error-color1)', 
+                    fontSize: '14px',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.2)' 
+                  }}
+                >
+                  Timed out. Please verify your LLM settings...
+                </p>
+              )}
+            </div>
+          )}
         </div>
+
+
       </div>
     </div>
   );
