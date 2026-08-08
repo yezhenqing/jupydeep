@@ -24,16 +24,17 @@ const prozenIcon = new LabIcon({
 import ChatBot from '../components/chat/ChatBot';
 
 const ChatPanel = (): JSX.Element => {
+  const settings = ServerConnection.makeSettings();
+  const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
+  const urlWithToken = `${sseUrl}?token=${settings.token}`;
   const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(prozenSvgstr)}`;
+
   const [futureTime] = useState(() => Date.now() + 2 * 60 * 1000);
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    const settings = ServerConnection.makeSettings();
-    const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
-    const urlWithToken = `${sseUrl}?token=${settings.token}`;
     const eventSource = new EventSource(urlWithToken);
 
     eventSource.onmessage = event => {
