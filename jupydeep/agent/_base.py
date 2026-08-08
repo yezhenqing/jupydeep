@@ -1,3 +1,5 @@
+import json
+import asyncio
 from pathlib import Path
 from itertools import chain
 from deepdiff import DeepDiff
@@ -9,7 +11,7 @@ from pydantic_deep import (
     LocalBackend,
     create_summarization_processor,
 )
-from pydantic_deep.toolsets.skills import SkillsToolset
+from pydantic_deep.features.skills import SkillsToolset
 from pydantic import BaseModel, Field, ConfigDict, model_validator, model_serializer
 from pydantic_ai import AgentSpec, Agent
 
@@ -226,6 +228,10 @@ class DeepAgentManager:
         if self._agent_instances:
             self._is_initialized = True
 
+            # Emit the initialization complete signal over SSE prior to termination
+            # await asyncio.sleep(50) # for debug
+            await self._notify_initialization_complete()
+
     def deep_enhanced(self, config: AgentConfig):
         _config_dict = config.as_dict()
 
@@ -284,7 +290,6 @@ class DeepAgentManager:
             toolsets=toolsets,
             # include_skills=True,
             include_skills=False,  # we will set skills through SkillsToolset
-            # TODO: Waiting for pydantic-deepagents to become compatible with the Pydantic AI 2.0 upgrade.
             history_processors=[processor],
         )
 
@@ -392,3 +397,33 @@ class DeepAgentManager:
         self._agent_deps.clear()
         self._is_initialized = False
         self._is_configured = False
+
+    async def _notify_initialization_complete(self):
+        """Notify the frontend that the engine initialization is complete."""
+        summary = self._parent.runtime.get_summary()
+        info_obj = summary.model_dump(
+            include={
+                "agents",
+                "usage_limit",
+                "mcps",
+                "llms",
+                "skills",
+                "default_model",
+                "default_agent",
+            }
+        )
+
+        notification_data = {
+            "event": "materialization_complete",
+            "payload": info_obj,
+            "status": "initialized",
+        }
+
+        from jupydeep.handlers.engine import watcher
+
+        watcher.last_data = json.dumps(notification_data)
+        watcher.event.set()
+
+        # Wait briefly to ensure the SSE connection receives the message
+        await asyncio.sleep(0.1)
+        watcher.event.clear()

@@ -94,18 +94,18 @@ class AgentEngineExtension(ExtensionApp):
 
     def initialize_handlers(self):
         """Initialize handlers."""
-        api_base_url = url_path_join(self.base_url, self.extension_url)
+        ext_base = self.extension_url
 
         self.handlers.extend(
             [
-                (url_path_join(api_base_url, "global"), GlobalSettingHandler),
-                (url_path_join(api_base_url, "mcp"), MCPUpdateHandler),
-                (url_path_join(api_base_url, "llm"), LLMUpdateHandler),
-                (url_path_join(api_base_url, "skills"), SkillsUpdateHandler),
-                (url_path_join(api_base_url, "agents"), AgentUpdateHandler),
-                (url_path_join(api_base_url, "catalog"), EngineCatalogHandler),
-                (url_path_join(api_base_url, "engine-sse"), EngineSSEHandler),
-                (url_path_join(api_base_url, "chat"), ChatStreamHandler),
+                (url_path_join(ext_base, "global"), GlobalSettingHandler),
+                (url_path_join(ext_base, "mcp"), MCPUpdateHandler),
+                (url_path_join(ext_base, "llm"), LLMUpdateHandler),
+                (url_path_join(ext_base, "skills"), SkillsUpdateHandler),
+                (url_path_join(ext_base, "agents"), AgentUpdateHandler),
+                (url_path_join(ext_base, "catalog"), EngineCatalogHandler),
+                (url_path_join(ext_base, "engine-sse"), EngineSSEHandler),
+                (url_path_join(ext_base, "chat"), ChatStreamHandler),
             ]
         )
 
