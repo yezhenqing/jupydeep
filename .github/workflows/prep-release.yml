@@ -29,8 +29,8 @@ jobs:
 
       - name: Prep Release
         id: prep-release
-        #uses: jupyter-server/jupyter_releaser/.github/actions/prep-release@v2
-        uses: yezhenqing/jupyter_releaser/.github/actions/prep-release@main
+        uses: jupyter-server/jupyter_releaser/.github/actions/prep-release@v2
+        #uses: yezhenqing/jupyter_releaser/.github/actions/prep-release@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version_spec: ${{ github.event.inputs.version_spec }}
