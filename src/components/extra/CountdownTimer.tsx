@@ -35,7 +35,17 @@ export default function CountdownTimer({
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-medium text-xs ${className}`}
       >
         <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-        Timed Out
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 rounded-lg transition-colors"
+          style={{
+            backgroundColor: 'var(--jp-brand-color1)',
+            color: 'var(--jp-ui-inverse-font-color1)'
+          }}
+        >
+        🔄 Retry (Refresh Page)
+        </button>
+
       </div>
     );
   }

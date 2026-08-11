@@ -239,12 +239,17 @@ class DeepAgentManager:
         llm_model = None
         model_name = _config_dict.get("model", None)
         llm_comp = self._parent.getComponent("llm")
+
         if model_name and model_name in llm_comp.llms:
             llm_model = llm_comp.getModel(model_name)
         else:  # use the default model
             global_hub = self._parent.global_setting_hub
-            if global_hub.default_model:
+            if global_hub.default_model and global_hub.default_model in llm_comp.llms:
                 llm_model = llm_comp.getModel(global_hub.default_model)
+            else:
+                # choose the first one from the available model list
+                if llm_comp.llms:
+                    llm_model = llm_comp.getModel(llm_comp.llms[0])
         if not llm_model:
             logger.warning(
                 "Not able to create agents due to the lack of available LLM models"
@@ -414,9 +419,9 @@ class DeepAgentManager:
         )
 
         notification_data = {
-            "event": "materialization_complete",
+            "event": "agent_materialized",
             "payload": info_obj,
-            "status": "initialized",
+            "status": "agents initialized",
         }
 
         from jupydeep.handlers.engine import watcher

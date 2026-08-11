@@ -55,6 +55,7 @@ class EngineCatalogHandler(APIHandler):
         self.finish(
             {
                 "status": "success",
+                "event": "catalog_updated",
                 "message": "Engine info object send successfully",
                 "payload": info_obj,
             }
@@ -251,6 +252,7 @@ class AgentUpdateHandler(APIHandler):
             notify_obj = json.dumps(
                 {
                     "status": "success",
+                    "event": "agent_updated",
                     "message": "Engine info object updated from AgentUpdateHandler trigger",
                     "payload": engine.runtime.to_dict(),
                 }

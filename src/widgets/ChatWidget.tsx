@@ -34,7 +34,9 @@ const ChatPanel = (): JSX.Element => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(0);
 
+
   useEffect(() => {
+
     const eventSource = new EventSource(urlWithToken);
 
     eventSource.onmessage = event => {
@@ -42,15 +44,16 @@ const ChatPanel = (): JSX.Element => {
         const data = JSON.parse(event.data);
         console.log('📨 SSE received:', data);
 
-        if (data.event === 'materialization_complete') {
-          const payload = data.payload || data.data;
+        //if (data.event === 'agent_materialized' || data.event === "agent_updated") {
+        // no matter of event, as long as agents are available
+          const payload = data.payload;
           const agents = payload?.agents;
 
           if (agents && Object.keys(agents).length > 0) {
             console.log('✅ Jupydeep Agents ready!', Object.keys(agents));
             setIsReady(true);
           }
-        }
+        //}
       } catch (error) {
         console.error('Failed to parse SSE data:', error);
       }
@@ -78,7 +81,7 @@ const ChatPanel = (): JSX.Element => {
     return () => clearInterval(timer);
   }, [isReady]);
 
-  const isTimeout = seconds >= 80;
+  const isTimeout = seconds >= 120;
 
   return (
     <div

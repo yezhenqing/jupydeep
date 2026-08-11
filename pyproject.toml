@@ -98,7 +98,8 @@ before-build-python = ["jlpm clean:all"]
 ignore = ["W002"]
 
 [tool.uv.sources]
-jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.git" }
+#jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.git" }
+jupyter-mcp-server = { path = "/home/yezhe/Developer/jupyterdev/temp/jupyter-mcp-server", editable = true }
 
 [dependency-groups]
 dev = [
