@@ -4,14 +4,13 @@ import { URLExt } from '@jupyterlab/coreutils';
 
 export const queryClient = new QueryClient();
 let globalEventSource: EventSource | null = null;
-const ENGINE_QUERY_KEY = ['engineCatalog'];
+const getSettings = () => ServerConnection.makeSettings();
 
 export function setupSSE() {
   if (globalEventSource) {
     return;
   }
-
-  const settings = ServerConnection.makeSettings();
+  const settings = getSettings();
   const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
   const urlWithToken = `${sseUrl}?token=${settings.token}`;
 
@@ -47,8 +46,9 @@ export function closeSSE() {
   }
 }
 
+
 export const fetchEngine = async () => {
-  const settings = ServerConnection.makeSettings();
+  const settings = getSettings();
   const fetchUrl = URLExt.join(settings.baseUrl, 'jupydeep/catalog');
 
   const response = await ServerConnection.makeRequest(
@@ -65,6 +65,7 @@ export const fetchEngine = async () => {
   return result;
 };
 
+const ENGINE_QUERY_KEY = ['engineCatalog'];
 export function useEngineCatalog() {
   setupSSE();
 

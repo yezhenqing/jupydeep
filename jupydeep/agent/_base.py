@@ -49,7 +49,7 @@ class CapabilityOpts(BaseModel):
     include_subagents: bool = True
     include_plan: bool = True
     include_liteparse: bool = True
-    context_manager: bool = True
+    # context_manager: bool = True
     web_search: bool = True
     web_fetch: bool = True
 
@@ -246,10 +246,12 @@ class DeepAgentManager:
             global_hub = self._parent.global_setting_hub
             if global_hub.default_model and global_hub.default_model in llm_comp.llms:
                 llm_model = llm_comp.getModel(global_hub.default_model)
+                model_name = global_hub.default_model
             else:
                 # choose the first one from the available model list
                 if llm_comp.llms:
                     llm_model = llm_comp.getModel(llm_comp.llms[0])
+                    model_name = llm_comp.llms[0]
         if not llm_model:
             logger.warning(
                 "Not able to create agents due to the lack of available LLM models"
@@ -285,13 +287,27 @@ class DeepAgentManager:
             if skills:
                 toolsets.append(SkillsToolset(skills=skills))
 
+        # 5. Context manager
+        llm_config = llm_comp.getConfig(model_name)
+        ctx_mg_dict = {
+            "context_manager": True,
+            "on_context_update": self._context_update,
+        }
+        if llm_config.context_window:
+            ctx_mg_dict["context_manager_max_tokens"] = 1000 * llm_config.context_window
+
         processor = create_summarization_processor(
             trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
             keep=("messages", 20),  # Keep last 20 messages after summarization
         )
+
         _agent = create_deep_agent(
             **_config_dict,
             model=llm_model,
+            # context_manager=True,
+            # context_manager_max_tokens=128_000,
+            # on_context_update=self.context_update,
+            **ctx_mg_dict,
             toolsets=toolsets,
             # include_skills=True,
             include_skills=False,  # we will set skills through SkillsToolset
@@ -432,3 +448,6 @@ class DeepAgentManager:
         # Wait briefly to ensure the SSE connection receives the message
         await asyncio.sleep(0.1)
         watcher.event.clear()
+
+    def _context_update(self, pct, current, maximum):
+        print(f"######Context==>: {pct:.0%} ({current}/{maximum})")

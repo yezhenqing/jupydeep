@@ -30,6 +30,12 @@ class LLMModelConfig(BaseModel):
     top_p: float = Field(
         default=0.9, ge=0, le=1.0, description="Nucleus sampling threshold, range 0-1"
     )
+    context_window: int = Field(
+        default=100,
+        ge=1,
+        le=1000,
+        description="Maximum token limit for context windown",
+    )
 
     llm_api_key: str = Field(default="", alias="api_key", description="API key")
     llm_api_base: str = Field(default="", alias="api_base", description="API base URL")
@@ -68,6 +74,9 @@ class LLMComponent(BaseComponent):
 
     def getModel(self, name):
         return self._active_instances.get(name, None)
+
+    def getConfig(self, name):
+        return self._current_settings.get(name, None)
 
     def configure(self):
         if self._is_configured:

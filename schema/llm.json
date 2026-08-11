@@ -43,6 +43,14 @@
             "maximum": 1,
             "default": 0.9,
             "description": "Nucleus sampling: considers tokens with top_p probability mass."
+          },
+          "context_window": {
+            "type": "number",
+            "title": "Context Window (k)",
+            "minimum": 0,
+            "maximum": 1000,
+            "default": 0,
+            "description": "Context window: max combined prompt/response tokens (k). 0 = auto-detect.."
           }
         }
       }
