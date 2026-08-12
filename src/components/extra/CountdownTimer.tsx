@@ -38,7 +38,7 @@ export default function CountdownTimer({
           font-medium transition-all hover:opacity-90 active:scale-95 shadow-sm cursor-pointer"
           style={{
             backgroundColor: 'var(--jp-brand-color1)',
-            color: 'var(--jp-ui-inverse-font-color1)',
+            color: 'var(--jp-ui-inverse-font-color1)'
           }}
         >
           <span>🔄</span>

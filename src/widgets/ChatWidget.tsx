@@ -40,10 +40,10 @@ const ChatPanel = (): JSX.Element => {
     return () => clearInterval(timer);
   }, [isReady]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log("from ChatPanel engineData:", engineData)
     const agents = engineData?.payload?.agents;
-    if(agents && Object.keys(agents).length > 0) {
+    if (agents && Object.keys(agents).length > 0) {
       setIsReady(true);
     }
   }, [engineData]);
@@ -141,7 +141,9 @@ const ChatPanel = (): JSX.Element => {
                   textShadow: '0 1px 3px rgba(0,0,0,0.3)'
                 }}
               >
-                {isLoading ? '🔄 Checking engine status...' : '⏳ Initializing agents...'}
+                {isLoading
+                  ? '🔄 Checking engine status...'
+                  : '⏳ Initializing agents...'}
               </div>
 
               <CountdownTimer

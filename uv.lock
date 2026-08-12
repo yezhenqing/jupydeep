@@ -2433,7 +2433,7 @@ requires-dist = [
     { name = "ipykernel", marker = "extra == 'test'" },
     { name = "jupyter-collaboration", specifier = ">=4.3.0" },
     { name = "jupyter-kernel-client", specifier = ">=0.9.0" },
-    { name = "jupyter-mcp-server", editable = "../../temp/jupyter-mcp-server" },
+    { name = "jupyter-mcp-server", git = "https://github.com/yezhenqing/jupyter-mcp-server.git" },
     { name = "jupyter-server-client", specifier = ">=0.1.1" },
     { name = "jupyter-ydoc", specifier = ">=3.5.0" },
     { name = "jupyterlab", specifier = ">=4.5.8" },
@@ -2603,7 +2603,8 @@ wheels = [
 
 [[package]]
 name = "jupyter-mcp-server"
-source = { editable = "../../temp/jupyter-mcp-server" }
+version = "1.0.4"
+source = { git = "https://github.com/yezhenqing/jupyter-mcp-server.git#42a11e0a58ed710b9ffb0320bd0976272f9fa732" }
 dependencies = [
     { name = "click" },
     { name = "fastapi" },
@@ -2620,37 +2621,6 @@ dependencies = [
     { name = "traitlets" },
     { name = "uvicorn" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "click" },
-    { name = "fastapi" },
-    { name = "ipykernel", marker = "extra == 'test'" },
-    { name = "jupyter-collaboration", marker = "extra == 'test'" },
-    { name = "jupyter-kernel-client", specifier = ">=1.0.0" },
-    { name = "jupyter-mcp-tools", specifier = ">=0.1.6" },
-    { name = "jupyter-nbmodel-client", specifier = ">=0.14.6" },
-    { name = "jupyter-server", specifier = ">=1.6,<3" },
-    { name = "jupyter-server", marker = "extra == 'test'", specifier = ">=1.6,<3" },
-    { name = "jupyter-server-client", specifier = ">=0.1.1" },
-    { name = "jupyterlab", marker = "extra == 'test'" },
-    { name = "mcp", extras = ["cli"], specifier = ">=1.10.1" },
-    { name = "mdformat", marker = "extra == 'lint'", specifier = ">0.7" },
-    { name = "mdformat-gfm", marker = "extra == 'lint'", specifier = ">=0.3.5" },
-    { name = "mypy", marker = "extra == 'typing'", specifier = ">=0.990" },
-    { name = "opentelemetry-api", specifier = ">=1.24.0" },
-    { name = "opentelemetry-sdk", specifier = ">=1.24.0" },
-    { name = "pillow", marker = "extra == 'test'", specifier = ">=10.0.0" },
-    { name = "pydantic" },
-    { name = "pytest", marker = "extra == 'test'", specifier = ">=7.0" },
-    { name = "pytest-asyncio", marker = "extra == 'test'" },
-    { name = "pytest-timeout", marker = "extra == 'test'", specifier = ">=2.1.0" },
-    { name = "ruff", marker = "extra == 'lint'" },
-    { name = "tornado", specifier = ">=6.1" },
-    { name = "traitlets", specifier = ">=5.0" },
-    { name = "uvicorn" },
-]
-provides-extras = ["lint", "test", "typing"]
 
 [[package]]
 name = "jupyter-mcp-tools"

@@ -34,7 +34,7 @@ export function setupSSE() {
 
   globalEventSource.onmessage = event => {
     try {
-      const message = JSON.parse(event.data)
+      const message = JSON.parse(event.data);
       // console.log("SSE message:", message)
       const eventType = message.event;
       const payload = message.payload;
@@ -56,7 +56,7 @@ export function setupSSE() {
               ...payload,
               agents: payload.agents ?? old?.agents ?? {}
             }));
-          }else {
+          } else {
             queryClient.invalidateQueries({ queryKey: ENGINE_QUERY_KEY });
           }
           break;
@@ -77,7 +77,7 @@ export function setupSSE() {
 
 export function closeSSE() {
   refCount--;
-  if (refCount <=0 && globalEventSource) {
+  if (refCount <= 0 && globalEventSource) {
     globalEventSource.onmessage = null;
     globalEventSource.onerror = null;
     globalEventSource.close();
@@ -107,8 +107,6 @@ export const fetchEngine = async () => {
   return await response.json();
 };
 
-
-
 // ============================================================================
 // Custom React Hooks
 // ============================================================================
@@ -128,11 +126,10 @@ export function useEngineCatalog() {
   });
 }
 
-
-export interface ContextWindowData {
+export interface IContextWindowData {
   current?: number;
   pct?: number;
-  maximum?: number
+  maximum?: number;
 }
 
 export function useContextWindow() {
@@ -141,7 +138,7 @@ export function useContextWindow() {
     return () => closeSSE();
   }, []);
 
-  return useQuery<ContextWindowData>({
+  return useQuery<IContextWindowData>({
     queryKey: CONTEXT_QUERY_KEY,
     // No REST API to fetch data; entirely written externally via SSE from server.
     // purely push mode
