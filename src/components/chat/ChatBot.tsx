@@ -285,10 +285,11 @@ const ChatBot = () => {
             style={{ color: 'var(--jp-ui-font-color2)' }}
             className="text-[10px] leading-none font-medium whitespace-nowrap shrink-0 select-none"
           >
+            {/* It has already been multiplied by 100 on the server side. */}
             Context Window ({(contextData?.pct ?? 0).toFixed(3)}%):
           </span>
           <Progress
-            value={contextData?.pct ?? 0}
+            value={Math.min(contextData?.pct ?? 0, 100)}
             className="flex-1 h-2 bg-[var(--jp-layout-color2)] [&>div]:bg-[var(--jp-brand-color1)]"
           />
         </div>

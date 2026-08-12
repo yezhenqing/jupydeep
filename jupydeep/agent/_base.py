@@ -53,6 +53,7 @@ class CapabilityOpts(BaseModel):
     include_subagents: bool = True
     include_plan: bool = True
     include_liteparse: bool = True
+    context_manager: bool = True
     web_search: bool = True
     web_fetch: bool = True
 
@@ -291,25 +292,47 @@ class DeepAgentManager:
                 toolsets.append(SkillsToolset(skills=skills))
 
         # 5. Context manager
-        llm_config = llm_comp.getConfig(model_name)
-        ctx_mg_dict = {
-            "context_manager": True,
-            "on_context_update": self._context_update,
-        }
-        if llm_config.context_window:
-            ctx_mg_dict["context_manager_max_tokens"] = 1000 * llm_config.context_window
+        # Pop out 'context_manager' from _config_dict to build a new replacement ctx_mg_dict
 
-            processor = create_summarization_processor(
-                trigger=("fraction", 0.8),  # trigger by fraction
-                max_input_tokens=llm_config.context_window,
-                keep=("messages", 20),  # Keep last 20 messages after summarization
-            )
+        ctx_setting = _config_dict.pop("context_manager", None)
+        processor = None
+        if ctx_setting:
+            llm_config = llm_comp.getConfig(model_name)
+            ctx_mg_dict = {
+                "context_manager": True,
+                "on_context_update": self._context_update,
+            }
+            if llm_config.context_window:
+                ctx_mg_dict["context_manager_max_tokens"] = llm_config.context_window
+                processor = create_summarization_processor(
+                    model=llm_model,
+                    trigger=("fraction", 0.8),  # trigger by fraction
+                    max_input_tokens=llm_config.context_window,
+                    keep=("messages", 20),  # Keep last 20 messages after summarization
+                )
+            else:
+                processor = create_summarization_processor(
+                    model=llm_model,
+                    trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
+                    keep=("messages", 20),
+                )
         else:
-            processor = create_summarization_processor(
-                trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
-                keep=("messages", 20),
-            )
+            ctx_mg_dict = {"context_manager": False}
 
+        agent_kwargs = {
+            **_config_dict,
+            "model": llm_model,
+            **ctx_mg_dict,
+            "toolsets": toolsets,
+            "include_skills": False,  # set skills through SkillsToolset
+        }
+
+        if processor is not None:
+            agent_kwargs["history_processors"] = [processor]
+
+        _agent = create_deep_agent(**agent_kwargs)
+
+        """
         _agent = create_deep_agent(
             **_config_dict,
             model=llm_model,
@@ -319,7 +342,7 @@ class DeepAgentManager:
             include_skills=False,  # we will set skills through SkillsToolset
             history_processors=[processor],
         )
-
+        """
         _deps = self.build_deps(config.opts)
 
         # @_agent.tool
@@ -444,6 +467,7 @@ class DeepAgentManager:
         watcher.event.clear()
 
     def _context_update(self, pct, current, maximum):
+        # print("===context_update:", pct, current, maximum)
         info_obj = {
             "pct": 100 * pct,
             "current": current,

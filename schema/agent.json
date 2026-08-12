@@ -46,6 +46,7 @@
               "include_subagents",
               "include_plan",
               "include_liteparse",
+              "context_manager",
               "web_search",
               "web_fetch",
               "cost_tracking",

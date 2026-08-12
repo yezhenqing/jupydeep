@@ -32,9 +32,9 @@ class LLMModelConfig(BaseModel):
         default=0.9, ge=0, le=1.0, description="Nucleus sampling threshold, range 0-1"
     )
     context_window: int = Field(
-        default=100,
+        default=0,
         ge=0,
-        le=1000,
+        le=2000000,
         description="Maximum token limit for context windown",
     )
 
@@ -126,8 +126,8 @@ class LLMComponent(BaseComponent):
 
     def _context_update(self, name, pct, current, maximum):
         llm_config = self.getConfig(name)
-        if maximum:
-            llm_config.context_window = maximum / 1000
+        if not llm_config.context_window and maximum:
+            llm_config.context_window = int(maximum)
 
     async def _validate_llm_client(
         self, name: str, model: LLMModelEntity | str
@@ -153,17 +153,29 @@ class LLMComponent(BaseComponent):
                 context_manager=True,
                 # on_context_update=wrapped_callback,
                 on_context_update=lambda p, c, m: self._context_update(name, p, c, m),
+                # minimal config for rapid testing
+                include_filesystem=False,
+                include_execute=False,
+                include_todo=False,
+                thinking=False,  # Save tokens on subagents
+                include_subagents=False,
                 include_skills=False,
+                include_plan=False,
+                include_teams=False,
+                include_monitoring=False,
+                include_builtin_subagents=False,
+                cost_tracking=False,
+                include_memory=False,
             )
             deps = DeepAgentDeps(backend=StateBackend())
 
             # Set timeout to avoid infinite blocking
             result = await asyncio.wait_for(
                 agent.run(
-                    "Connection test to LLM available, respond with True if you can connect successfully.",
+                    "Please respond rapidly with True if you can connect successfully.",
                     deps=deps,
                 ),
-                timeout=30.0,
+                timeout=50.0,
             )
 
             if result.output:

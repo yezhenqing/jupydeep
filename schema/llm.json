@@ -46,11 +46,11 @@
           },
           "context_window": {
             "type": "number",
-            "title": "Context Window (k)",
+            "title": "Context Window",
             "minimum": 0,
-            "maximum": 1000,
+            "maximum": 2000000,
             "default": 0,
-            "description": "Context window: max combined prompt/response tokens (k). 0 = auto-detect.."
+            "description": "Context window: max combined prompt/response tokens. 0 = auto-detect.."
           }
         }
       }
