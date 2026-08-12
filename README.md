@@ -15,6 +15,16 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 
 > ⚠️ **Note:** JupyDeep is an active proof of concept under rapid development. Because its underlying foundation—including Pydantic AI/Agents—is also evolving quickly, unexpected issues may arise. We appreciate your patience as we lay the groundwork for a mature future.
 
+## 🔥 News & Highlights
+
+- **[2026-08-12] v0.1.9 Release:**
+  - 🧠 Introduced flexible **Context Window** management with live token updates.
+  - ⚡ Optimized Agent startup performance and responsiveness.
+- **[2026-08-07] v0.1.8 Release:**
+  - ⏱️ Introduced **CountDownTimer** to provide real-time visual feedback during agent startup.
+
+---
+
 ## 🗺️ Roadmap / Upcoming Features
 
 - **Conversation Persistence & Checkpoint Rewind** (State management)
