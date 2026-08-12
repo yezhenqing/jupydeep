@@ -31,21 +31,19 @@ export default function CountdownTimer({
 
   if (timeLeft <= 0) {
     return (
-      <div
-        className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-medium text-xs ${className}`}
-      >
-        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+      <div className={`flex flex-col items-center gap-2 ${className}`}>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl text-xs
+          font-medium transition-all hover:opacity-90 active:scale-95 shadow-sm cursor-pointer"
           style={{
             backgroundColor: 'var(--jp-brand-color1)',
-            color: 'var(--jp-ui-inverse-font-color1)'
+            color: 'var(--jp-ui-inverse-font-color1)',
           }}
         >
-        🔄 Retry (Refresh Page)
+          <span>🔄</span>
+          <span>Retry (Refresh Page)</span>
         </button>
-
       </div>
     );
   }

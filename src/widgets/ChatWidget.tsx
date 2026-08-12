@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { ReactWidget } from '@jupyterlab/ui-components';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient, closeSSE } from '../hooks/useEngine';
-import { ServerConnection } from '@jupyterlab/services';
-import { URLExt } from '@jupyterlab/coreutils';
+import { queryClient, closeSSE, useEngineCatalog } from '../hooks/useEngine';
 
 import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
@@ -24,50 +22,11 @@ const prozenIcon = new LabIcon({
 import ChatBot from '../components/chat/ChatBot';
 
 const ChatPanel = (): JSX.Element => {
-  const settings = ServerConnection.makeSettings();
-  const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
-  const urlWithToken = `${sseUrl}?token=${settings.token}`;
   const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(prozenSvgstr)}`;
-
   const [futureTime] = useState(() => Date.now() + 2 * 60 * 1000);
-
-  const [isReady, setIsReady] = useState<boolean>(false);
   const [seconds, setSeconds] = useState(0);
-
-
-  useEffect(() => {
-
-    const eventSource = new EventSource(urlWithToken);
-
-    eventSource.onmessage = event => {
-      try {
-        const data = JSON.parse(event.data);
-        console.log('📨 SSE received:', data);
-
-        //if (data.event === 'agent_materialized' || data.event === "agent_updated") {
-        // no matter of event, as long as agents are available
-          const payload = data.payload;
-          const agents = payload?.agents;
-
-          if (agents && Object.keys(agents).length > 0) {
-            console.log('✅ Jupydeep Agents ready!', Object.keys(agents));
-            setIsReady(true);
-          }
-        //}
-      } catch (error) {
-        console.error('Failed to parse SSE data:', error);
-      }
-    };
-
-    eventSource.onerror = error => {
-      console.error('SSE error:', error);
-    };
-
-    return () => {
-      console.log('Closing SSE connection');
-      eventSource.close();
-    };
-  }, []);
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const { data: engineData, isLoading } = useEngineCatalog();
 
   useEffect(() => {
     if (isReady) {
@@ -80,6 +39,14 @@ const ChatPanel = (): JSX.Element => {
 
     return () => clearInterval(timer);
   }, [isReady]);
+
+  useEffect(()=>{
+    // console.log("from ChatPanel engineData:", engineData)
+    const agents = engineData?.payload?.agents;
+    if(agents && Object.keys(agents).length > 0) {
+      setIsReady(true);
+    }
+  }, [engineData]);
 
   const isTimeout = seconds >= 120;
 
@@ -174,7 +141,7 @@ const ChatPanel = (): JSX.Element => {
                   textShadow: '0 1px 3px rgba(0,0,0,0.3)'
                 }}
               >
-                ⏳ Initializing agents...
+                {isLoading ? '🔄 Checking engine status...' : '⏳ Initializing agents...'}
               </div>
 
               <CountdownTimer
@@ -204,8 +171,7 @@ const ChatPanel = (): JSX.Element => {
 export class ChatWidget extends ReactWidget {
   constructor() {
     super();
-    this.id = 'jupyter-excalidraw-agents';
-    this.addClass('jp-excalidraw-container');
+    this.id = 'jupydeep-agents';
 
     this.title.label = '';
     this.title.icon = prozenIcon;

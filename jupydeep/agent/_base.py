@@ -1,4 +1,5 @@
 import json
+import time
 import asyncio
 from pathlib import Path
 from itertools import chain
@@ -20,7 +21,6 @@ from ..utils.logging import get_logger
 
 if TYPE_CHECKING:
     from ..engine import AgentEngine
-
 
 import warnings
 
@@ -49,7 +49,6 @@ class CapabilityOpts(BaseModel):
     include_subagents: bool = True
     include_plan: bool = True
     include_liteparse: bool = True
-    # context_manager: bool = True
     web_search: bool = True
     web_fetch: bool = True
 
@@ -218,6 +217,7 @@ class DeepAgentManager:
         self._is_configured = True
 
     async def materialize(self):
+        print("agent config keys:", self._agent_configs.keys())
         for key in self._agent_configs.keys():
             _config = self._agent_configs[key]
             _agent, _deps = self.deep_enhanced(_config)
@@ -230,7 +230,7 @@ class DeepAgentManager:
 
             # Emit the initialization complete signal over SSE prior to termination
             # await asyncio.sleep(50) # for debug
-            await self._notify_initialization_complete()
+            await self._notify_init_complete()
 
     def deep_enhanced(self, config: AgentConfig):
         _config_dict = config.as_dict()
@@ -296,17 +296,20 @@ class DeepAgentManager:
         if llm_config.context_window:
             ctx_mg_dict["context_manager_max_tokens"] = 1000 * llm_config.context_window
 
-        processor = create_summarization_processor(
-            trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
-            keep=("messages", 20),  # Keep last 20 messages after summarization
-        )
+            processor = create_summarization_processor(
+                trigger=("fraction", 0.8),  # trigger by fraction
+                max_input_tokens=llm_config.context_window,
+                keep=("messages", 20),  # Keep last 20 messages after summarization
+            )
+        else:
+            processor = create_summarization_processor(
+                trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
+                keep=("messages", 20),
+            )
 
         _agent = create_deep_agent(
             **_config_dict,
             model=llm_model,
-            # context_manager=True,
-            # context_manager_max_tokens=128_000,
-            # on_context_update=self.context_update,
             **ctx_mg_dict,
             toolsets=toolsets,
             # include_skills=True,
@@ -419,30 +422,17 @@ class DeepAgentManager:
         self._is_initialized = False
         self._is_configured = False
 
-    async def _notify_initialization_complete(self):
+    async def _notify_init_complete(self):
         """Notify the frontend that the engine initialization is complete."""
-        summary = self._parent.runtime.get_summary()
-        info_obj = summary.model_dump(
-            include={
-                "agents",
-                "usage_limit",
-                "mcps",
-                "llms",
-                "skills",
-                "default_model",
-                "default_agent",
-            }
-        )
-
-        notification_data = {
-            "event": "agent_materialized",
-            "payload": info_obj,
-            "status": "agents initialized",
+        notify_data = {
+            "event": "agent_spawned",
+            "payload": self._parent.runtime.to_dict(),
+            "status": "agents ready",
         }
 
         from jupydeep.handlers.engine import watcher
 
-        watcher.last_data = json.dumps(notification_data)
+        watcher.last_data = json.dumps(notify_data)
         watcher.event.set()
 
         # Wait briefly to ensure the SSE connection receives the message
@@ -450,4 +440,25 @@ class DeepAgentManager:
         watcher.event.clear()
 
     def _context_update(self, pct, current, maximum):
-        print(f"######Context==>: {pct:.0%} ({current}/{maximum})")
+        info_obj = {
+            "pct": 100 * pct,
+            "current": current,
+            "maximum": maximum,
+        }
+
+        notify_data = {
+            "event": "context_updated",
+            "payload": info_obj,
+            "status": "context window updated",
+        }
+        # TODO: Refactor: _context_update is called frequently,
+        # so importing 'watcher' inline here is inefficient.
+        from jupydeep.handlers.engine import watcher
+
+        watcher.last_data = json.dumps(notify_data)
+        watcher.event.set()
+
+        # Wait briefly to ensure the SSE connection receives the message
+        # await asyncio.sleep(0.1)
+        time.sleep(0.1)
+        watcher.event.clear()

@@ -104,6 +104,7 @@ class GlobalSettingHandler(APIHandler):
         notify_obj = json.dumps(
             {
                 "status": "success",
+                "event": "global_updated",
                 "message": "Engine info object updated from globalsetting trigger",
                 "payload": engine.runtime.to_dict(),
             }
@@ -129,6 +130,7 @@ class LLMUpdateHandler(APIHandler):
             notify_obj = json.dumps(
                 {
                     "status": "success",
+                    "event": "llm_updated",
                     "message": "Engine info object updated from LLMUpdateHandler trigger",
                     "payload": engine.runtime.to_dict(),
                 }
@@ -170,6 +172,7 @@ class SkillsUpdateHandler(APIHandler):
             notify_obj = json.dumps(
                 {
                     "status": "success",
+                    "event": "skill_updated",
                     "message": "Engine info object updated from SkillUpdateHandler trigger",
                     "payload": engine.runtime.to_dict(),
                 }
@@ -212,6 +215,7 @@ class MCPUpdateHandler(APIHandler):
             notify_obj = json.dumps(
                 {
                     "status": "success",
+                    "event": "mcp_updated",
                     "message": "Engine info object updated from MCPUpdateHandler trigger",
                     "payload": engine.runtime.to_dict(),
                 }

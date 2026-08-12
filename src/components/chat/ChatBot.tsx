@@ -35,7 +35,7 @@ import {
 
 import { InputGroupAddon } from '../ui/input-group';
 import { Separator } from '../ui/separator';
-//import { Progress } from '../ui/progress';
+import { Progress } from '../ui/progress';
 
 import { Part } from './parts/Part';
 import { ToolUIPart } from 'ai';
@@ -47,11 +47,12 @@ import { toast } from 'sonner';
 import { DefaultChatTransport } from 'ai';
 import { useChat } from '@ai-sdk/react';
 import { ServerConnection } from '@jupyterlab/services';
-import { useEngineCatalog } from '../../hooks/useEngine';
+import { useEngineCatalog, useContextWindow } from '../../hooks/useEngine';
 
 const settings = ServerConnection.makeSettings();
 
 const ChatBot = () => {
+  const { data: contextData } = useContextWindow();
   const { data: engineData, isLoading } = useEngineCatalog();
   const [agents, setAgents] = useState<string[]>([]);
   const [selectedAgent, setSelectedAgent] = useState<string>('');
@@ -61,7 +62,6 @@ const ChatBot = () => {
       const agentList = Object.keys(engineData.payload.agents).filter(
         key => engineData.payload.agents[key].enabled
       );
-
       setAgents(agentList);
 
       if (agentList.length > 0) {
@@ -277,10 +277,24 @@ const ChatBot = () => {
         <ConversationScrollButton />
       </Conversation>
 
-      <Separator orientation="horizontal" />
-      {/* TODO: Implement context window consumption tracker */}
-      {/*  <Progress value={56} className="w-full" />
+      <Separator orientation="horizontal" className="shrink-0" />
+      {/* Context window consumption tracker */}
+      <div className="w-full shrink-0 px-2 py-1 box-border">
+        <div className="flex w-full items-center gap-1.5">
+          <span
+            style={{ color: 'var(--jp-ui-font-color2)' }}
+            className="text-[10px] leading-none font-medium whitespace-nowrap shrink-0 select-none"
+          >
+            Context Window ({(contextData?.pct ?? 0).toFixed(3)}%):
+          </span>
+          <Progress
+            value={contextData?.pct ?? 0}
+            className="flex-1 h-2 bg-[var(--jp-layout-color2)] [&>div]:bg-[var(--jp-brand-color1)]"
+          />
+        </div>
+      </div>
 
+      {/*
       <div className="flex items-center gap-2 px-2">
         <span>
           You used <strong>$0.50</strong> in this turn
