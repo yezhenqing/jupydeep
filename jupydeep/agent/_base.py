@@ -18,6 +18,8 @@ from pydantic_ai import AgentSpec, Agent
 
 from ..engine._base import ConfigLoader
 from ..utils.logging import get_logger
+from ..handlers import get_watcher
+from jupyter_core.utils import run_sync
 
 if TYPE_CHECKING:
     from ..engine import AgentEngine
@@ -27,6 +29,8 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 logger = get_logger(__name__)
+
+watcher = run_sync(get_watcher)()
 
 
 class JupyterDeps(DeepAgentDeps):
@@ -217,7 +221,6 @@ class DeepAgentManager:
         self._is_configured = True
 
     async def materialize(self):
-        print("agent config keys:", self._agent_configs.keys())
         for key in self._agent_configs.keys():
             _config = self._agent_configs[key]
             _agent, _deps = self.deep_enhanced(_config)
@@ -430,7 +433,8 @@ class DeepAgentManager:
             "status": "agents ready",
         }
 
-        from jupydeep.handlers.engine import watcher
+        # from jupydeep.handlers.engine import watcher
+        # watcher = await get_watcher()
 
         watcher.last_data = json.dumps(notify_data)
         watcher.event.set()
@@ -451,9 +455,9 @@ class DeepAgentManager:
             "payload": info_obj,
             "status": "context window updated",
         }
-        # TODO: Refactor: _context_update is called frequently,
-        # so importing 'watcher' inline here is inefficient.
-        from jupydeep.handlers.engine import watcher
+
+        # from jupydeep.handlers.engine import watcher
+        # watcher = await get_watcher()
 
         watcher.last_data = json.dumps(notify_data)
         watcher.event.set()

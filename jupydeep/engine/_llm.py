@@ -153,6 +153,7 @@ class LLMComponent(BaseComponent):
                 context_manager=True,
                 # on_context_update=wrapped_callback,
                 on_context_update=lambda p, c, m: self._context_update(name, p, c, m),
+                include_skills=False,
             )
             deps = DeepAgentDeps(backend=StateBackend())
 

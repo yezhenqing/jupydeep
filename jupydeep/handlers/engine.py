@@ -1,32 +1,20 @@
 import tornado
 import json
-import asyncio
-from jupyter_server.base.handlers import APIHandler
 
+from jupyter_server.base.handlers import APIHandler
+from jupyter_core.utils import run_sync
 from ..engine import AgentEngine
 from ..engine._base import ConfigLoader
 from ..utils.logging import get_logger
+from . import get_watcher
+
 
 logger = get_logger(__name__)
 
-
-# Simulate a global configuration change trigger
-class EngineWatcher:
-    def __init__(self):
-        self.event = asyncio.Event()
-        self.last_data = None
-
-    def notify(self, data):
-        """Notify all waiting handlers of configuration change"""
-        self.last_data = data
-        self.event.set()
-        # Clear the event in the next event loop tick to ensure all wait() have completed
-        asyncio.get_running_loop().call_soon(self.event.clear)
-
-
 # Global singleton
-watcher = EngineWatcher()
-# 1. Get business engine instance
+watcher = run_sync(get_watcher)()
+
+# Get business engine instance
 engine = AgentEngine.get_instance()
 
 
