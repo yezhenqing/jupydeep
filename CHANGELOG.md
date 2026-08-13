@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.9
+
+([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.8...55de71620958168b94fdb13c451aa923e3c3b9db))
+
+### Enhancements made
+
+- Add context window management [#10](https://github.com/yezhenqing/jupydeep/pull/10) ([@yezhenqing](https://github.com/yezhenqing))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-08-08&to=2026-08-13&type=c))
+
+@yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-08-08..2026-08-13&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.8
 
 ([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.7...2093eb3d164a46a4bcc013dc82a7e01f46ff0ae5))
@@ -22,8 +41,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-07-08&to=2026-08-08&type=c))
 
 @yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-07-08..2026-08-08&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.7
 
