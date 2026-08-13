@@ -18,7 +18,7 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 ## 🔥 News & Highlights
 
 - **[2026-08-12] v0.1.9 Release:**
-  - 🧠 Introduced flexible **Context Window** management with live token updates.
+  - 🧠 Introduced flexible [**Context Window**](https://yezhenqing.github.io/jupydeep/en/howto_ctx.html) management with live token updates.
   - ⚡ Optimized Agent startup performance and responsiveness.
 - **[2026-08-07] v0.1.8 Release:**
   - ⏱️ Introduced **CountDownTimer** to provide real-time visual feedback during agent startup.
