@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>用户指南 &mdash; JupyDeep-Documentation 0.1.3 文档</title>
+  <title>How to config context window &mdash; JupyDeep-Documentation 0.1.3 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
@@ -22,8 +22,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="使用指南" href="howto.html" />
-    <link rel="prev" title="安装" href="install.html" /> 
+    <link rel="next" title="开发者指南" href="developer.html" />
+    <link rel="prev" title="如何自定义智能体" href="howto_agent.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -87,18 +87,18 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">用户指南</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">快速入门</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#locate-settings">1. 定位设置项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configure-your-mcp">3. 配置您的 MCP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#meet-your-built-in-agents">4. 认识内置智能体</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#global-setting">5. 全局设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">用户指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#getting-started">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#locate-settings">1. 定位设置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-llm">2. 配置大语言模型（LLM）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-mcp">3. 配置您的 MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#meet-your-built-in-agents">4. 认识内置智能体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#global-setting">5. 全局设置</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="howto.html">使用指南</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="howto.html">使用指南</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="howto_llm.html">如何添加额外的大语言模型（LLM）</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter 配置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama 配置</a></li>
@@ -107,10 +107,10 @@
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">如何添加额外的技能（Skills）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_agent.html">如何自定义智能体</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#toggling-context-window-management">3. Toggling Context Window Management</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to config context window</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-configure">2. How to Configure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toggling-context-window-management">3. Toggling Context Window Management</a></li>
 </ul>
 </li>
 </ul>
@@ -148,9 +148,10 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">用户指南</li>
+          <li class="breadcrumb-item"><a href="howto.html">使用指南</a></li>
+      <li class="breadcrumb-item active">How to config context window</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide.rst.txt" rel="nofollow"> 查看页面源码</a>
+            <a href="_sources/howto_ctx.rst.txt" rel="nofollow"> 查看页面源码</a>
       </li>
   </ul>
   <hr/>
@@ -158,71 +159,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="user-guide">
-<h1>用户指南<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
-<section id="getting-started">
-<h2>快速入门<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
-<p>首次安装 <strong>JupyDeep</strong> 后，您需要配置一些设置以启动引擎：</p>
-<section id="locate-settings">
-<h3>1. 定位设置项<a class="headerlink" href="#locate-settings" title="Link to this heading"></a></h3>
-<p>打开 JupyterLab 设置编辑器（Settings Editor），搜索以 <code class="docutils literal notranslate"><span class="pre">jupydeep</span></code> 为前缀的选项。</p>
+  <section id="how-to-config-context-window">
+<h1>How to config context window<a class="headerlink" href="#how-to-config-context-window" title="Link to this heading"></a></h1>
+<p>Most Large Language Models (LLMs) operate within a maximum <strong>context window size</strong>—a limit on the total number of combined
+prompt and response tokens the model can process at once. Depending on the model, this threshold can range from a few thousand
+to millions of tokens.</p>
+<p>In long-running conversations or iterative agent workflows, token consumption accumulates rapidly. If the context window fills up, the agent may encounter errors, lose prior state, or drop critical memory.</p>
+<p>To address this seamlessly, <strong>JupyDeep</strong> allows you to configure the context window size according to the specific characteristics
+and limits of your underlying LLM.</p>
+<section id="key-benefits">
+<h2>1. Key Benefits<a class="headerlink" href="#key-benefits" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Prevents Overflow Errors:</strong> Automatically tracks token usage so long conversations don't exceed model limits.</p></li>
+<li><p><strong>Smart Summarization:</strong> Works alongside JupyDeep's context manager to automatically summarize conversation history upon reaching threshold capacity, powered by the Pydantic AI and DeepAgent frameworks.</p></li>
+<li><p><strong>Real-time Monitoring:</strong> Provides dynamic visibility into active context window utilization within the UI.</p></li>
+</ul>
 </section>
-<section id="configure-your-llm">
-<h3>2. 配置大语言模型（LLM）<a class="headerlink" href="#configure-your-llm" title="Link to this heading"></a></h3>
-<p>智能体引擎需要大语言模型（LLM）后端才能运行。请按照以下配置设置您的模型提供商（例如 OpenAI）（<strong>必填</strong>）。</p>
-<a class="reference internal image-reference" href="_images/jupydeep_llm.png"><img alt="_images/jupydeep_llm.png" class="align-center" src="_images/jupydeep_llm.png" style="width: 676.8000000000001px; height: 601.6px;" />
+<section id="how-to-configure">
+<h2>2. How to Configure<a class="headerlink" href="#how-to-configure" title="Link to this heading"></a></h2>
+<p>You can specify the <cite>context_window</cite> parameter in your LLM settings in JupyDeep:</p>
+<a class="reference internal image-reference" href="_images/context_window_llm.png"><img alt="_images/context_window_llm.png" class="align-center" src="_images/context_window_llm.png" style="width: 626.4000000000001px; height: 956.8000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Each LLM model has a <code class="docutils literal notranslate"><span class="pre">context_window</span></code> parameter, which you can specify by checking the underlying model's technical specifications. For instance, in the above figure, <code class="docutils literal notranslate"><span class="pre">gemma-e4b</span></code> is a local LLM running on a laptop with a configured 60k context window. Conversely, setting context_window to 0 (as shown below for <code class="docutils literal notranslate"><span class="pre">openai/gpt-5.6-luna</span></code> via OpenRouter) enables dynamic auto-detection.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Setting context_window to <cite>0`</cite> enables auto-detection, allowing JupyDeep/Pydantic-deep to dynamically adapt based on
+the model's reported context capacity. If auto-detection fails or is unsupported, it safely falls back to a default
+of 200k tokens.</p>
+</div>
+</section>
+<section id="toggling-context-window-management">
+<h2>3. Toggling Context Window Management<a class="headerlink" href="#toggling-context-window-management" title="Link to this heading"></a></h2>
+<p>As shown in the screenshot below, you can toggle the agent's context window management feature on or off via the Agent Settings panel. Once enabled, the progress bar dynamically displays accumulated token usage as the conversation progresses.</p>
+<p>If you prefer an uncluttered interface, you can disable this feature completely and leave context management to the LLM itself. Most modern LLMs offer sufficient context capacity for small-to-intermediate tasks. However, in scenarios such as local LLM deployments—where context limits are strictly set due to constrained hardware resources—this feature allows you to monitor token consumption in real time and avoid exceeding context limits.</p>
+<a class="reference internal image-reference" href="_images/context_window_agent.png"><img alt="_images/context_window_agent.png" class="align-center" src="_images/context_window_agent.png" style="width: 753.6px; height: 728.8000000000001px;" />
 </a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p>虽然此处以 OpenAI 为例，但您有权访问的任何其他受支持的 LLM 提供商都能完美运行。请参阅 <a class="reference external" href="https://pydantic.dev/docs/ai/api/models/base/">Pydantic AI (KnownModelName 章节)</a> 中列出的可用模型。您还可以配置本地代理——例如在本地机器或网络上运行的 <code class="docutils literal notranslate"><span class="pre">Ollama</span></code>。</p>
+<p>Currently, the history message compaction threshold is set to 0.8 (80%). Once token usage reaches this limit, JupyDeep triggers the LLM to compact earlier history messages, reclaiming valuable context window space.
+You may occasionally notice the usage indicator exceeding 100%. This typically occurs when a long response or large tool output arrives in a single step before the compaction process completes.</p>
+<p>Please refer to the technical documentation of Pydantic Deep Agents <a class="reference external" href="https://vstorm-co.github.io/pydantic-deepagents/advanced/context-management/">Pydantic Deep Agents</a> , and the <a class="reference external" href="https://github.com/vstorm-co/summarization-pydantic-ai">summarization package</a> for further details.</p>
 </div>
-</section>
-<section id="configure-your-mcp">
-<h3>3. 配置您的 MCP<a class="headerlink" href="#configure-your-mcp" title="Link to this heading"></a></h3>
-<p>为了在 Jupyter 工作空间中最大化提高生产力，强烈建议按照以下指南配置 Jupyter MCP（<strong>推荐</strong>）。</p>
-<a class="reference internal image-reference" href="_images/jupydeep_mcp.png"><img alt="_images/jupydeep_mcp.png" class="align-center" src="_images/jupydeep_mcp.png" style="width: 560.8000000000001px; height: 604.8000000000001px;" />
-</a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>请确保 URL 前缀和端口与浏览器地址栏中的内容相匹配。</p>
-</div>
-</section>
-<section id="meet-your-built-in-agents">
-<h3>4. 认识内置智能体<a class="headerlink" href="#meet-your-built-in-agents" title="Link to this heading"></a></h3>
-<p>一旦您的 LLM 连接成功，两个默认智能体将立即加载到您的 <cite>jupydeep.agent</cite> 面板中。</p>
-<a class="reference internal image-reference" href="_images/jupydeep_agent.png"><img alt="_images/jupydeep_agent.png" class="align-center" src="_images/jupydeep_agent.png" style="width: 727.2px; height: 898.4000000000001px;" />
-</a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<ul class="simple">
-<li><p>🐵 <strong>Wu Kong (悟空)：</strong> 专为繁重的代码执行和技术问题解决而设计。</p></li>
-<li><p>🐴 <strong>Monk Tang (唐僧)：</strong> 专为高层级的战术规划和工具编排而设计。</p></li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">小技巧</p>
-<p>您可以轻松定制他们的技能集和能力以满足您的需求。如果智能体没有出现，请尝试刷新页面。</p>
-</div>
-</section>
-<section id="global-setting">
-<h3>5. 全局设置<a class="headerlink" href="#global-setting" title="Link to this heading"></a></h3>
-<p>本部分主要配置引擎和智能体的全局行为。其中包括默认智能体与模型的设置、Token 使用限制、工具调用（tool-call）超时以及后端配置。</p>
-<a class="reference internal image-reference" href="_images/jupydeep_global.png"><img alt="_images/jupydeep_global.png" class="align-center" src="_images/jupydeep_global.png" style="width: 787.5px; height: 588.0px;" />
-</a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>其中部分参数目前仅为占位符，尚未实际实现。</p>
-</div>
-</section>
 </section>
 </section>
 
@@ -230,8 +213,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="install.html" class="btn btn-neutral float-left" title="安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="howto.html" class="btn btn-neutral float-right" title="使用指南" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="howto_agent.html" class="btn btn-neutral float-left" title="如何自定义智能体" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="developer.html" class="btn btn-neutral float-right" title="开发者指南" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

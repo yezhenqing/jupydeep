@@ -6,3 +6,4 @@ How To
    howto_mcp
    howto_skill
    howto_agent
+   howto_ctx

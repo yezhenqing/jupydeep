@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to customize agents &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+  <title>How to config context window &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to config context window" href="howto_ctx.html" />
-    <link rel="prev" title="How to add extra skills" href="howto_skill.html" /> 
+    <link rel="next" title="Developer Guide" href="developer.html" />
+    <link rel="prev" title="How to customize agents" href="howto_agent.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -105,11 +105,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">How to customize agents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#toggling-context-window-management">3. Toggling Context Window Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to customize agents</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to config context window</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-configure">2. How to Configure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toggling-context-window-management">3. Toggling Context Window Management</a></li>
 </ul>
 </li>
 </ul>
@@ -148,9 +148,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="howto.html">How To</a></li>
-      <li class="breadcrumb-item active">How to customize agents</li>
+      <li class="breadcrumb-item active">How to config context window</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/howto_agent.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/howto_ctx.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -158,17 +158,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="how-to-customize-agents">
-<h1>How to customize agents<a class="headerlink" href="#how-to-customize-agents" title="Link to this heading"></a></h1>
-<p><em>This section is a work in progress (WIP) and will be available in an upcoming release.</em></p>
+  <section id="how-to-config-context-window">
+<h1>How to config context window<a class="headerlink" href="#how-to-config-context-window" title="Link to this heading"></a></h1>
+<p>Most Large Language Models (LLMs) operate within a maximum <strong>context window size</strong>—a limit on the total number of combined
+prompt and response tokens the model can process at once. Depending on the model, this threshold can range from a few thousand
+to millions of tokens.</p>
+<p>In long-running conversations or iterative agent workflows, token consumption accumulates rapidly. If the context window fills up, the agent may encounter errors, lose prior state, or drop critical memory.</p>
+<p>To address this seamlessly, <strong>JupyDeep</strong> allows you to configure the context window size according to the specific characteristics
+and limits of your underlying LLM.</p>
+<section id="key-benefits">
+<h2>1. Key Benefits<a class="headerlink" href="#key-benefits" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Prevents Overflow Errors:</strong> Automatically tracks token usage so long conversations don’t exceed model limits.</p></li>
+<li><p><strong>Smart Summarization:</strong> Works alongside JupyDeep’s context manager to automatically summarize conversation history upon reaching threshold capacity, powered by the Pydantic AI and DeepAgent frameworks.</p></li>
+<li><p><strong>Real-time Monitoring:</strong> Provides dynamic visibility into active context window utilization within the UI.</p></li>
+</ul>
+</section>
+<section id="how-to-configure">
+<h2>2. How to Configure<a class="headerlink" href="#how-to-configure" title="Link to this heading"></a></h2>
+<p>You can specify the <cite>context_window</cite> parameter in your LLM settings in JupyDeep:</p>
+<a class="reference internal image-reference" href="_images/context_window_llm.png"><img alt="_images/context_window_llm.png" class="align-center" src="_images/context_window_llm.png" style="width: 626.4000000000001px; height: 956.8000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Each LLM model has a <code class="docutils literal notranslate"><span class="pre">context_window</span></code> parameter, which you can specify by checking the underlying model’s technical specifications. For instance, in the above figure, <code class="docutils literal notranslate"><span class="pre">gemma-e4b</span></code> is a local LLM running on a laptop with a configured 60k context window. Conversely, setting context_window to 0 (as shown below for <code class="docutils literal notranslate"><span class="pre">openai/gpt-5.6-luna</span></code> via OpenRouter) enables dynamic auto-detection.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Setting context_window to <cite>0`</cite> enables auto-detection, allowing JupyDeep/Pydantic-deep to dynamically adapt based on
+the model’s reported context capacity. If auto-detection fails or is unsupported, it safely falls back to a default
+of 200k tokens.</p>
+</div>
+</section>
+<section id="toggling-context-window-management">
+<h2>3. Toggling Context Window Management<a class="headerlink" href="#toggling-context-window-management" title="Link to this heading"></a></h2>
+<p>As shown in the screenshot below, you can toggle the agent’s context window management feature on or off via the Agent Settings panel. Once enabled, the progress bar dynamically displays accumulated token usage as the conversation progresses.</p>
+<p>If you prefer an uncluttered interface, you can disable this feature completely and leave context management to the LLM itself. Most modern LLMs offer sufficient context capacity for small-to-intermediate tasks. However, in scenarios such as local LLM deployments—where context limits are strictly set due to constrained hardware resources—this feature allows you to monitor token consumption in real time and avoid exceeding context limits.</p>
+<a class="reference internal image-reference" href="_images/context_window_agent.png"><img alt="_images/context_window_agent.png" class="align-center" src="_images/context_window_agent.png" style="width: 753.6px; height: 728.8000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the history message compaction threshold is set to 0.8 (80%). Once token usage reaches this limit, JupyDeep triggers the LLM to compact earlier history messages, reclaiming valuable context window space.
+You may occasionally notice the usage indicator exceeding 100%. This typically occurs when a long response or large tool output arrives in a single step before the compaction process completes.</p>
+<p>Please refer to the technical documentation of Pydantic Deep Agents <a class="reference external" href="https://vstorm-co.github.io/pydantic-deepagents/advanced/context-management/">Pydantic Deep Agents</a> , and the <a class="reference external" href="https://github.com/vstorm-co/summarization-pydantic-ai">summarization package</a> for further details.</p>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="howto_skill.html" class="btn btn-neutral float-left" title="How to add extra skills" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="howto_ctx.html" class="btn btn-neutral float-right" title="How to config context window" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="howto_agent.html" class="btn btn-neutral float-left" title="How to customize agents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developer.html" class="btn btn-neutral float-right" title="Developer Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
