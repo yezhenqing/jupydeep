@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Dict, Optional, List, TYPE_CHECKING
 from pydantic import BaseModel, Field, ConfigDict
 
-from pydantic_ai import Agent
+# from pydantic_ai import Agent
+from pydantic_deep import create_deep_agent, DeepAgentDeps, StateBackend
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.settings import ModelSettings
@@ -29,6 +30,12 @@ class LLMModelConfig(BaseModel):
     )
     top_p: float = Field(
         default=0.9, ge=0, le=1.0, description="Nucleus sampling threshold, range 0-1"
+    )
+    context_window: int = Field(
+        default=0,
+        ge=0,
+        le=2000000,
+        description="Maximum token limit for context windown",
     )
 
     llm_api_key: str = Field(default="", alias="api_key", description="API key")
@@ -68,6 +75,9 @@ class LLMComponent(BaseComponent):
 
     def getModel(self, name):
         return self._active_instances.get(name, None)
+
+    def getConfig(self, name):
+        return self._current_settings.get(name, None)
 
     def configure(self):
         if self._is_configured:
@@ -114,6 +124,11 @@ class LLMComponent(BaseComponent):
         )
         return model
 
+    def _context_update(self, name, pct, current, maximum):
+        llm_config = self.getConfig(name)
+        if not llm_config.context_window and maximum:
+            llm_config.context_window = int(maximum)
+
     async def _validate_llm_client(
         self, name: str, model: LLMModelEntity | str
     ) -> bool:
@@ -123,18 +138,44 @@ class LLMComponent(BaseComponent):
         Returns: {'status': bool, 'message': str}
         """
         try:
-            agent = Agent(
+            # agent = Agent(
+            #    model=model,
+            #    output_type=bool,
+            #    system_prompt="You are a connectivity test assistant, return with True or False.",
+            # )
+
+            # Since we are already validating the LLM, we should also capture the context window size at the same time.
+            # wrapped_callback = lambda p, c, m: self._context_update(name, p, c, m)
+            agent = create_deep_agent(
                 model=model,
                 output_type=bool,
                 system_prompt="You are a connectivity test assistant, return with True or False.",
+                context_manager=True,
+                # on_context_update=wrapped_callback,
+                on_context_update=lambda p, c, m: self._context_update(name, p, c, m),
+                # minimal config for rapid testing
+                include_filesystem=False,
+                include_execute=False,
+                include_todo=False,
+                thinking=False,  # Save tokens on subagents
+                include_subagents=False,
+                include_skills=False,
+                include_plan=False,
+                include_teams=False,
+                include_monitoring=False,
+                include_builtin_subagents=False,
+                cost_tracking=False,
+                include_memory=False,
             )
+            deps = DeepAgentDeps(backend=StateBackend())
 
             # Set timeout to avoid infinite blocking
             result = await asyncio.wait_for(
                 agent.run(
-                    "Connection test to LLM available, respond with True if you can connect successfully."
+                    "Please respond rapidly with True if you can connect successfully.",
+                    deps=deps,
                 ),
-                timeout=30.0,
+                timeout=50.0,
             )
 
             if result.output:
@@ -148,7 +189,7 @@ class LLMComponent(BaseComponent):
                 }
 
         except asyncio.TimeoutError:
-            msg = "Validation timeout after 30 seconds"
+            msg = "Validation timeout after 50 seconds"
             logger.error(f"LLM '{name}: ' {msg}")
             return {"status": False, "message": msg}
         except Exception as e:

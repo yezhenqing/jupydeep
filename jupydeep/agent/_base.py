@@ -1,4 +1,5 @@
 import json
+import time
 import asyncio
 from pathlib import Path
 from itertools import chain
@@ -17,16 +18,19 @@ from pydantic_ai import AgentSpec, Agent
 
 from ..engine._base import ConfigLoader
 from ..utils.logging import get_logger
+from ..handlers import get_watcher
+from jupyter_core.utils import run_sync
 
 if TYPE_CHECKING:
     from ..engine import AgentEngine
-
 
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 logger = get_logger(__name__)
+
+watcher = run_sync(get_watcher)()
 
 
 class JupyterDeps(DeepAgentDeps):
@@ -230,7 +234,7 @@ class DeepAgentManager:
 
             # Emit the initialization complete signal over SSE prior to termination
             # await asyncio.sleep(50) # for debug
-            await self._notify_initialization_complete()
+            await self._notify_init_complete()
 
     def deep_enhanced(self, config: AgentConfig):
         _config_dict = config.as_dict()
@@ -239,12 +243,19 @@ class DeepAgentManager:
         llm_model = None
         model_name = _config_dict.get("model", None)
         llm_comp = self._parent.getComponent("llm")
+
         if model_name and model_name in llm_comp.llms:
             llm_model = llm_comp.getModel(model_name)
         else:  # use the default model
             global_hub = self._parent.global_setting_hub
-            if global_hub.default_model:
+            if global_hub.default_model and global_hub.default_model in llm_comp.llms:
                 llm_model = llm_comp.getModel(global_hub.default_model)
+                model_name = global_hub.default_model
+            else:
+                # choose the first one from the available model list
+                if llm_comp.llms:
+                    llm_model = llm_comp.getModel(llm_comp.llms[0])
+                    model_name = llm_comp.llms[0]
         if not llm_model:
             logger.warning(
                 "Not able to create agents due to the lack of available LLM models"
@@ -280,19 +291,58 @@ class DeepAgentManager:
             if skills:
                 toolsets.append(SkillsToolset(skills=skills))
 
-        processor = create_summarization_processor(
-            trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
-            keep=("messages", 20),  # Keep last 20 messages after summarization
-        )
+        # 5. Context manager
+        # Pop out 'context_manager' from _config_dict to build a new replacement ctx_mg_dict
+
+        ctx_setting = _config_dict.pop("context_manager", None)
+        processor = None
+        if ctx_setting:
+            llm_config = llm_comp.getConfig(model_name)
+            ctx_mg_dict = {
+                "context_manager": True,
+                "on_context_update": self._context_update,
+            }
+            if llm_config.context_window:
+                ctx_mg_dict["context_manager_max_tokens"] = llm_config.context_window
+                processor = create_summarization_processor(
+                    model=llm_model,
+                    trigger=("fraction", 0.8),  # trigger by fraction
+                    max_input_tokens=llm_config.context_window,
+                    keep=("messages", 20),  # Keep last 20 messages after summarization
+                )
+            else:
+                processor = create_summarization_processor(
+                    model=llm_model,
+                    trigger=("tokens", 100000),  # Summarize when reaching 100k tokens
+                    keep=("messages", 20),
+                )
+        else:
+            ctx_mg_dict = {"context_manager": False}
+
+        agent_kwargs = {
+            **_config_dict,
+            "model": llm_model,
+            **ctx_mg_dict,
+            "toolsets": toolsets,
+            "include_skills": False,  # set skills through SkillsToolset
+        }
+
+        if processor is not None:
+            agent_kwargs["history_processors"] = [processor]
+
+        _agent = create_deep_agent(**agent_kwargs)
+
+        """
         _agent = create_deep_agent(
             **_config_dict,
             model=llm_model,
+            **ctx_mg_dict,
             toolsets=toolsets,
             # include_skills=True,
             include_skills=False,  # we will set skills through SkillsToolset
             history_processors=[processor],
         )
-
+        """
         _deps = self.build_deps(config.opts)
 
         # @_agent.tool
@@ -398,32 +448,45 @@ class DeepAgentManager:
         self._is_initialized = False
         self._is_configured = False
 
-    async def _notify_initialization_complete(self):
+    async def _notify_init_complete(self):
         """Notify the frontend that the engine initialization is complete."""
-        summary = self._parent.runtime.get_summary()
-        info_obj = summary.model_dump(
-            include={
-                "agents",
-                "usage_limit",
-                "mcps",
-                "llms",
-                "skills",
-                "default_model",
-                "default_agent",
-            }
-        )
-
-        notification_data = {
-            "event": "materialization_complete",
-            "payload": info_obj,
-            "status": "initialized",
+        notify_data = {
+            "event": "agent_spawned",
+            "payload": self._parent.runtime.to_dict(),
+            "status": "agents ready",
         }
 
-        from jupydeep.handlers.engine import watcher
+        # from jupydeep.handlers.engine import watcher
+        # watcher = await get_watcher()
 
-        watcher.last_data = json.dumps(notification_data)
+        watcher.last_data = json.dumps(notify_data)
         watcher.event.set()
 
         # Wait briefly to ensure the SSE connection receives the message
         await asyncio.sleep(0.1)
+        watcher.event.clear()
+
+    def _context_update(self, pct, current, maximum):
+        # print("===context_update:", pct, current, maximum)
+        info_obj = {
+            "pct": 100 * pct,
+            "current": current,
+            "maximum": maximum,
+        }
+
+        notify_data = {
+            "event": "context_updated",
+            "payload": info_obj,
+            "status": "context window updated",
+        }
+
+        # from jupydeep.handlers.engine import watcher
+        # watcher = await get_watcher()
+
+        watcher.last_data = json.dumps(notify_data)
+        watcher.event.set()
+
+        # Wait briefly to ensure the SSE connection receives the message
+        # await asyncio.sleep(0.1)
+        time.sleep(0.1)
         watcher.event.clear()

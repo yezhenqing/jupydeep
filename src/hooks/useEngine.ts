@@ -1,17 +1,27 @@
-import { QueryClient, useQuery } from '@tanstack/react-query';
+import { QueryClient, useQuery, skipToken } from '@tanstack/react-query';
 import { ServerConnection } from '@jupyterlab/services';
 import { URLExt } from '@jupyterlab/coreutils';
+import { useEffect } from 'react';
 
 export const queryClient = new QueryClient();
+
+// Query Keys
+export const ENGINE_QUERY_KEY = ['engineCatalog'];
+export const CONTEXT_QUERY_KEY = ['contextWindow'];
+
 let globalEventSource: EventSource | null = null;
-const ENGINE_QUERY_KEY = ['engineCatalog'];
+let refCount = 0;
+
+const getSettings = () => ServerConnection.makeSettings();
 
 export function setupSSE() {
   if (globalEventSource) {
+    refCount++;
     return;
   }
+  refCount = 1;
 
-  const settings = ServerConnection.makeSettings();
+  const settings = getSettings();
   const sseUrl = URLExt.join(settings.baseUrl, 'jupydeep/engine-sse');
   const urlWithToken = `${sseUrl}?token=${settings.token}`;
 
@@ -19,15 +29,42 @@ export function setupSSE() {
 
   globalEventSource.onopen = () => {
     queryClient.invalidateQueries({ queryKey: ENGINE_QUERY_KEY });
+    queryClient.invalidateQueries({ queryKey: CONTEXT_QUERY_KEY });
   };
 
   globalEventSource.onmessage = event => {
     try {
-      const newData = JSON.parse(event.data);
-      queryClient.setQueryData(ENGINE_QUERY_KEY, (old: any) => ({
-        ...old,
-        ...newData
-      }));
+      const message = JSON.parse(event.data);
+      // console.log("SSE message:", message)
+      const eventType = message.event;
+      const payload = message.payload;
+      switch (eventType) {
+        case 'context_updated':
+          if (payload) {
+            queryClient.setQueryData(CONTEXT_QUERY_KEY, (old: any) => ({
+              ...old,
+              ...payload
+            }));
+          }
+          break;
+
+        case 'catalog_updated':
+        case 'agent_spawned':
+          if (payload) {
+            queryClient.setQueryData(ENGINE_QUERY_KEY, (old: any) => ({
+              ...old,
+              ...payload,
+              agents: payload.agents ?? old?.agents ?? {}
+            }));
+          } else {
+            queryClient.invalidateQueries({ queryKey: ENGINE_QUERY_KEY });
+          }
+          break;
+
+        default:
+          queryClient.invalidateQueries({ queryKey: ENGINE_QUERY_KEY });
+          break;
+      }
     } catch (err) {
       console.error('JupyDeep SSE data parse error:', err);
     }
@@ -39,16 +76,22 @@ export function setupSSE() {
 }
 
 export function closeSSE() {
-  if (globalEventSource) {
+  refCount--;
+  if (refCount <= 0 && globalEventSource) {
     globalEventSource.onmessage = null;
     globalEventSource.onerror = null;
     globalEventSource.close();
     globalEventSource = null;
+    refCount = 0;
   }
 }
 
+// ============================================================================
+// API Fetchers
+// ============================================================================
+
 export const fetchEngine = async () => {
-  const settings = ServerConnection.makeSettings();
+  const settings = getSettings();
   const fetchUrl = URLExt.join(settings.baseUrl, 'jupydeep/catalog');
 
   const response = await ServerConnection.makeRequest(
@@ -61,17 +104,45 @@ export const fetchEngine = async () => {
     throw new Error('JupyDeep: Unable to get server configuration');
   }
 
-  const result = await response.json();
-  return result;
+  return await response.json();
 };
 
+// ============================================================================
+// Custom React Hooks
+// ============================================================================
+
 export function useEngineCatalog() {
-  setupSSE();
+  useEffect(() => {
+    setupSSE();
+    return () => closeSSE();
+  }, []);
 
   return useQuery({
     queryKey: ENGINE_QUERY_KEY,
     queryFn: fetchEngine,
     staleTime: Infinity,
+    refetchOnMount: 'always',
     refetchOnWindowFocus: true
+  });
+}
+
+export interface IContextWindowData {
+  current?: number;
+  pct?: number;
+  maximum?: number;
+}
+
+export function useContextWindow() {
+  useEffect(() => {
+    setupSSE();
+    return () => closeSSE();
+  }, []);
+
+  return useQuery<IContextWindowData>({
+    queryKey: CONTEXT_QUERY_KEY,
+    // No REST API to fetch data; entirely written externally via SSE from server.
+    // purely push mode
+    queryFn: skipToken,
+    staleTime: Infinity
   });
 }
