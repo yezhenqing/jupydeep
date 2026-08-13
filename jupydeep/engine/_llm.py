@@ -189,7 +189,7 @@ class LLMComponent(BaseComponent):
                 }
 
         except asyncio.TimeoutError:
-            msg = "Validation timeout after 30 seconds"
+            msg = "Validation timeout after 50 seconds"
             logger.error(f"LLM '{name}: ' {msg}")
             return {"status": False, "message": msg}
         except Exception as e:
