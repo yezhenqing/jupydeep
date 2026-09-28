@@ -24,6 +24,12 @@ from ..utils.logging import get_logger
 logger = get_logger(__name__)
 
 
+SSE_DONE = "data: [DONE]\n\n"
+TRIGGER_SUBMIT = "submit-message"
+TRIGGER_REGENERATE = "regenerate-message"
+VALID_TRIGGERS = {TRIGGER_SUBMIT, TRIGGER_REGENERATE}
+
+
 class DataEventType(Enum):
     """Data event types - output to frontend"""
 
@@ -51,10 +57,10 @@ class DataEvent:
     def to_sse(self) -> str:
         payload = json.dumps(
             {
-                'type': self.type.value,
-                'message': self.message,
-                'sequence': self.sequence,
-                'metadata': self.metadata,
+                "type": self.type.value,
+                "message": self.message,
+                "sequence": self.sequence,
+                "metadata": self.metadata,
             }
         )
         return f"data: {payload}\n\n"
@@ -92,6 +98,8 @@ class ChatStreamHandler(APIHandler):
             request_limit=global_setting.request_limit,
             total_tokens_limit=global_setting.total_tokens_limit,
         )
+        self.agent_id: str | None = None
+        self.session_id: str | None = None
 
     def set_default_headers(self):
         """Set SSE response headers"""
@@ -112,26 +120,42 @@ class ChatStreamHandler(APIHandler):
                 self._send_error("Empty request body", 400)
                 return
 
-            data = json.loads(self.request.body)
-            agent_id = data.get("agent_id")
+            data = json.loads(body)
+        except json.JSONDecodeError as e:
+            logger.warning("Invalid JSON body: %s", e)
+            self._send_error("Invalid JSON body", 400)
+            return
+
+        agent_id = data.get("agent_id") or self.agent_id
+        self.agent_id = agent_id
+        self.session_id = data.get("session_id") or self.session_id
+        if not agent_id:
+            self._send_error("Missing agent_id", 400)
+            return
+
+        try:
             _agent, _deps = self._engine._deep_agent_manager.getAgentAndDeps(agent_id)
-
-            tornado_request = TornadoVercelBridge(self.request)
-
-            try:
-                adapter = await VercelAIAdapter.from_request(
-                    tornado_request, agent=_agent, sdk_version=6
-                )
-            except ValidationError as v_err:
-                logger.warning(f"Protocol Validation Failed: {v_err}")
-                self._send_error("Invalid Vercel AI protocol format", 422)
-                return
-
-            await self._run_adapter_stream(adapter, _deps)
         except Exception as e:
-            logger.exception(f"Unexpected error: {e}")
-            if not self.handler_finished:
-                self._send_error(str(e), 500)
+            logger.exception("Unknown agent_id=%s: %s", agent_id, e)
+            self._send_error("Unknown agent_id", 404)
+            return
+
+        tornado_request = TornadoVercelBridge(self.request)
+
+        try:
+            adapter = await VercelAIAdapter.from_request(
+                tornado_request, agent=_agent, sdk_version=6
+            )
+        except ValidationError as v_err:
+            logger.warning(f"Protocol Validation Failed: {v_err}")
+            self._send_error("Invalid Vercel AI protocol format", 422)
+            return
+        except Exception as e:
+            logger.exception("Failed to build adapter: %s", e)
+            self._send_error("Failed to build adapter", 400)
+            return
+
+        await self._run_adapter_stream(adapter, _deps)
 
     async def _run_adapter_stream(self, adapter: VercelAIAdapter, deps: JupyterDeps):
         """
@@ -179,15 +203,23 @@ class ChatStreamHandler(APIHandler):
                 logger.warning("No chunks were generated from the adapter stream.")
 
             # Send termination signal according to Vercel specification
-            self.write("data: [DONE]\n\n")
+            self.write(SSE_DONE)
             await self.flush()
         except tornado.iostream.StreamClosedError:
-            logger.warning("Client disconnected during streaming")
+            logger.info(
+                "Client disconnected during streaming: agent_id=%s", self.agent_id
+            )
+
         except Exception as e:
             logger.exception(f"Streaming error in _run_adapter_stream: {e}")
             # If not finished yet, try to send error message
             if not self._finished:
-                self.write(f'data: {{"error": "{str(e)}"}}\n\n')
+                # self.write(f'data: {{"error": "{str(e)}"}}\n\n')
+                payload = json.dumps(
+                    {"type": "error", "error": str(e)},
+                    ensure_ascii=False,
+                )
+                self.write(f"data: {payload}\n\n")
                 await self.flush()
 
     def _send_sse_event(self, event: DataEvent):

@@ -144,3 +144,9 @@ coverage/
 logs/
 tutorials/
 temp.txt
+
+*.pdf
+eng.traineddata
+
+
+.agents
