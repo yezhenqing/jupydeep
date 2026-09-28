@@ -148,7 +148,7 @@ class LLMComponent(BaseComponent):
             # wrapped_callback = lambda p, c, m: self._context_update(name, p, c, m)
             agent = create_deep_agent(
                 model=model,
-                output_type=bool,
+                # output_type=bool,
                 system_prompt="You are a connectivity test assistant, return with True or False.",
                 context_manager=True,
                 # on_context_update=wrapped_callback,

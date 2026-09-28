@@ -2438,7 +2438,7 @@ requires-dist = [
     { name = "jupyter-ydoc", specifier = ">=3.5.0" },
     { name = "jupyterlab", specifier = ">=4.5.8" },
     { name = "matplotlib", specifier = ">=3.10.8" },
-    { name = "mcp", specifier = ">=1.27.0" },
+    { name = "mcp", specifier = ">=1.27.0,<2" },
     { name = "pre-commit", specifier = ">=4.6.0" },
     { name = "pydantic-ai", specifier = ">=2.26.0" },
     { name = "pydantic-deep", extras = ["all", "liteparse"], specifier = ">=0.3.43" },
