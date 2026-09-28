@@ -106,7 +106,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">如何添加额外的技能（Skills）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">如何自定义智能体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -169,7 +174,7 @@
 <p>请确保您已安装 <code class="docutils literal notranslate"><span class="pre">uv</span></code>。如果尚未安装，请参考 <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">uv 安装指南</a>。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>tutorial
 <span class="gp">$ </span>uv<span class="w"> </span>init
-<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span>
+<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">"jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"</span>
 </pre></div>
 </div>
 <p>然后只需按如下方式启动 JupyterLab：</p>
@@ -183,7 +188,7 @@
 <p>对于 <code class="docutils literal notranslate"><span class="pre">conda</span></code>，您可以创建一个新环境，然后在该环境中通过 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 安装 JupyDeep。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>jupydeep<span class="w"> </span>jupyterlab
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>jupydeep
-<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
+<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"</span><span class="w"> </span>jupydeep
 </pre></div>
 </div>
 <div class="admonition note">

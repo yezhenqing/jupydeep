@@ -109,7 +109,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_skill.html">如何添加额外的技能（Skills）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">如何自定义智能体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -217,16 +222,16 @@
 
 <span class="c1"># Constants / file paths</span>
 <span class="n">UBIQUITIN_SEQ</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG&quot;</span>
+    <span class="s2">"MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG"</span>
 <span class="p">)</span>
 
-<span class="n">PRED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_openfold3.pdb&quot;</span><span class="p">)</span>
-<span class="n">REF_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_reference.pdb&quot;</span><span class="p">)</span>
-<span class="n">ALIGNED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ubiquitin_openfold3_aligned.pdb&quot;</span><span class="p">)</span>
+<span class="n">PRED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"ubiquitin_openfold3.pdb"</span><span class="p">)</span>
+<span class="n">REF_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"ubiquitin_reference.pdb"</span><span class="p">)</span>
+<span class="n">ALIGNED_PDB</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"ubiquitin_openfold3_aligned.pdb"</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sequence length:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">UBIQUITIN_SEQ</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Working directory:&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Will write:&quot;</span><span class="p">,</span> <span class="n">PRED_PDB</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sequence length:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">UBIQUITIN_SEQ</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Working directory:"</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Will write:"</span><span class="p">,</span> <span class="n">PRED_PDB</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -272,7 +277,7 @@ Will write: ubiquitin_openfold3.pdb ubiquitin_reference.pdb ubiquitin_openfold3_
 </ul>
 <p>It writes the first returned structure sample to <code class="docutils literal notranslate"><span class="pre">ubiquitin_openfold3.pdb</span></code>.</p>
 <p>If you do not have an API key, set it in the environment before running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">NGC_API_KEY</span><span class="o">=</span><span class="s1">&#39;...&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">NGC_API_KEY</span><span class="o">=</span><span class="s1">'...'</span>
 </pre></div>
 </div>
 <div class="nbinput docutils container">
@@ -280,39 +285,39 @@ Will write: ubiquitin_openfold3.pdb ubiquitin_reference.pdb ubiquitin_openfold3_
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">predict_ubiquitin_openfold3</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">out_pdb</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">diffusion_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Call hosted OpenFold3 and save the first returned structure as PDB.</span>
+<span class="w">    </span><span class="sd">"""Call hosted OpenFold3 and save the first returned structure as PDB.</span>
 
 <span class="sd">    Returns the full JSON response (parsed).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Validate API key presence (do not print its value)</span>
-    <span class="k">if</span> <span class="s2">&quot;NGC_API_KEY&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;NGC_API_KEY&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">"NGC_API_KEY"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"NGC_API_KEY"</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
         <span class="k">raise</span> <span class="ne">EnvironmentError</span><span class="p">(</span>
-            <span class="s2">&quot;NGC_API_KEY is not set. Please export NGC_API_KEY in your environment to call the hosted API.&quot;</span>
+            <span class="s2">"NGC_API_KEY is not set. Please export NGC_API_KEY in your environment to call the hosted API."</span>
         <span class="p">)</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://health.api.nvidia.com/v1/biology/openfold/openfold3/predict&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://health.api.nvidia.com/v1/biology/openfold/openfold3/predict"</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NGC_API_KEY&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+        <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'NGC_API_KEY'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="c1"># Minimal payload with an explicit single-sequence A3M MSA (works as a smoke-test MSA)</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"inputs"</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
-                <span class="s2">&quot;input_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ubiquitin&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;output_format&quot;</span><span class="p">:</span> <span class="s2">&quot;pdb&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;molecules&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">"input_id"</span><span class="p">:</span> <span class="s2">"ubiquitin"</span><span class="p">,</span>
+                <span class="s2">"output_format"</span><span class="p">:</span> <span class="s2">"pdb"</span><span class="p">,</span>
+                <span class="s2">"molecules"</span><span class="p">:</span> <span class="p">[</span>
                     <span class="p">{</span>
-                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;protein&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;sequence&quot;</span><span class="p">:</span> <span class="n">sequence</span><span class="p">,</span>
-                        <span class="s2">&quot;diffusion_samples&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">diffusion_samples</span><span class="p">),</span>
-                        <span class="s2">&quot;msa&quot;</span><span class="p">:</span> <span class="p">{</span>
-                            <span class="s2">&quot;main&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s2">&quot;a3m&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                    <span class="s2">&quot;alignment&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&gt;query</span><span class="se">\n</span><span class="si">{</span><span class="n">sequence</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;a3m&quot;</span><span class="p">,</span>
+                        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"protein"</span><span class="p">,</span>
+                        <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span>
+                        <span class="s2">"sequence"</span><span class="p">:</span> <span class="n">sequence</span><span class="p">,</span>
+                        <span class="s2">"diffusion_samples"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">diffusion_samples</span><span class="p">),</span>
+                        <span class="s2">"msa"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"main"</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">"a3m"</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">"alignment"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"&gt;query</span><span class="se">\n</span><span class="si">{</span><span class="n">sequence</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                                    <span class="s2">"format"</span><span class="p">:</span> <span class="s2">"a3m"</span><span class="p">,</span>
                                 <span class="p">}</span>
                             <span class="p">}</span>
                         <span class="p">},</span>
@@ -329,35 +334,35 @@ Will write: ubiquitin_openfold3.pdb ubiquitin_reference.pdb ubiquitin_openfold3_
             <span class="n">err</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">err</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OpenFold3 request failed: HTTP </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"OpenFold3 request failed: HTTP </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="c1"># Extract the first sample structure</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"outputs"</span><span class="p">,</span> <span class="p">[])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No outputs in response keys=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No outputs in response keys=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">structures</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structures_with_scores&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">structures</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"structures_with_scores"</span><span class="p">,</span> <span class="p">[])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">structures</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No structures_with_scores returned by OpenFold3&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No structures_with_scores returned by OpenFold3"</span><span class="p">)</span>
 
     <span class="n">sample0</span> <span class="o">=</span> <span class="n">structures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">fmt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;pdb&quot;</span><span class="p">)</span>
-    <span class="n">structure_txt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structure&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"format"</span><span class="p">,</span> <span class="s2">"pdb"</span><span class="p">)</span>
+    <span class="n">structure_txt</span> <span class="o">=</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"structure"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">structure_txt</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Returned structure is empty&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Returned structure is empty"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">fmt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;pdb&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected PDB output but got format=</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fmt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">"pdb"</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected PDB output but got format=</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">out_pdb</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">structure_txt</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">out_pdb</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">structure_txt</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
 
     <span class="c1"># Print a compact confidence summary (not required, but helpful)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved:&quot;</span><span class="p">,</span> <span class="n">out_pdb</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Saved:"</span><span class="p">,</span> <span class="n">out_pdb</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span>
-        <span class="s2">&quot;Scores:&quot;</span><span class="p">,</span>
-        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;confidence_score&quot;</span><span class="p">,</span> <span class="s2">&quot;complex_plddt_score&quot;</span><span class="p">,</span> <span class="s2">&quot;ptm_score&quot;</span><span class="p">,</span> <span class="s2">&quot;iptm_score&quot;</span><span class="p">,</span> <span class="s2">&quot;complex_pde_score&quot;</span><span class="p">]},</span>
+        <span class="s2">"Scores:"</span><span class="p">,</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sample0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"confidence_score"</span><span class="p">,</span> <span class="s2">"complex_plddt_score"</span><span class="p">,</span> <span class="s2">"ptm_score"</span><span class="p">,</span> <span class="s2">"iptm_score"</span><span class="p">,</span> <span class="s2">"complex_pde_score"</span><span class="p">]},</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">result</span>
@@ -366,11 +371,11 @@ Will write: ubiquitin_openfold3.pdb ubiquitin_reference.pdb ubiquitin_openfold3_
 <span class="k">if</span> <span class="ow">not</span> <span class="n">PRED_PDB</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="n">_openfold3_response</span> <span class="o">=</span> <span class="n">predict_ubiquitin_openfold3</span><span class="p">(</span><span class="n">UBIQUITIN_SEQ</span><span class="p">,</span> <span class="n">PRED_PDB</span><span class="p">,</span> <span class="n">diffusion_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PRED_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping OpenFold3 call.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">PRED_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping OpenFold3 call."</span><span class="p">)</span>
     <span class="n">_openfold3_response</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="c1"># Quick sanity check: first few lines</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PRED_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PRED_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
 <br/></pre></div>
 </div>
 </div>
@@ -396,19 +401,19 @@ ATOM      5  CB  MET A   1       1.329  -6.896   9.962  1.00 78.16           C
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download 1UBQ from RCSB</span>
-<span class="n">pdb_id</span> <span class="o">=</span> <span class="s2">&quot;1UBQ&quot;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://files.rcsb.org/download/</span><span class="si">{</span><span class="n">pdb_id</span><span class="si">}</span><span class="s2">.pdb&quot;</span>
+<span class="n">pdb_id</span> <span class="o">=</span> <span class="s2">"1UBQ"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.rcsb.org/download/</span><span class="si">{</span><span class="n">pdb_id</span><span class="si">}</span><span class="s2">.pdb"</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">REF_PDB</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
     <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-    <span class="n">REF_PDB</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved:&quot;</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">)</span>
+    <span class="n">REF_PDB</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Saved:"</span><span class="p">,</span> <span class="n">REF_PDB</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">REF_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping download.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">REF_PDB</span><span class="si">}</span><span class="s2"> already exists; skipping download."</span><span class="p">)</span>
 
 <span class="c1"># Quick sanity check</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">REF_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">REF_PDB</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]))</span>
 <br/></pre></div>
 </div>
 </div>
@@ -445,19 +450,19 @@ COMPND   3 CHAIN: A;
 <span class="n">u_mob</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PRED_PDB</span><span class="p">))</span>
 
 <span class="c1"># Select common C-alpha atoms</span>
-<span class="n">sel</span> <span class="o">=</span> <span class="s2">&quot;protein and name CA&quot;</span>
+<span class="n">sel</span> <span class="o">=</span> <span class="s2">"protein and name CA"</span>
 <span class="n">ref_ca</span> <span class="o">=</span> <span class="n">u_ref</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
 <span class="n">mob_ca</span> <span class="o">=</span> <span class="n">u_mob</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reference CA atoms:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mobile CA atoms:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Reference CA atoms:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Mobile CA atoms:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">))</span>
 
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;C-alpha selection returned 0 atoms; check input PDBs.&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"C-alpha selection returned 0 atoms; check input PDBs."</span><span class="p">)</span>
 
 <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">))</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_ca</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mob_ca</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: CA atom counts differ; aligning first </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> atoms.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Warning: CA atom counts differ; aligning first </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> atoms."</span><span class="p">)</span>
 
 <span class="c1"># AlignTraj modifies the mobile coordinates in memory.</span>
 <span class="c1"># We set in_memory=True to avoid writing a trajectory.</span>
@@ -473,11 +478,11 @@ COMPND   3 CHAIN: A;
 
 <span class="c1"># Compute RMSD after alignment (single frame) using the matched CA sets</span>
 <span class="n">rmsd_after</span> <span class="o">=</span> <span class="n">rms</span><span class="o">.</span><span class="n">rmsd</span><span class="p">(</span><span class="n">mob_ca</span><span class="o">.</span><span class="n">positions</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ref_ca</span><span class="o">.</span><span class="n">positions</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">superposition</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final RMSD (CA, Å): </span><span class="si">{</span><span class="n">rmsd_after</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final RMSD (CA, Å): </span><span class="si">{</span><span class="n">rmsd_after</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Save aligned mobile structure (now in reference frame)</span>
 <span class="n">u_mob</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ALIGNED_PDB</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved aligned PDB:&quot;</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Saved aligned PDB:"</span><span class="p">,</span> <span class="n">ALIGNED_PDB</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -531,19 +536,19 @@ Saved aligned PDB: ubiquitin_openfold3_aligned.pdb
 <span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Component indices: 0 -&gt; reference, 1 -&gt; aligned prediction</span>
-<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">&quot;protein&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">&quot;protein&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">"protein"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_cartoon</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s2">"protein"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Center/zoom for optimal viewing</span>
 <span class="n">view</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
 
-<span class="c1"># Different nglview versions expose different helpers; fall back to NGL&#39;s autoView.</span>
-<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;zoom_to&quot;</span><span class="p">):</span>
+<span class="c1"># Different nglview versions expose different helpers; fall back to NGL's autoView.</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">"zoom_to"</span><span class="p">):</span>
     <span class="n">view</span><span class="o">.</span><span class="n">zoom_to</span><span class="p">()</span>
-<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;zoom&quot;</span><span class="p">):</span>
+<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">"zoom"</span><span class="p">):</span>
     <span class="n">view</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
-<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">&quot;_remote_call&quot;</span><span class="p">):</span>
-    <span class="n">view</span><span class="o">.</span><span class="n">_remote_call</span><span class="p">(</span><span class="s2">&quot;autoView&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s2">"_remote_call"</span><span class="p">):</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">_remote_call</span><span class="p">(</span><span class="s2">"autoView"</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -562,8 +567,8 @@ Saved aligned PDB: ubiquitin_openfold3_aligned.pdb
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="s1">&#39;100%&#39;</span>
-<span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="s1">&#39;500px&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="s1">'100%'</span>
+<span class="n">view</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="s1">'500px'</span>
 <span class="n">view</span>
 </pre></div>
 </div>
@@ -591,9 +596,9 @@ Saved aligned PDB: ubiquitin_openfold3_aligned.pdb
         <span class="n">img_bytes</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">_image_data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">img_bytes</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">_image_data</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">img_bytes</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">))</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">img_bytes</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">"100%"</span><span class="p">))</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Image data not populated. Please re-run this cell.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: Image data not populated. Please re-run this cell."</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

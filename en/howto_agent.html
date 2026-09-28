@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to customize agents &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+  <title>How to Customize Agents &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
@@ -105,7 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">How to customize agents</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -148,7 +153,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="howto.html">How To</a></li>
-      <li class="breadcrumb-item active">How to customize agents</li>
+      <li class="breadcrumb-item active">How to Customize Agents</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/howto_agent.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -159,8 +164,94 @@
            <div itemprop="articleBody">
              
   <section id="how-to-customize-agents">
-<h1>How to customize agents<a class="headerlink" href="#how-to-customize-agents" title="Link to this heading"></a></h1>
-<p><em>This section is a work in progress (WIP) and will be available in an upcoming release.</em></p>
+<h1>How to Customize Agents<a class="headerlink" href="#how-to-customize-agents" title="Link to this heading"></a></h1>
+<p>JupyDeep is flexible, allowing you to create your own agents by defining custom agent specifications. This gives you the freedom and convenience to tailor AI assistants for specific roles—such as Data Scientist, Bioinformatics Specialist, or Code Reviewer—and equip them with dedicated tools, specialized system prompts, and custom execution contexts.</p>
+<p>In this section, we will demonstrate how to set up your own customized agent and decorate it with tools and skills to automate complex analytical workflows.</p>
+<section id="key-benefits">
+<h2>1. Key Benefits<a class="headerlink" href="#key-benefits" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Tailored Domain Expertise</strong>: Focus the agent’s system prompts on specific domains (e.g., Single-Cell RNA-seq, Machine Learning, structural modeling) for higher precision and reduced hallucinations.</p></li>
+<li><p><strong>Seamless Tool Integration</strong>: Bind custom tools and skills directly to the agent using declarative definitions or Pydantic schemas.</p></li>
+<li><p><strong>Role-Based Context Management</strong>: Isolate different workflows into distinct agent configurations, preserving task clarity and prompt history.</p></li>
+<li><p><strong>Sub-Agent Composition</strong> <em>(Under Active Development)</em>: Hierarchically compose multiple specialized sub-agents to tackle complex multi-step workflows through coordinated task delegation.</p></li>
+</ul>
+</section>
+<section id="core-architecture-of-a-custom-agent">
+<h2>2. Core Architecture of a Custom Agent<a class="headerlink" href="#core-architecture-of-a-custom-agent" title="Link to this heading"></a></h2>
+<p>JupyDeep leverages a declarative Agent Specification (<cite>AgentSpec</cite>), which directly adheres to the <a class="reference external" href="https://pydantic.dev/docs/ai/core-concepts/agent-spec/">PydanticAI Agent Spec</a> architecture. A custom agent spec brings together four core building blocks:</p>
+<ol class="arabic simple">
+<li><p><strong>Identity &amp; Model Selection (`name`, `description`, `model`)</strong>
+Defines the agent’s unique name (e.g., <code class="docutils literal notranslate"><span class="pre">Wu</span> <span class="pre">Kong</span></code>), description, and the LLM endpoint (e.g., <code class="docutils literal notranslate"><span class="pre">openai:gpt-5.2</span></code>, <code class="docutils literal notranslate"><span class="pre">ollama/qwen2.5-coder:32b</span></code>, or local GGUF models).</p></li>
+<li><p><strong>System Instructions &amp; Roles (`instructions`)</strong>
+Defines the agent’s system prompt, core responsibilities, workflow patterns, and technical constraints. It sets the agent’s persona and rules for interacting with notebooks or executing tasks.</p></li>
+<li><p><strong>Capabilities &amp; Runtime Controls (`capabilities`)</strong>
+Configures execution capabilities and model-level reasoning parameters—such as enabling native extended thinking mode (e.g., <code class="docutils literal notranslate"><span class="pre">thinking:</span> <span class="pre">effort:</span> <span class="pre">high</span></code>)—or configuring kernel execution contexts.</p></li>
+<li><p><strong>Tools &amp; Execution Bindings (`tools` &amp; MCP Integration)</strong>
+Binds functional skills to the agent. This includes native PydanticAI function tools, runtime dependency injections, or external tool protocols like Jupyter Model Context Protocol (MCP) tools for cell insertion, code execution, and file management.</p></li>
+</ol>
+</section>
+<section id="step-by-step-guide-creating-your-first-custom-agent">
+<h2>3. Step-by-Step Guide: Creating Your First Custom Agent<a class="headerlink" href="#step-by-step-guide-creating-your-first-custom-agent" title="Link to this heading"></a></h2>
+<section id="step-3-1-define-the-agent-specification-file">
+<h3>Step 3.1: Define the Agent Specification File<a class="headerlink" href="#step-3-1-define-the-agent-specification-file" title="Link to this heading"></a></h3>
+<p>JupyDeep automatically discovers custom agents by scanning for specification files within your active Jupyter workspace directory. To create a custom agent, first ensure the <strong>`.agents/agent_specs/`</strong> subdirectory exists in your workspace root, and then create a YAML specification file inside it (e.g., <cite>.agents/agent_specs/bailongma.yaml</cite>).</p>
+<p>Below is an example of an Agent Specification file defining a Document-Parsing Assistant:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"BaiLongMa"</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Document</span><span class="nv"> </span><span class="s">Processing</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">Multimodal</span><span class="nv"> </span><span class="s">Parsing</span><span class="nv"> </span><span class="s">Specialist</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">JupyDeep"</span>
+<span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">"ollama/qwen3.8"</span>
+
+<span class="nt">capabilities</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thinking</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">effort</span><span class="p">:</span><span class="w"> </span><span class="s">"medium"</span>
+
+<span class="nt">instructions</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no"># Role: Document Parsing &amp; Intelligence Specialist</span>
+<span class="w">  </span><span class="no">Your name is BaiLongMa. You are an expert document processing assistant designed to ingest, parse, interpret, and organize complex documents for JupyDeep users.</span>
+
+<span class="w">  </span><span class="no">## Core Responsibilities</span>
+<span class="w">  </span><span class="no">1. **Document Parsing**: Utilize the `liteparse` skill to extract clean text, tables, structural hierarchies, and metadata from multi-format documents (PDFs, Markdown, DOCX, HTML).</span>
+<span class="w">  </span><span class="no">2. **Content Interpretation**: Summarize long-form research papers, technical reports, and documentation into structured, easy-to-digest key takeaways.</span>
+<span class="w">  </span><span class="no">3. **Structural Organization**: Restructure unstructured notes into standardized formats (e.g., Markdown tables, JSON schemas, or RST documentation blocks).</span>
+<span class="w">  </span><span class="no">4. **Context-Aware Assistance**: Help users query document contents accurately, citing relevant sections and preventing halluctions.</span>
+
+<span class="w">  </span><span class="no">## Workflow Pattern</span>
+<span class="w">  </span><span class="no">1. **Ingest &amp; Parse**: Parse target document sources using `liteparse` to obtain structured representations.</span>
+<span class="w">  </span><span class="no">2. **Extract &amp; Clean**: Filter out noise, boilerplate, and irrelevant artifacts while preserving critical data and formulas.</span>
+<span class="w">  </span><span class="no">3. **Synthesize**: Present key insights, structured summaries, or visual table summaries clearly in notebook cells.</span>
+
+<span class="w">  </span><span class="no">## Tone &amp; Style</span>
+<span class="w">  </span><span class="no">Meticulous, structured, and insightful. Present information clearly with explicit citations and logical bullet points.</span>
+</pre></div>
+</div>
+<p>Suppose you are going to launch JupyterLab with JupyDeep using the following command, setting your workspace root directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab<span class="w"> </span>--ip<span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span>--no-browser<span class="w"> </span>--notebook-dir<span class="o">=</span><span class="s2">"/home/yezhq/workspace"</span>
+</pre></div>
+</div>
+<p>To ensure JupyDeep automatically discovers your custom agent, create and save the YAML specification file into your workspace’s specification directory <strong>before</strong> launching JupyterLab:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/home/yezhq/workspace/.agents/agent_specs/bailongma.yaml
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Agent specifications are registered during server initialization. If you add or modify a spec file while JupyterLab is already running, you will need to restart the Jupyter server for JupyDeep to detect the changes.</p>
+</div>
+</section>
+<section id="step-3-2-register-tools-and-skills">
+<h3>Step 3.2: Register Tools and Skills<a class="headerlink" href="#step-3-2-register-tools-and-skills" title="Link to this heading"></a></h3>
+<p>Once the YAML specification file is saved in the directory above, launch JupyterLab. Your newly created custom agent will be automatically detected and made available in the JupyDeep settings panel (<code class="docutils literal notranslate"><span class="pre">Settings</span> <span class="pre">-&gt;</span> <span class="pre">JupyDeep</span> <span class="pre">Agents</span></code>), as shown below:</p>
+<a class="reference internal image-reference" href="_images/custom_agent.png"><img alt="_images/custom_agent.png" class="align-center" src="_images/custom_agent.png" style="width: 895.5px; height: 695.7px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>In addition to system instructions, you can attach specific skills and capabilities to your custom agent by enabling or disabling them in the JupyDeep settings panel. For instance, because <strong>BaiLongMa</strong> is tailored for document processing, enabling the <code class="docutils literal notranslate"><span class="pre">liteparse</span></code> capability—as shown in the figure below—arms the agent with multi-format parsing tools.</p>
+<p>Once configured, you can direct the agent to any document within your workspace (e.g., a PDF research paper) and prompt it to parse, structure, or summarize its content. Furthermore, you can significantly enhance your agent’s capabilities by adding custom tools and extensions. For more details, see <a class="reference internal" href="howto_skill.html#how-to-add-extra-skills"><span class="std std-ref">How to Add Extra Skills</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A hands-on, step-by-step demonstration featuring PDF parsing workflows will soon be available in the <strong>JupyDeep Gallery</strong> <em>(currently under preparation)</em>.</p>
+</div>
+</section>
+</section>
 </section>
 
 

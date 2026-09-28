@@ -106,7 +106,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">如何添加额外的 MCP 服务器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">如何添加额外的技能（Skills）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">如何自定义智能体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -178,7 +183,7 @@
 <p>对于 macOS 和 Windows 用户，请参考相关的在线文档来设置这些平台上的环境变量。</p>
 </div>
 <p>以 Ubuntu 为例，运行以下命令将变量追加到您的配置文件中：</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export OPENROUTER_API_KEY=&lt;your_api_key&gt;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"export OPENROUTER_API_KEY=&lt;your_api_key&gt;"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
 <span class="gp"># </span>Verify<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>was<span class="w"> </span>added<span class="w"> </span>correctly
 <span class="gp">$ </span>tail<span class="w"> </span>~/.bashrc
 <span class="gp">$ </span><span class="nb">source</span><span class="w"> </span>~/.bashrc

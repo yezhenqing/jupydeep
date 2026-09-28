@@ -105,7 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to customize agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -179,7 +184,7 @@ Follow the guidelines to fill in the required information.</p>
 <p>For macOS and Windows, please consult the relevant online documentation to set up environment variables on those platforms.</p>
 </div>
 <p>Using Ubuntu as an example, run the following commands to append the variable to your profile:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export OPENROUTER_API_KEY=&lt;your_api_key&gt;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"export OPENROUTER_API_KEY=&lt;your_api_key&gt;"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
 <span class="gp"># </span>Verify<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>was<span class="w"> </span>added<span class="w"> </span>correctly
 <span class="gp">$ </span>tail<span class="w"> </span>~/.bashrc
 <span class="gp">$ </span><span class="nb">source</span><span class="w"> </span>~/.bashrc

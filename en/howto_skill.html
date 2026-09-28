@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to customize agents" href="howto_agent.html" />
+    <link rel="next" title="How to Customize Agents" href="howto_agent.html" />
     <link rel="prev" title="How to add extra MCP servers" href="howto_mcp.html" /> 
 </head>
 
@@ -105,7 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How to add extra skills</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to customize agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -159,7 +164,7 @@
            <div itemprop="articleBody">
              
   <section id="how-to-add-extra-skills">
-<h1>How to add extra skills<a class="headerlink" href="#how-to-add-extra-skills" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>How to add extra skills<a class="headerlink" href="#how-to-add-extra-skills" title="Link to this heading"></a></h1>
 <p>In the context of AI agents, <strong>Skills</strong> represent the discrete, executable capabilities or tools that an agent can leverage to
 interact with the environment and accomplish specific tasks. They inherently enable <strong>progressive disclosure</strong> by only loading
 detailed instructions and execution logic when explicitly needed, thereby optimizing the agent’s context window. Architecturally,
@@ -181,8 +186,8 @@ description: A simple skill used to tell a quick, humorous joke to lighten the m
 license: Apache-2.0
 metadata:
 author: yezhenqing
-version: &quot;1.0&quot;
-<span class="gu">tags: &quot;entertainment, humor, joke&quot;</span>
+version: "1.0"
+<span class="gu">tags: "entertainment, humor, joke"</span>
 <span class="gu">---</span>
 
 <span class="gh"># Joke Bot</span>
@@ -195,7 +200,7 @@ When a user asks for a joke, please strictly follow these steps:
 
 <span class="k">1.</span> <span class="gs">**Select a Category**</span>: If the user does not specify a topic, default to a joke about programmers or technology.
 <span class="k">2.</span> <span class="gs">**Keep it Concise**</span>: The joke must not exceed 3 sentences. Keep it crisp and clean.
-<span class="k">3.</span> <span class="gs">**Add Agent Signature**</span>: Always append a sign-off at the very end of your response (e.g., &quot;- Delivered by <span class="gs">**tell-a-joke Agent**</span>&quot;).
+<span class="k">3.</span> <span class="gs">**Add Agent Signature**</span>: Always append a sign-off at the very end of your response (e.g., "- Delivered by <span class="gs">**tell-a-joke Agent**</span>").
 
 <span class="gu">## Constraints</span>
 
@@ -204,7 +209,7 @@ When a user asks for a joke, please strictly follow these steps:
 
 <span class="gu">## Trigger Example</span>
 
-User: &quot;Work is exhausting today, tell me a joke to help me relax.&quot;
+User: "Work is exhausting today, tell me a joke to help me relax."
 </pre></div>
 </div>
 <div class="admonition note">
@@ -234,7 +239,7 @@ please refer to the <a class="reference external" href="https://agentskills.io/s
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="howto_mcp.html" class="btn btn-neutral float-left" title="How to add extra MCP servers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="howto_agent.html" class="btn btn-neutral float-right" title="How to customize agents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="howto_agent.html" class="btn btn-neutral float-right" title="How to Customize Agents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

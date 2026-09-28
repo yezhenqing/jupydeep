@@ -105,7 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to customize agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -168,7 +173,7 @@
 <p>Ensure you have <code class="docutils literal notranslate"><span class="pre">uv</span></code> is installed. If not, please refer to the <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">uv installation guide</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>tutorial
 <span class="gp">$ </span>uv<span class="w"> </span>init
-<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span>
+<span class="gp">$ </span>uv<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>jupydeep<span class="w"> </span><span class="s2">"jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"</span>
 </pre></div>
 </div>
 <p>Then simply launch JupyterLab as below:</p>
@@ -182,7 +187,7 @@
 <p>For <code class="docutils literal notranslate"><span class="pre">conda</span></code>, you can create a new environment and then install JupyDeep using <code class="docutils literal notranslate"><span class="pre">pip</span></code> inside it.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>jupydeep<span class="w"> </span>jupyterlab
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>jupydeep
-<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
+<span class="gp">$ </span><span class="o">(</span>jupydeep<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"</span><span class="w"> </span>jupydeep
 </pre></div>
 </div>
 <div class="admonition note">

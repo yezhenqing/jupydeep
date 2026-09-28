@@ -105,7 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_mcp.html">How to add extra MCP servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_skill.html">How to add extra skills</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">How to customize agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../howto_ctx.html">How to config context window</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../howto_ctx.html#how-to-configure">2. How to Configure</a></li>
@@ -189,7 +194,7 @@ within the environment.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONNOUSERSITE</span><span class="o">=</span><span class="m">1</span>
 <span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>bionemo<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.12<span class="w"> </span>jupyterlab<span class="w"> </span>jupyter_console<span class="w"> </span>nglview<span class="w"> </span>rdkit<span class="w"> </span>biopython<span class="w"> </span>requests<span class="w"> </span>pandas<span class="w"> </span>ipywidgets<span class="w"> </span>mdanalysis<span class="w"> </span>MDAnalysisTests<span class="w"> </span>-c<span class="w"> </span>conda-forge
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>bionemo
-<span class="gp">$ </span><span class="o">(</span>bionemo<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git&quot;</span><span class="w"> </span>jupydeep
+<span class="gp">$ </span><span class="o">(</span>bionemo<span class="o">)</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"jupyter-mcp-server @ git+https://github.com/yezhenqing/jupyter-mcp-server.git"</span><span class="w"> </span>jupydeep
 </pre></div>
 </div>
 <p>For molecule and protein structure visualization, we utilize the <a class="reference external" href="https://github.com/nglviewer/nglview">nglview package</a>, which is
@@ -198,7 +203,7 @@ the latest version (v4.0.1) that has not yet been resolved. Consequently, we nee
 and stable operation.</p>
 <div class="highlight-consoley notranslate"><div class="highlight"><pre><span></span># Ensure the bionemo environment is activated
 # Apply hotfix to the nglview frontend version
-$ (bionemo) sed -i &quot;s/__frontend_version__ = &#39;4.0&#39;/__frontend_version__ = &#39;3.1.5&#39;/&quot; $(python -c &quot;import site; print(site.getsitepackages()[0])&quot;)/nglview/_frontend.py
+$ (bionemo) sed -i "s/__frontend_version__ = '4.0'/__frontend_version__ = '3.1.5'/" $(python -c "import site; print(site.getsitepackages()[0])")/nglview/_frontend.py
 </pre></div>
 </div>
 <p>Now, let’s activate the Conda environment and launch JupyterLab to verify that everything is working correctly.</p>
