@@ -19,7 +19,7 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 
 - **[2026-09-28] v0.1.10 Release:**
   - 🔧 Pin `mcp` to `< 2` and improve chat error handling.
-  - 📝 New doc: ["How to Customize Agents"](https://yezhenqing.github.io/jupydeep/en/howto_agent.html) .
+  - 📝 New doc: [**How to Customize Agents**](https://yezhenqing.github.io/jupydeep/en/howto_agent.html) .
 
 - **[2026-08-12] v0.1.9 Release:**
   - 🧠 Introduced flexible [**Context Window**](https://yezhenqing.github.io/jupydeep/en/howto_ctx.html) management with live token updates.
