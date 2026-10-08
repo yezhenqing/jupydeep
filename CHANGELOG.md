@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.11
+
+([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.10...040906c27709fac09dab19935cd01ce9fb130ef1))
+
+### Enhancements made
+
+- refactor(mcp/engine): support mcp auth token and migrate old backends to pydantic-ai workspace [#13](https://github.com/yezhenqing/jupydeep/pull/13) ([@yezhenqing](https://github.com/yezhenqing))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-09-28&to=2026-10-08&type=c))
+
+@yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-09-28..2026-10-08&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.10
 
 ([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.9...e001b85051dcf5839bb35b60905c2b73d6a9520d))
@@ -18,8 +37,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-08-13&to=2026-09-28&type=c))
 
 @yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-08-13..2026-09-28&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.9
 
