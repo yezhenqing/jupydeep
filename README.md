@@ -17,6 +17,10 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 
 ## 🔥 News & Highlights
 
+- **[2026-10-08] v0.1.11 Release:**
+  - 🔑 Support authentication tokens for MCP configuration.
+  - 🏗️ Replace old backends with `pydantic-ai` [workspace architecture](https://pydantic.dev/docs/ai/core-concepts/workspace/).
+
 - **[2026-09-28] v0.1.10 Release:**
   - 🔧 Pin `mcp` to `< 2` and improve chat error handling.
   - 📝 New doc: [**How to Customize Agents**](https://yezhenqing.github.io/jupydeep/en/howto_agent.html) .
