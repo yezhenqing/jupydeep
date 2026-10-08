@@ -48,8 +48,8 @@ Below is an example of an Agent Specification file defining a Document-Parsing A
    model: "ollama/qwen3.8"
 
    capabilities:
-     thinking:
-       effort: "medium"
+     - thinking:
+         effort: "medium"
 
    instructions: |
      # Role: Document Parsing & Intelligence Specialist
