@@ -167,7 +167,8 @@ class AgentEngineExtension(ExtensionApp):
 
         try:
             _context = JupyterContext(
-                base_url=self.serverapp.base_url,
+                # base_url=self.serverapp.base_url,
+                base_url=self.serverapp.connection_url,
                 workspace=self.serverapp.root_dir,
                 token=self.serverapp.token,
                 setting_json_dirs=_setting_json_dirs,

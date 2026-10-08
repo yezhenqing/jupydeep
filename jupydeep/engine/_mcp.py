@@ -1,6 +1,8 @@
 import asyncio
+import os
 from pathlib import Path
 from pydantic import BaseModel, Field
+from urllib.parse import urlparse
 from typing import Dict, List, Optional, Literal, Any, TYPE_CHECKING
 from fastmcp.client.transports import StdioTransport
 from pydantic_ai.mcp import MCPToolset
@@ -25,6 +27,7 @@ class MCPServerConfig(BaseModel):
     transport: Literal["stdio", "sse", "streamable-http"] = Field(
         default="streamable-http", description="Transport protocol"
     )
+    auth_token: str = Field(default="", description="MCP authentication token")
     enabled: bool = Field(default=True, description="Whether to enable this server")
     env: Dict[str, str] = Field(
         default_factory=dict, description="Environment variables"
@@ -37,6 +40,7 @@ class MCPServerConfig(BaseModel):
             command=data.get("command", ""),
             args=data.get("args", []),
             url=data.get("url", ""),
+            auth_token=data.get("auth_token", ""),
             transport=data.get("transport", "streamable-http"),
             enabled=data.get("enabled", True),
             env=data.get("env", {}),
@@ -204,15 +208,24 @@ class MCPComponent(BaseComponent):
                     args=mcp_config.args,
                     env=env_vars,
                 )
-                mcp_client = MCPToolset(transport)
-            elif transport_type == "sse":
-                mcp_client = MCPToolset(mcp_config.url)
+                return MCPToolset(transport)
+
+            # Handle HTTP / SSE based network connections
+            headers = {}
+
+            config_auth_token = getattr(mcp_config, "auth_token", None)
+            jupyter_ctx = self._parent.jupyter_context
+
+            if config_auth_token:
+                final_token = os.path.expandvars(config_auth_token)
+            elif self._is_local_jupyter_mcp(mcp_config.url, jupyter_ctx.base_url):
+                final_token = jupyter_ctx.token
             else:
-                headers = {}
-                token = self._parent.jupyter_context.token
-                if token:
-                    headers["Authorization"] = f"Bearer {token}"
-                mcp_client = MCPToolset(mcp_config.url, headers=headers)
+                final_token = None
+            if final_token:
+                headers["Authorization"] = f"Bearer {final_token}"
+
+            mcp_client = MCPToolset(mcp_config.url, headers=headers)
         except Exception as e:
             raise e
 
@@ -336,3 +349,35 @@ class MCPComponent(BaseComponent):
         self._current_settings.pop(key, None)
         if self._parent:
             self._parent = None
+
+    def _is_local_jupyter_mcp(self, mcp_url: str, jupyter_base_url: str) -> bool:
+        """Check if the given MCP URL belongs to the current Jupyter server instance."""
+        if not mcp_url or not jupyter_base_url:
+            return False
+
+        u_mcp = urlparse(mcp_url.strip())
+        u_jup = urlparse(jupyter_base_url.strip())
+
+        # 1. Relative paths (e.g., "/mcp" or "api/mcp") default to the current local server
+        if not u_mcp.netloc:
+            return True
+
+        # 2. Check host equivalence (resolve localhost / 127.0.0.1 / 0.0.0.0 / ::1)
+        local_hosts = {"localhost", "127.0.0.1", "0.0.0.0", "::1"}
+        mcp_host = u_mcp.hostname or ""
+        jup_host = u_jup.hostname or ""
+
+        hosts_match = (mcp_host == jup_host) or (
+            mcp_host in local_hosts and jup_host in local_hosts
+        )
+
+        # 3. Check port matching (default 80 for HTTP, 443 for HTTPS if omitted)
+        mcp_port = u_mcp.port or (443 if u_mcp.scheme == "https" else 80)
+        jup_port = u_jup.port or (443 if u_jup.scheme == "https" else 80)
+        ports_match = mcp_port == jup_port
+
+        # 4. Check path prefix matching against Jupyter base_url
+        jup_path = u_jup.path.rstrip("/")
+        paths_match = u_mcp.path.startswith(jup_path) if jup_path else True
+
+        return hosts_match and ports_match and paths_match

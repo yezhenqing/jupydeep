@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from pydantic_deep import (
     create_deep_agent,
     DeepAgentDeps,
-    LocalBackend,
+    LocalWorkspace,
     create_summarization_processor,
 )
 from pydantic_deep.features.skills import SkillsToolset
@@ -330,6 +330,10 @@ class DeepAgentManager:
         if processor is not None:
             agent_kwargs["history_processors"] = [processor]
 
+        # 6. Workspace
+        workspace = LocalWorkspace(self._jupyter_context.workspace)
+        agent_kwargs["workspace"] = workspace
+
         _agent = create_deep_agent(**agent_kwargs)
 
         """
@@ -355,9 +359,11 @@ class DeepAgentManager:
         return _agent, _deps
 
     def build_deps(self, opts: DeepAgentOptions = None):
-        local_backend = LocalBackend(root_dir=self._jupyter_context.workspace)
-        # deps = DeepAgentDeps(backend=local_backend)
-        deps = JupyterDeps(jupyter_context=self._jupyter_context, backend=local_backend)
+        # local_backend = LocalBackend(root_dir=self._jupyter_context.workspace)
+        # deps = JupyterDeps(jupyter_context=self._jupyter_context, backend=local_backend)
+        # backend is replaced by pydantic-ai workspace now.
+        # https://github.com/vstorm-co/pydantic-deepagents/releases (0.3.45)
+        deps = JupyterDeps(jupyter_context=self._jupyter_context)
         return deps
 
     async def update_from_dict(self, new_settings):
