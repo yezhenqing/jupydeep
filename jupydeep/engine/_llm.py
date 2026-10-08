@@ -4,7 +4,7 @@ from typing import Dict, Optional, List, TYPE_CHECKING
 from pydantic import BaseModel, Field, ConfigDict
 
 # from pydantic_ai import Agent
-from pydantic_deep import create_deep_agent, DeepAgentDeps, StateBackend
+from pydantic_deep import create_deep_agent, DeepAgentDeps
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.settings import ModelSettings
@@ -167,7 +167,7 @@ class LLMComponent(BaseComponent):
                 cost_tracking=False,
                 include_memory=False,
             )
-            deps = DeepAgentDeps(backend=StateBackend())
+            deps = DeepAgentDeps()
 
             # Set timeout to avoid infinite blocking
             result = await asyncio.wait_for(

@@ -46,6 +46,10 @@
               "url": {
                 "type": "string",
                 "description": "MCP server base_url"
+              },
+              "auth_token": {
+                "type": "string",
+                "description": "MCP authentication token"
               }
             },
             "required": ["url"]
