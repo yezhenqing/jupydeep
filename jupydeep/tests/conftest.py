@@ -15,12 +15,12 @@ def jp_server_config(jp_server_config):
 
     if "ServerApp" not in jp_server_config:
         jp_server_config["ServerApp"] = {}
-    
+
     if "jpserver_extensions" not in jp_server_config["ServerApp"]:
         jp_server_config["ServerApp"]["jpserver_extensions"] = {}
-    
+
     jp_server_config["ServerApp"]["jpserver_extensions"]["jupydeep"] = True
-    
+
     return jp_server_config
 
 

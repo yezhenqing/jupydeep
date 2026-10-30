@@ -32,6 +32,7 @@ def setup_logging(debug: bool = False, log_to_file: bool = True) -> None:
     # Reduce noise from verbose libraries (these affect root logger)
     _configure_third_party_logging(level)
 
+
 def _has_file_handler(logger: logging.Logger) -> bool:
     """Check if logger already has a file handler."""
     for handler in logger.handlers:
@@ -118,4 +119,3 @@ def get_logger(name: str) -> logging.Logger:
     else:
         full_name = f"{prefix}.{name}"
     return logging.getLogger(full_name)
-
