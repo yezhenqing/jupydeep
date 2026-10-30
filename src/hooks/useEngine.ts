@@ -1,4 +1,4 @@
-import { QueryClient, useQuery, skipToken } from '@tanstack/react-query';
+import { QueryClient, useQuery, useMutation, skipToken } from '@tanstack/react-query';
 import { ServerConnection } from '@jupyterlab/services';
 import { URLExt } from '@jupyterlab/coreutils';
 import { useEffect } from 'react';
@@ -144,5 +144,52 @@ export function useContextWindow() {
     // purely push mode
     queryFn: skipToken,
     staleTime: Infinity
+  });
+}
+
+
+// ============================================================================
+// MLflow Test Connection API & Mutation Hook
+// ============================================================================
+
+export interface IMlflowTestRequest {
+  tracking_uri: string;
+}
+
+export interface IMlflowTestResponse {
+  status: 'success' | 'error';
+  message: string;
+}
+
+// Low-level fetcher function
+const testMlflowConnection = async (data: IMlflowTestRequest): Promise<IMlflowTestResponse> => {
+  const settings = getSettings();
+  const testUrl = URLExt.join(settings.baseUrl, 'jupydeep/mlftest');
+
+  const response = await ServerConnection.makeRequest(
+    testUrl,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    },
+    settings
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || 'Failed to connect to MLflow server');
+  }
+
+  return result;
+};
+
+// React Query mutation hook for testing MLflow
+export function useMlflowTest() {
+  return useMutation({
+    mutationFn: testMlflowConnection,
   });
 }

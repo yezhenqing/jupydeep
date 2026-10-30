@@ -56,6 +56,18 @@
             "DockerSandbox",
             "CompositeBackend"
           ]
+        },
+        "enable_mlflow": {
+          "type": "boolean",
+          "default": false,
+          "title": "Enable MLflow Instrumentation",
+          "description": "Automatically trace tool calls and agent execution using MLflow"
+        },
+        "mlflow_tracking_uri": {
+          "type": "string",
+          "default": "http://127.0.0.1:5000",
+          "title": "MLflow Tracking URI",
+          "description": "Tracking server URL for MLflow instrumentation"
         }
       }
     }

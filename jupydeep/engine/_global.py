@@ -37,6 +37,15 @@ class GlobalSetting(BaseModel):
         default=None,
         description="The maximum number of tokens allowed in requests and responses combined",
     )
+    # Enable MLflow instrumentation for tracking tool calls and agents
+    enable_mlflow: bool = Field(
+        default=False, description="Enable MLflow instrumentation"
+    )
+    # Tracking server URI for MLflow logs
+    mlflow_tracking_uri: str = Field(
+        default="http://127.0.0.1:5000",
+        description="Tracking server URL for MLflow instrumentation",
+    )
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "GlobalSetting":
