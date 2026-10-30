@@ -2468,7 +2468,7 @@ provides-extras = ["test"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "jupyter-builder", specifier = ">=0.0.3" },
+    { name = "jupyter-builder", specifier = ">=1.0.0" },
     { name = "jupyter-console", specifier = ">=6.6.3" },
     { name = "pre-commit", specifier = ">=4.6.0" },
     { name = "ruff", specifier = ">=0.15.12" },

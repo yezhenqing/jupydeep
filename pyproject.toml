@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.5.0", "jupyterlab>=4.5.8,<5", "hatch-nodejs-version>=0.3.2"]
+requires = ["hatchling>=1.5.0", "jupyter-builder>=1.0.0", "hatch-nodejs-version>=0.3.2"]
 build-backend = "hatchling.build"
 
 [project]
@@ -106,7 +106,7 @@ jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.g
 dev = [
     "pre-commit>=4.6.0",
     "ruff>=0.15.12",
-    "jupyter-builder>=0.0.3",
+    "jupyter-builder>=1.0.0",
     "jupyter-console>=6.6.3",
 ]
 
