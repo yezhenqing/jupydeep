@@ -27,6 +27,7 @@ class RuntimeSummary(BaseModel):
     llms: list[str] = []
     skills: list[str] = []
     usage_limit: Optional[Union[float, str]] = None
+    is_mlflow_active: bool = False
 
 
 class _RuntimeView:
@@ -83,6 +84,11 @@ class _RuntimeView:
             else:
                 return None
 
+    @property
+    def is_mlflow_active(self) -> bool:
+        global_setting = self._engine.global_setting_hub.global_setting
+        return global_setting.is_mlflow_active
+
     def to_dict(self) -> Dict[str, Any]:
         return self.get_summary().model_dump()
 
@@ -96,6 +102,7 @@ class _RuntimeView:
             llms=self.llms,
             skills=self.skills,
             usage_limit=self.usage_limit,
+            is_mlflow_active=self.is_mlflow_active,
         )
 
 

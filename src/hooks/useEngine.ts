@@ -35,7 +35,7 @@ export function setupSSE() {
   globalEventSource.onmessage = event => {
     try {
       const message = JSON.parse(event.data);
-      // console.log("SSE message:", message)
+      //console.log("SSE message:", message)
       const eventType = message.event;
       const payload = message.payload;
       switch (eventType) {

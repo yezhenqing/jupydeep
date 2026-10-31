@@ -5,6 +5,9 @@ import { useEngineCatalog } from '../hooks/useEngine';
 interface IAgentConfigData {
   enabled?: boolean;
   description?: string;
+  enable_mlflow?: boolean;
+  mlflow_experiment_suffix?:string;
+  is_mlflow_active?: boolean;
   model?: string;
   deep_mcps?: string[];
   capabilities?: string[];
@@ -16,6 +19,7 @@ interface IAgentsFormData {
 }
 
 const EMPTY_ARRAY: any[] = [];
+
 
 const AgentsField: React.FC<FieldProps> = props => {
   const { schema, formData = {}, onChange, disabled, readonly } = props;
@@ -44,6 +48,9 @@ const AgentsField: React.FC<FieldProps> = props => {
     'include_memory'
   ];
 
+  //console.log("engineData:", engineData)
+
+  const is_mlflow_active = engineData?.payload?.is_mlflow_active || false;
   const llmsEnum = engineData?.payload?.llms || EMPTY_ARRAY;
   const skillsEnum = engineData?.payload?.skills || EMPTY_ARRAY;
   const mcpsEnum = engineData?.payload?.mcps || EMPTY_ARRAY;
@@ -130,6 +137,10 @@ const AgentsField: React.FC<FieldProps> = props => {
           enabled: formAgentData?.enabled ?? defaultAgentData?.enabled ?? true,
           description:
             defaultAgentData?.description ?? formAgentData?.description ?? '',
+          enable_mlflow:
+            formAgentData?.enable_mlflow ?? defaultAgentData?.enable_mlflow ?? false,
+          mlflow_experiment_suffix:
+            defaultAgentData?.mlflow_experiment_suffix ?? formAgentData?.mlflow_experiment_suffix ?? 'JupyDeep-Agent-suffix',
           model:
             formAgentData?.model ??
             defaultAgentData?.model ??
@@ -247,6 +258,56 @@ const AgentsField: React.FC<FieldProps> = props => {
                   disabled={disabled || readonly || isLLMsEmpty}
                 />
               </div>
+
+              {/* Agent-level MLflow Instrumentation Section */}
+              {is_mlflow_active && (
+                <div className="mb-4 space-y-3 border-t border-[var(--jp-border-color2)] pt-4">
+                  {/*  Enable/Disable Agent MLflow Toggle */}
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 rounded border-[var(--jp-border-color2)] text-[var(--jp-brand-color1)] bg-[var(--jp-layout-color1)]"
+                      checked={!!agentData.enable_mlflow}
+                      onChange={e => {
+                        onChange({
+                          ...(formData as IAgentsFormData),
+                          [agentName]: { ...agentData, enable_mlflow: e.target.checked }
+                        });
+                      }}
+                      disabled={disabled || readonly || isLLMsEmpty}
+                    />
+                    <span className="text-sm font-bold text-[var(--jp-ui-font-color1)]">
+                      Enable MLflow Tracing
+                    </span>
+                  </label>
+
+                  {/*  Experiment Suffix (Shown only when enabled) */}
+                  {agentData.enable_mlflow && (
+                    <div className="ml-6 space-y-2">
+                      <label className="text-xs font-semibold text-[var(--jp-ui-font-color2)] mb-1 block">
+                        Experiment Suffix
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. experiment-v1"
+                        className="w-full p-2 text-sm border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color1)] text-[var(--jp-ui-font-color1)]"
+                        value={agentData.mlflow_experiment_suffix || ''}
+                        onChange={e => {
+                          onChange({
+                            ...(formData as IAgentsFormData),
+                            [agentName]: { ...agentData, mlflow_experiment_suffix: e.target.value }
+                          });
+                        }}
+                        disabled={disabled || readonly || isLLMsEmpty}
+                      />
+                      <p className="text-xs text-[var(--jp-ui-font-color3)] mt-1">
+                        Optional suffix appended to the experiment name. Resulting format:
+                        <code className="text-[var(--jp-ui-font-color2)] font-mono">JupyDeep-{agentName}-&lt;suffix&gt;</code>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* LLM Selection (agent_llm - single select) */}
               <div className="mb-4">

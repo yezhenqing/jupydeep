@@ -57,10 +57,10 @@
             "CompositeBackend"
           ]
         },
-        "enable_mlflow": {
+        "enable_system_mlflow": {
           "type": "boolean",
           "default": false,
-          "title": "Enable MLflow Instrumentation",
+          "title": "Enable MLflow Instrumentation - System Level",
           "description": "Automatically trace tool calls and agent execution using MLflow"
         },
         "mlflow_tracking_uri": {

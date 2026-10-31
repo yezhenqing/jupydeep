@@ -10,7 +10,7 @@ interface IGlobalConfig {
   total_tokens_limit?: number | null;
   tool_timeout?: number;
   backend?: string;
-  enable_mlflow?: boolean;
+  enable_system_mlflow?: boolean;
   mlflow_tracking_uri?: string;
 }
 
@@ -23,6 +23,8 @@ const GlobalField: React.FC<FieldProps> = props => {
   const { data: engineData } = useEngineCatalog();
   const llmsEnum = engineData?.payload?.llms || EMPTY_ARRAY;
   const agentsEnum = Object.keys(engineData?.payload?.agents ?? {});
+
+  const is_mlflow_active = engineData?.payload?.is_mlflow_active || false;
 
   const handleChange = (field: keyof IGlobalConfig, value: any) => {
     onChange({
@@ -47,6 +49,9 @@ const GlobalField: React.FC<FieldProps> = props => {
         // Optional callback handlers if needed
         onError: (error) => {
           console.error('MLflow connection test failed:', error);
+        },
+        onSuccess: (d) => {
+
         }
       }
     );
@@ -230,22 +235,46 @@ const GlobalField: React.FC<FieldProps> = props => {
           <input
             type="checkbox"
             className="w-4 h-4 rounded border-[var(--jp-border-color2)] text-[var(--jp-brand-color1)] bg-[var(--jp-layout-color1)]"
-            checked={!!config.enable_mlflow}
-            onChange={e => handleChange('enable_mlflow', e.target.checked)}
+            checked={!!config.enable_system_mlflow}
+            onChange={e => handleChange('enable_system_mlflow', e.target.checked)}
             disabled={disabled || readonly}
           />
           <span className="text-sm font-bold text-[var(--jp-ui-font-color1)]">
-            Enable MLflow Instrumentation
+            MLflow Instrumentation Infra
           </span>
         </label>
 
         {/* 2. Detailed Configuration (Shown only when enabled) */}
-        {config.enable_mlflow && (
+        {config.enable_system_mlflow && (
           <div className="ml-6 space-y-2">
             <div>
-              <label className="text-xs font-semibold text-[var(--jp-ui-font-color2)] mb-1 block">
-                MLflow Tracking URI
-              </label>
+
+              <div className="flex items-center gap-1.5 mb-1">
+                <label className="text-xs font-semibold text-[var(--jp-ui-font-color2)]">
+                  MLflow Tracking URI
+                </label>
+                <span className="inline-flex items-center gap-1">
+                  <span
+                    className="inline-block w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: is_mlflow_active
+                        ? 'var(--jp-success-color1)'
+                        : 'var(--jp-error-color1)'
+                    }}
+                  />
+                  <span
+                    className="text-xs"
+                    style={{
+                      color: is_mlflow_active
+                        ? 'var(--jp-success-color1)'
+                        : 'var(--jp-error-color1)'
+                    }}
+                  >
+                    {is_mlflow_active ? 'Active' : 'Inactive'}
+                  </span>
+                </span>
+              </div>
+
               <div className="flex gap-2">
                 {/* Tracking URI input field */}
                 <input

@@ -82,6 +82,9 @@ class DeepAgentOptions(BaseModel):
     deep_mcps: List[str] = Field(default=[])
     enabled: bool = True
 
+    enable_mlflow: bool = False
+    mlflow_experiment_suffix: str = Field(default="")
+
     @model_validator(mode="before")
     @classmethod
     def pre_validate_capabilities(cls, data: Any) -> Any:
@@ -167,7 +170,14 @@ class AgentConfig:
             **(self._spec.model_settings or {}),
             **self._deep_opts.capabilities.model_dump(),
             **self._deep_opts.model_dump(
-                exclude={"deep_mcps", "deep_skills", "capabilities", "enabled"}
+                exclude={
+                    "deep_mcps",
+                    "deep_skills",
+                    "capabilities",
+                    "enabled",
+                    "enable_mlflow",
+                    "mlflow_experiment_suffix",
+                }
             ),
         }
         return _config
@@ -319,6 +329,9 @@ class DeepAgentManager:
         else:
             ctx_mg_dict = {"context_manager": False}
 
+        # 6. MLflow instrumentation
+        # print("====agent options:", config.opts)
+
         agent_kwargs = {
             **_config_dict,
             "model": llm_model,
@@ -336,17 +349,6 @@ class DeepAgentManager:
 
         _agent = create_deep_agent(**agent_kwargs)
 
-        """
-        _agent = create_deep_agent(
-            **_config_dict,
-            model=llm_model,
-            **ctx_mg_dict,
-            toolsets=toolsets,
-            # include_skills=True,
-            include_skills=False,  # we will set skills through SkillsToolset
-            history_processors=[processor],
-        )
-        """
         _deps = self.build_deps(config.opts)
 
         # @_agent.tool
