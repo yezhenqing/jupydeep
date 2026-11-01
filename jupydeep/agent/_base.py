@@ -33,7 +33,6 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
 # os.environ["MLFLOW_ASYNC_TRACE_LOGGING_MAX_SPAN_BATCH_SIZE"] = "2"
-mlflow.pydantic_ai.autolog()
 
 logger = get_logger(__name__)
 
@@ -236,7 +235,6 @@ class DeepAgentManager:
             if _name in self._agent_configs:
                 self._agent_configs[_name].update_opts(_setting)
 
-        self._setup_global_mlflow()
         self._is_configured = True
 
     async def materialize(self):
@@ -356,11 +354,15 @@ class DeepAgentManager:
 
         # extra. MLflow instrumentation
         if config.opts.enable_mlflow:
+            mlflow.pydantic_ai.autolog()
+            uri = self._parent.global_setting_hub.global_setting.mlflow_tracking_uri
+            mlflow.set_tracking_uri(uri)
             self._configure_mlflow_experiment(config, agent_id)
             _agent.instrument = True
         else:
             if hasattr(_agent, "instrument"):
                 _agent.instrument = False
+            mlflow.pydantic_ai.autolog(disable=True)
 
         _deps = self.build_deps(config.opts)
 
@@ -381,16 +383,6 @@ class DeepAgentManager:
         deps = JupyterDeps(jupyter_context=self._jupyter_context)
         return deps
 
-    def _setup_global_mlflow(self):
-        try:
-            if self._parent and self._parent.global_setting_hub:
-                uri = self._parent.global_setting_hub.global_setting.mlflow_tracking_uri
-                if uri:
-                    mlflow.set_tracking_uri(uri)
-        except Exception as e:
-            error_msg = str(e).splitlines()[0] if str(e) else type(e).__name__
-            logger.warning(f"Global MLflow autolog setup failed: {error_msg}")
-
     def _configure_mlflow_experiment(self, config: AgentConfig, agent_id: str):
         try:
             suffix = config.opts.mlflow_experiment_suffix
@@ -399,8 +391,6 @@ class DeepAgentManager:
                 experiment_name = f"JupyDeep-{agent_id}-{date_str}-{suffix}"
             else:
                 experiment_name = f"JupyDeep-{agent_id}-{date_str}"
-
-            print("======mlflow experiment:", experiment_name)
 
             mlflow_client = mlflow.tracking.MlflowClient()
             experiment = mlflow_client.get_experiment_by_name(experiment_name)
