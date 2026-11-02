@@ -47,16 +47,13 @@ const GlobalField: React.FC<FieldProps> = props => {
       { tracking_uri: config.mlflow_tracking_uri || 'http://127.0.0.1:5000' },
       {
         // Optional callback handlers if needed
-        onError: (error) => {
+        onError: error => {
           console.error('MLflow connection test failed:', error);
         },
-        onSuccess: (d) => {
-
-        }
+        onSuccess: d => {}
       }
     );
   };
-
 
   return (
     <div className="mb-5 font-sans">
@@ -236,7 +233,9 @@ const GlobalField: React.FC<FieldProps> = props => {
             type="checkbox"
             className="w-4 h-4 rounded border-[var(--jp-border-color2)] text-[var(--jp-brand-color1)] bg-[var(--jp-layout-color1)]"
             checked={!!config.enable_system_mlflow}
-            onChange={e => handleChange('enable_system_mlflow', e.target.checked)}
+            onChange={e =>
+              handleChange('enable_system_mlflow', e.target.checked)
+            }
             disabled={disabled || readonly}
           />
           <span className="text-sm font-bold text-[var(--jp-ui-font-color1)]">
@@ -248,7 +247,6 @@ const GlobalField: React.FC<FieldProps> = props => {
         {config.enable_system_mlflow && (
           <div className="ml-6 space-y-2">
             <div>
-
               <div className="flex items-center gap-1.5 mb-1">
                 <label className="text-xs font-semibold text-[var(--jp-ui-font-color2)]">
                   MLflow Tracking URI
@@ -282,7 +280,9 @@ const GlobalField: React.FC<FieldProps> = props => {
                   placeholder="http://127.0.0.1:5000"
                   className="flex-1 p-2 text-sm border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color1)] text-[var(--jp-ui-font-color1)]"
                   value={config.mlflow_tracking_uri || ''}
-                  onChange={e => handleChange('mlflow_tracking_uri', e.target.value)}
+                  onChange={e =>
+                    handleChange('mlflow_tracking_uri', e.target.value)
+                  }
                   disabled={disabled || readonly}
                 />
 
@@ -290,7 +290,9 @@ const GlobalField: React.FC<FieldProps> = props => {
                 <button
                   type="button"
                   onClick={handleTestConnection}
-                  disabled={disabled || readonly || mlflowTestMutation.isPending}
+                  disabled={
+                    disabled || readonly || mlflowTestMutation.isPending
+                  }
                   className="px-3 py-2 text-sm font-medium border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color2)] hover:bg-[var(--jp-layout-color3)] text-[var(--jp-ui-font-color1)] transition-colors disabled:opacity-50"
                 >
                   {mlflowTestMutation.isPending ? 'Testing...' : 'Test'}
@@ -299,25 +301,29 @@ const GlobalField: React.FC<FieldProps> = props => {
             </div>
 
             {/* Connection Success Feedback */}
-            {mlflowTestMutation.isSuccess && mlflowTestMutation.data?.status === 'success' && (
-              <div className="text-xs p-2 rounded bg-green-500/15 text-green-600 border border-green-500/20">
-                {mlflowTestMutation.data.message || 'Connection successful! MLflow is ready.'}
-              </div>
-            )}
+            {mlflowTestMutation.isSuccess &&
+              mlflowTestMutation.data?.status === 'success' && (
+                <div className="text-xs p-2 rounded bg-green-500/15 text-green-600 border border-green-500/20">
+                  {mlflowTestMutation.data.message ||
+                    'Connection successful! MLflow is ready.'}
+                </div>
+              )}
 
             {/* Connection Error Feedback */}
-            {(mlflowTestMutation.isError || (mlflowTestMutation.isSuccess && mlflowTestMutation.data?.status === 'error')) && (
+            {(mlflowTestMutation.isError ||
+              (mlflowTestMutation.isSuccess &&
+                mlflowTestMutation.data?.status === 'error')) && (
               <div className="text-xs p-2 rounded bg-red-500/15 text-red-600 border border-red-500/20">
                 {mlflowTestMutation.isError
-                  ? (mlflowTestMutation.error instanceof Error ? mlflowTestMutation.error.message : 'Connection failed.')
+                  ? mlflowTestMutation.error instanceof Error
+                    ? mlflowTestMutation.error.message
+                    : 'Connection failed.'
                   : mlflowTestMutation.data?.message}
               </div>
             )}
-
           </div>
         )}
       </div>
-
     </div>
   );
 };

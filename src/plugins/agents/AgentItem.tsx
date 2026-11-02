@@ -61,18 +61,11 @@ export const AgentItem: React.FC<AgentItemProps> = ({
   const checkboxDisabled = disabled || readonly;
 
   const agentData: IAgentConfigData = {
-    enabled:
-      formAgentData?.enabled ??
-      defaultAgentData?.enabled ??
-      true,
+    enabled: formAgentData?.enabled ?? defaultAgentData?.enabled ?? true,
     description:
-      defaultAgentData?.description ??
-      formAgentData?.description ??
-      '',
+      defaultAgentData?.description ?? formAgentData?.description ?? '',
     enable_mlflow:
-      formAgentData?.enable_mlflow ??
-      defaultAgentData?.enable_mlflow ??
-      false,
+      formAgentData?.enable_mlflow ?? defaultAgentData?.enable_mlflow ?? false,
     mlflow_experiment_suffix:
       defaultAgentData?.mlflow_experiment_suffix ??
       formAgentData?.mlflow_experiment_suffix ??
@@ -99,7 +92,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
       EMPTY_ARRAY
   };
 
-  const [localSuffix, setLocalSuffix] = useState(agentData.mlflow_experiment_suffix || '');
+  const [localSuffix, setLocalSuffix] = useState(
+    agentData.mlflow_experiment_suffix || ''
+  );
 
   useEffect(() => {
     setLocalSuffix(agentData.mlflow_experiment_suffix || '');
@@ -148,15 +143,15 @@ export const AgentItem: React.FC<AgentItemProps> = ({
               isLLMsEmpty
                 ? 'bg-[var(--jp-error-color1)] text-white'
                 : isEnabled
-                ? 'bg-[var(--jp-success-color1)] text-white'
-                : 'bg-[var(--jp-error-color1)] text-white'
+                  ? 'bg-[var(--jp-success-color1)] text-white'
+                  : 'bg-[var(--jp-error-color1)] text-white'
             }`}
           >
             {isLLMsEmpty
               ? 'Disabled (No LLM)'
               : isEnabled
-              ? 'Enabled'
-              : 'Disabled'}
+                ? 'Enabled'
+                : 'Disabled'}
           </span>
         </div>
       </div>
@@ -179,7 +174,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
               }}
               disabled={isAgentDisabled}
             />
-            <label className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}>
+            <label
+              className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}
+            >
               Enable this agent
             </label>
           </div>
@@ -210,54 +207,60 @@ export const AgentItem: React.FC<AgentItemProps> = ({
 
         {/* MLflow Section */}
         {is_mlflow_active && (
-        <div className="mb-4 space-y-3 border-t border-[var(--jp-border-color2)] pt-4">
+          <div className="mb-4 space-y-3 border-t border-[var(--jp-border-color2)] pt-4">
             <div className="space-y-1.5">
-            <span className="text-sm font-bold text-[var(--jp-ui-font-color1)] block">
+              <span className="text-sm font-bold text-[var(--jp-ui-font-color1)] block">
                 Enable MLflow Tracing
-            </span>
-            <div className="flex items-center space-x-2">
+              </span>
+              <div className="flex items-center space-x-2">
                 <input
-                type="checkbox"
-                className="w-4 h-4 rounded border-[var(--jp-border-color2)] text-[var(--jp-brand-color1)] bg-[var(--jp-layout-color1)] cursor-pointer"
-                checked={!!agentData.enable_mlflow}
-                onChange={e => {
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-[var(--jp-border-color2)] text-[var(--jp-brand-color1)] bg-[var(--jp-layout-color1)] cursor-pointer"
+                  checked={!!agentData.enable_mlflow}
+                  onChange={e => {
                     onChange({
-                    ...formData,
-                    [agentName]: { ...agentData, enable_mlflow: e.target.checked }
+                      ...formData,
+                      [agentName]: {
+                        ...agentData,
+                        enable_mlflow: e.target.checked
+                      }
                     });
-                }}
-                disabled={disabled || readonly || isLLMsEmpty}
+                  }}
+                  disabled={disabled || readonly || isLLMsEmpty}
                 />
                 <span className="text-xs text-[var(--jp-ui-font-color2)]">
-                Activate tracking for this agent
+                  Activate tracking for this agent
                 </span>
-            </div>
+              </div>
             </div>
 
             {agentData.enable_mlflow && (
-            <div className="ml-6 space-y-2 mt-3">
+              <div className="ml-6 space-y-2 mt-3">
                 <label className="text-xs font-semibold text-[var(--jp-ui-font-color2)] mb-1 block">
-                Experiment Suffix
+                  Experiment Suffix
                 </label>
                 <input
-                type="text"
-                placeholder="e.g. experiment-v1"
-                className="w-full p-2 text-sm border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color1)] text-[var(--jp-ui-font-color1)]"
-                value={localSuffix}
-                onChange={e => {
+                  type="text"
+                  placeholder="e.g. experiment-v1"
+                  className="w-full p-2 text-sm border border-[var(--jp-border-color2)] rounded bg-[var(--jp-layout-color1)] text-[var(--jp-ui-font-color1)]"
+                  value={localSuffix}
+                  onChange={e => {
                     const val = e.target.value;
                     setLocalSuffix(val);
                     debouncerRef.current?.invoke(val);
-                }}
-                disabled={disabled || readonly || isLLMsEmpty}
+                  }}
+                  disabled={disabled || readonly || isLLMsEmpty}
                 />
                 <p className="text-xs text-[var(--jp-ui-font-color3)] mt-1">
-                Optional suffix appended to the experiment name. Resulting format:
-                <code className="text-[var(--jp-ui-font-color2)] font-mono">JupyDeep-{agentName}-&lt;suffix&gt;</code>
+                  Optional suffix appended to the experiment name. Resulting
+                  format:
+                  <code className="text-[var(--jp-ui-font-color2)] font-mono">
+                    JupyDeep-{agentName}-&lt;suffix&gt;
+                  </code>
                 </p>
-            </div>
+              </div>
             )}
-        </div>
+          </div>
         )}
 
         {/* LLM Selection */}
@@ -272,7 +275,10 @@ export const AgentItem: React.FC<AgentItemProps> = ({
           ) : (
             <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2">
               {llmsEnum.map((modelName: string) => (
-                <div key={modelName} className="flex items-center gap-1.5 py-0.5">
+                <div
+                  key={modelName}
+                  className="flex items-center gap-1.5 py-0.5"
+                >
                   <input
                     type="radio"
                     name={`${agentName}-llm-selection`}
@@ -288,7 +294,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
                     }}
                     disabled={checkboxDisabled}
                   />
-                  <label className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}>
+                  <label
+                    className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}
+                  >
                     {modelName}
                   </label>
                 </div>
@@ -321,7 +329,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
                   }}
                   disabled={isAgentDisabled}
                 />
-                <label className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}>
+                <label
+                  className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}
+                >
                   {mcpName}
                 </label>
               </div>
@@ -353,7 +363,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
                   }}
                   disabled={isAgentDisabled}
                 />
-                <label className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}>
+                <label
+                  className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}
+                >
                   {capab}
                 </label>
               </div>
@@ -385,7 +397,9 @@ export const AgentItem: React.FC<AgentItemProps> = ({
                   }}
                   disabled={isAgentDisabled}
                 />
-                <label className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}>
+                <label
+                  className={`text-sm text-[var(--jp-ui-font-color1)] ${labelClass}`}
+                >
                   {skill}
                 </label>
               </div>
@@ -397,7 +411,8 @@ export const AgentItem: React.FC<AgentItemProps> = ({
         {((agentData.capabilities?.length || 0) > 0 ||
           (agentData.deep_skills?.length || 0) > 0) && (
           <div className="mt-3 pt-3 border-t border-[var(--jp-border-color2)] text-xs text-[var(--jp-ui-font-color2)]">
-            Summary: {agentData.capabilities?.length || 0} capability(ies) · {agentData.deep_skills?.length || 0} skill(s)
+            Summary: {agentData.capabilities?.length || 0} capability(ies) ·{' '}
+            {agentData.deep_skills?.length || 0} skill(s)
           </div>
         )}
       </div>
