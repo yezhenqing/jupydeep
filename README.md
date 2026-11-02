@@ -17,6 +17,9 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 
 ## 🔥 News & Highlights
 
+- **[2026-11-01] v0.1.12 Release:**
+  - 🧭 Introduced MLflow instrumentation support, please refer to docs [**MLflow tracing**](https://yezhenqing.github.io/jupydeep/en/howto_mlflow.html).
+
 - **[2026-10-08] v0.1.11 Release:**
   - 🔑 Support authentication tokens for MCP configuration.
   - 🏗️ Replace old backends with `pydantic-ai` [workspace architecture](https://pydantic.dev/docs/ai/core-concepts/workspace/).

@@ -33,6 +33,8 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
 # os.environ["MLFLOW_ASYNC_TRACE_LOGGING_MAX_SPAN_BATCH_SIZE"] = "2"
+os.environ["MLFLOW_HTTP_REQUEST_MAX_RETRIES"] = "2"
+os.environ["MLFLOW_HTTP_REQUEST_TIMEOUT"] = "3"
 
 logger = get_logger(__name__)
 

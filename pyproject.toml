@@ -28,15 +28,15 @@ dependencies = [
     "jupyter-kernel-client>=0.9.0",
     "jupyter-collaboration>=4.3.0",
     "matplotlib>=3.10.8",
-    "pydantic-deep[all,liteparse]>=0.3.50",
-    "pydantic-ai>=2.54.0",
+    "pydantic-deep[all,liteparse]==0.3.50",
+    "pydantic-ai==2.54.0",
     "fastmcp>=3.2.0",
     "mcp>=1.27.0, <2",
     "deepdiff>=9.0.0",
     "jupyter-mcp-server",
     "seaborn>=0.13.2",
     "pre-commit>=4.6.0",
-    "mlflow>=3.17.2",
+    "mlflow==3.17.2",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
