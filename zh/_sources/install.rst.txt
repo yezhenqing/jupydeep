@@ -49,3 +49,50 @@ For ``conda``, you can create a new environment and then install JupyDeep using 
    In particular, `Issue #65 <https://github.com/datalayer/jupyter-server-nbmodel/issues/65>`_ prevents notebooks from executing smoothly.
 
 In both ``uv`` and ``conda``, you can install any additional packages you need (such as ``seaborn`` for data analysis).
+
+
+.. tip::
+
+   **Troubleshooting: Terminating Unresponsive Jupyter Processes**
+
+   Occasionally, the JupyterLab or JupyDeep process may become unresponsive and cannot be gracefully terminated using ``Ctrl + C``. 
+   If this occurs, you can forcefully terminate the active server instance from another terminal console by running:
+
+   .. code-block:: console
+
+      $ pkill -9 jupyter
+
+
+.. warning::
+
+   **Notice: Setting Schema Incompatibility**
+
+   If you have a previous installation of JupyDeep, newer versions may introduce breaking changes to the setting JSON schemas that are incompatible with your existing configuration. Please inspect your local Jupyter user settings file. 
+
+   You can locate your specific Jupyter configuration and user settings directories by running:
+
+   .. code-block:: console
+
+      $ uv run jupyter --paths
+
+   Typically on Linux, user settings for JupyDeep reside under the Jupyter config directory. You can list them via:
+
+   .. code-block:: console
+
+      $ ls ~/.jupyter/lab/user-settings/jupydeep/ -l
+
+   Inside this directory, you should find the following core JSON configuration files:
+
+   * ``agent.jupyterlab-settings`` – Agent-specific behavior and capability options
+   * ``global.jupyterlab-settings`` – Global server connectivity and tracking settings
+   * ``llm.jupyterlab-settings`` – LLM provider and model parameters
+   * ``mcp.jupyterlab-settings`` – Model Context Protocol server configurations
+   * ``skill.jupyterlab-settings`` – Custom agent skill paths and definitions
+
+   **For simplicity, you can delete these json files (if they exist) prior to reinstalling JupyDeep. 
+   After installation, you will need to reconfigure them.**
+
+   If you prefer to manually update these settings, please refer to the detailed 
+   ** `JSON schemas <https://github.com/yezhenqing/jupydeep/tree/main/schema>`_ ** in our GitHub repository 
+   to ensure your local configurations remain compatible with the latest schema definitions.
+     

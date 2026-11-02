@@ -1,6 +1,92 @@
 How to enable MLflow tracing
 ----------------------------
 
+.. warning::
+
+   **Notice: Setting Schema Incompatibility in v0.1.12**
+
+   Starting from version 0.1.12, JupyDeep introduces breaking changes to the JSON schemas for ``global.jupyterlab-settings`` and ``agent.jupyterlab-settings``. 
+   Please refer to the **Installation warning section** :ref:`Installation <installation>`.
+
+   If you have a previous installation of JupyDeep, please review your existing local configuration files and update them with the required schema properties. 
+
+   **For simplicity, you can delete these two configuration files (if they exist) prior to reinstalling JupyDeep. After installation, you will need to reconfigure them.**
+
+   For reference only; specific parameter values in your configuration may vary:
+
+   .. code-block:: json
+      :emphasize-lines: 10,11
+
+      {
+          "_root": {
+              "default_agent": "Wu Kong",
+              "default_model": "openai:gpt-5.2",
+              "usage_limit_usd": null,
+              "request_limit": 100,
+              "total_tokens_limit": null,
+              "tool_timeout": 200,
+              "backend": "LocalBackend",
+              "enable_system_mlflow": true,
+              "mlflow_tracking_uri": "http://127.0.0.1:5000"
+          }
+      }
+
+   You may need to update the parameters highlighted as above for ``enable_system_mlflow`` and ``mlflow_tracking_uri``.
+
+   And the updated agent settings schema file:
+
+   .. code-block:: json
+      :emphasize-lines: 6,7,26,27
+
+      {
+          "agents": {
+              "Wu Kong": {
+                  "enabled": true,
+                  "description": "This is the master agent (Wu Kong) for the JupyDeep extension.",
+                  "enable_mlflow": true,
+                  "mlflow_experiment_suffix": "run1",
+                  "model": "openrouter:qwen3.8",
+                  "deep_mcps": [
+                      "jupyter"
+                  ],
+                  "capabilities": [
+                      "include_plan",
+                      "include_todo",
+                      "include_filesystem",
+                      "context_manager",
+                      "include_liteparse"
+                  ],
+                  "deep_skills": [
+                      "test/v1/tell-a-joke"
+                  ]
+              },
+              "Monk Tang": {
+                  "enabled": true,
+                  "description": "This is the master agent (Monk Tang) for the JupyDeep extension.",
+                  "enable_mlflow": false,
+                  "mlflow_experiment_suffix": "JupyDeep-{Agent}-{suffix}",
+                  "model": "openrouter:qwen3.8",
+                  "deep_mcps": [
+                      "jupyter"
+                  ],
+                  "capabilities": [
+                      "include_todo",
+                      "include_filesystem",
+                      "include_subagents",
+                      "include_plan",
+                      "include_liteparse",
+                      "web_search",
+                      "web_fetch"
+                  ],
+                  "deep_skills": [
+                      "test/v1/tell-a-joke"
+                  ]
+              }
+          }
+      }
+
+   You may need to update the parameters highlighted as above for ``enable_mlflow`` and ``mlflow_experiment_suffix`` in each agent.
+
 1. Instrumentation in Agent Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

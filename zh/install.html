@@ -203,6 +203,41 @@
 In particular, <a class="reference external" href="https://github.com/datalayer/jupyter-server-nbmodel/issues/65">Issue #65</a> prevents notebooks from executing smoothly.</p>
 </div>
 <p>无论在 <code class="docutils literal notranslate"><span class="pre">uv</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">conda</span></code> 中，您都可以根据需要安装任何额外的依赖包（例如用于数据分析的 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>）。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>Troubleshooting: Terminating Unresponsive Jupyter Processes</strong></p>
+<p>Occasionally, the JupyterLab or JupyDeep process may become unresponsive and cannot be gracefully terminated using <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code>.
+If this occurs, you can forcefully terminate the active server instance from another terminal console by running:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pkill<span class="w"> </span>-9<span class="w"> </span>jupyter
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><strong>Notice: Setting Schema Incompatibility</strong></p>
+<p>If you have a previous installation of JupyDeep, newer versions may introduce breaking changes to the setting JSON schemas that are incompatible with your existing configuration. Please inspect your local Jupyter user settings file.</p>
+<p>You can locate your specific Jupyter configuration and user settings directories by running:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>--paths
+</pre></div>
+</div>
+<p>Typically on Linux, user settings for JupyDeep reside under the Jupyter config directory. You can list them via:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>~/.jupyter/lab/user-settings/jupydeep/<span class="w"> </span>-l
+</pre></div>
+</div>
+<p>Inside this directory, you should find the following core JSON configuration files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">agent.jupyterlab-settings</span></code> – Agent-specific behavior and capability options</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global.jupyterlab-settings</span></code> – Global server connectivity and tracking settings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llm.jupyterlab-settings</span></code> – LLM provider and model parameters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcp.jupyterlab-settings</span></code> – Model Context Protocol server configurations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skill.jupyterlab-settings</span></code> – Custom agent skill paths and definitions</p></li>
+</ul>
+<p><strong>For simplicity, you can delete these json files (if they exist) prior to reinstalling JupyDeep.
+After installation, you will need to reconfigure them.</strong></p>
+<p>If you prefer to manually update these settings, please refer to the detailed
+** <a class="reference external" href="https://github.com/yezhenqing/jupydeep/tree/main/schema">JSON schemas</a> ** in our GitHub repository
+to ensure your local configurations remain compatible with the latest schema definitions.</p>
+</div>
 </section>
 </section>
 </section>
