@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to enable MLflow tracing &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=360bc84d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer Guide" href="developer.html" />
+    <link rel="prev" title="How to config context window" href="howto_ctx.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id2">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#locate-settings">1. Locate Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-llm">2. Configure Your LLM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-mcp">3. Configure Your MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#meet-your-built-in-agents">4. Meet Your Built-in Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#global-setting">5. Global Setting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="howto.html">How To</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="howto_llm.html">How to add extra LLM models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#toggling-context-window-management">3. Toggling Context Window Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to enable MLflow tracing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#instrumentation-in-agent-development">1. Instrumentation in Agent Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-mlflow-tracing-in-jupydeep">2. Enabling MLflow Tracing in JupyDeep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#veryfing-mlflow-tracing-in-jupydeep">3. Veryfing MLflow Tracing in JupyDeep</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#how-to-contribute-codes">How to contribute codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gallery.html">JupyDeep Gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gallery.html#computational-biology">Computational Biology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/genmol.html">GenMol Skill Demonstration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/openfold3.html">OpenFold3 Skill Demonstration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gallery.html#miscellaneous">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/misc/rkernel.html">R Kernel Spec Demonstration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="howto.html">How To</a></li>
+      <li class="breadcrumb-item active">How to enable MLflow tracing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/howto_mlflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-to-enable-mlflow-tracing">
+<h1>How to enable MLflow tracing<a class="headerlink" href="#how-to-enable-mlflow-tracing" title="Link to this heading"></a></h1>
+<section id="instrumentation-in-agent-development">
+<h2>1. Instrumentation in Agent Development<a class="headerlink" href="#instrumentation-in-agent-development" title="Link to this heading"></a></h2>
+<p>In building AI agent applications, instrumentation embeds collection logic
+along critical execution paths to capture structured runtime data—including
+LLM calls, tool executions, and retrieval steps. Unlike conventional logging,
+it records stateful, multi-step reasoning chains that plain text logs cannot
+reconstruct. By providing deep observability into dynamic agent workflows,
+instrumentation enables developers to debug non-deterministic control flows,
+trace latency bottlenecks across nested tool invocations, and evaluate decision
+quality at every node via OpenTelemetry-based distributed tracing that propagates
+context without boilerplate.</p>
+<p>While several general-purpose and specialized instrumentation tools exist, MLflow
+Tracing is chosen here for its seamless integration with the broader MLflow ecosystem,
+single-line autologging across major agent frameworks, and open, self-hostable architecture
+that safeguards sensitive prompt payloads.</p>
+<p><strong>With this feature enabled, it facilitates a wide array of downstream tasks, including systematic
+prompt engineering, iterative model capability debugging, and side-by-side performance comparison</strong>.
+Whether hot-swapping underlying LLM providers to evaluate behavioral shifts, iterating across distinct
+capability versions within your agent architecture, or benchmarking functionally equivalent tools from
+diverse open-source and proprietary sources, MLflow integration empowers JupyDeep to streamline complex
+development workflows with full traceability and empirical rigor.</p>
+</section>
+<section id="enabling-mlflow-tracing-in-jupydeep">
+<h2>2. Enabling MLflow Tracing in JupyDeep<a class="headerlink" href="#enabling-mlflow-tracing-in-jupydeep" title="Link to this heading"></a></h2>
+<p>To enable MLflow tracing in JupyDeep, a two-tier configuration workflow is required:</p>
+<p>1. <strong>System Top-Level Configuration:</strong> Defines the target MLflow tracking server connection details (such
+as the tracking URI) and verifies network availability to ensure reliable telemetry backend communication.</p>
+<p>2. <strong>Agent-Level Configuration:</strong> Grants fine-grained control over tracing activation for individual agent
+instances. At this level, developers can toggle tracing on or off and specify custom experiment suffixes to
+logically group, isolate, and compare distinct execution runs.</p>
+<p>Suppose you have installed JupyterLab and JupyDeep via <code class="docutils literal notranslate"><span class="pre">uv</span></code> (refer to the <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>
+section for details). You can then start the MLflow server and JupyterLab in two separate terminal panes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In the first terminal pane</span>
+uv<span class="w"> </span>run<span class="w"> </span>mlflow<span class="w"> </span>server
+
+<span class="c1"># In the second terminal pane, please replace the notebook-dir parameter to the path you want</span>
+uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab<span class="w"> </span>--ip<span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span>--no-browser<span class="w"> </span>--notebook-dir<span class="o">=</span><span class="s2">"/home/yezhq/workspace"</span>
+</pre></div>
+</div>
+<p>If successful, the MLflow server will output a confirmation log such as <code class="docutils literal notranslate"><span class="pre">Uvicorn</span> <span class="pre">running</span> <span class="pre">on</span> <span class="pre">http://127.0.0.1:5000</span></code>
+(you can customize the port and supply additional parameters by consulting the MLflow documentation or running
+<code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">mlflow</span> <span class="pre">server</span> <span class="pre">--help</span></code>). Once both the MLflow and JupyDeep environments are running, proceed to the
+configuration steps below.</p>
+<section id="system-top-level-configuration">
+<h3>2.1 System Top-Level Configuration:<a class="headerlink" href="#system-top-level-configuration" title="Link to this heading"></a></h3>
+<p>In JupyDeep, please navigate to the setting editor panel, locating the “jupydeep.global” section, you will see
+something like the below picture.</p>
+<a class="reference internal image-reference" href="_images/mlflow_global.png"><img alt="_images/mlflow_global.png" class="align-center" src="_images/mlflow_global.png" style="width: 688.8000000000001px; height: 764.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Enter the tracking URI obtained from your MLflow server terminal into the configuration field, then click the
+<strong>Test</strong> button to verify connectivity. A successful connection will be indicated by a green status dot and an
+<strong>Active</strong> label.</p>
+</section>
+<section id="agent-level-configuration">
+<h3>2.1 Agent-Level Configuration:<a class="headerlink" href="#agent-level-configuration" title="Link to this heading"></a></h3>
+<p>The preceding step establishes the system-wide MLflow tracking server for JupyDeep. You can further configure
+tracing at a granular, agent-by-agent level based on your requirements. Navigating to the <strong>Agent</strong> section in
+the Settings Editor displays the options shown below (using the built-in <code class="docutils literal notranslate"><span class="pre">WuKong</span></code> agent as an example):</p>
+<a class="reference internal image-reference" href="_images/mlflow_agent.png"><img alt="_images/mlflow_agent.png" class="align-center" src="_images/mlflow_agent.png" style="width: 1286.0px; height: 1085.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Under the agent settings, locate the <strong>Enable MLflow Tracing</strong> option to toggle tracing for this agent (note that
+this option remains hidden if system-level tracing is disabled). You can also specify a custom experiment name suffix,
+which will be appended in MLflow to help distinguish and group individual execution runs.</p>
+</section>
+</section>
+<section id="veryfing-mlflow-tracing-in-jupydeep">
+<h2>3. Veryfing MLflow Tracing in JupyDeep<a class="headerlink" href="#veryfing-mlflow-tracing-in-jupydeep" title="Link to this heading"></a></h2>
+<p>Return to the JupyDeep chat panel and send a message to the <code class="docutils literal notranslate"><span class="pre">WuKong</span></code> agent (the agent configured for tracing).
+MLflow will automatically capture and trace all relevant conversational payload and execution data.</p>
+<p>Next, open the MLflow Web UI in your browser at <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:5000</span></code> and navigate to the <strong>Experiments</strong> panel.
+You will find the recorded session listed under the experiment naming scheme <code class="docutils literal notranslate"><span class="pre">JupyDeep-{agent.name}-{date}-{suffix}</span></code>
+(for example, <code class="docutils literal notranslate"><span class="pre">JupyDeep-WuKong-20261102-run1</span></code>).</p>
+<a class="reference internal image-reference" href="_images/mlflow_experiments.png"><img alt="_images/mlflow_experiments.png" class="align-center" src="_images/mlflow_experiments.png" style="width: 1010.0px; height: 369.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Clicking on the experiment to view its details reveals granular trace information, including token usage statistics
+and other performance summaries.</p>
+<a class="reference internal image-reference" href="_images/mlflow_traces.png"><img alt="_images/mlflow_traces.png" class="align-center" src="_images/mlflow_traces.png" style="width: 1604.0px; height: 1343.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>You can further inspect these traces to gain complete visibility into background execution—such as internal agent control flow
+and nested tool calls—allowing you to gather debugging data, evaluate execution performance, and score prompt strategies alongside
+agent capabilities.</p>
+<a class="reference internal image-reference" href="_images/mlflow_trace_detail.png"><img alt="_images/mlflow_trace_detail.png" class="align-center" src="_images/mlflow_trace_detail.png" style="width: 1606.0px; height: 1325.0px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="remarks">
+<h3>Remarks<a class="headerlink" href="#remarks" title="Link to this heading"></a></h3>
+<p>Integrating MLflow Tracing into JupyDeep significantly streamlines downstream agent development tasks, including runtime execution tracing,
+empirical performance evaluation, prompt engineering, and instruction diffing and comparison.</p>
+<p>For instance, developers can systematically evaluate behavioral changes by swapping prompt templates while holding all other agent configurations
+constant, recording trace outputs directly in MLflow to pinpoint optimal system performance. Beyond prompt refinement, this workflow seamlessly
+extends to comparing distinct instruction versions, benchmarking functionally equivalent capabilities from different authors or libraries, and
+fine-tuning tool-calling strategies with complete traceability.</p>
+<p>Additionally, because the MLflow library is bundled with JupyDeep, you can directly import <code class="docutils literal notranslate"><span class="pre">mlflow</span></code> into your own Python or Jupyter projects for
+custom machine learning monitoring, experiment tracking, and function-level tracing.</p>
+<p>Below is an illustrative code example tailored for a Jupyter notebook environment, demonstrating how to configure an experiment, set up traced functions,
+and execute a multi-step trace workflow:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+
+<span class="c1"># Set the tracking URI and target experiment</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="s2">"http://127.0.0.1:5000"</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">"JupyDeep-Custom-Tracing-Demo"</span><span class="p">)</span>
+
+<span class="nd">@mlflow</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">span_type</span><span class="o">=</span><span class="s2">"func"</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">"operation"</span><span class="p">:</span> <span class="s2">"increment"</span><span class="p">})</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nd">@mlflow</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">span_type</span><span class="o">=</span><span class="s2">"func"</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">"operation"</span><span class="p">:</span> <span class="s2">"decrement"</span><span class="p">})</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">minus_1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="nd">@mlflow</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Trace Test Pipeline"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trace_test</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">step1</span> <span class="o">=</span> <span class="n">add_1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">minus_1</span><span class="p">(</span><span class="n">step1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># Execute the traced function pipeline directly in the notebook cell</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">trace_test</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pipeline output: </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We strongly encourage users to explore the full spectrum of <a class="reference external" href="https://mlflow.org/docs/latest/genai/">MLflow</a> functionality and leverage its capabilities across diverse workflows within
+the JupyDeep environment. Beyond agent conversation tracing, integrating MLflow opens up broad possibilities—including custom pipeline instrumentation,
+model registry management, hyperparameter tracking, and automated performance evaluation—empowering you to build reproducible, production-ready AI
+and machine learning solutions directly inside your interactive workspace.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+<!-- Giscus Comments and Feedback Module -->
+ <!-- 
+<div class="sphinx-giscus-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Discussion and Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">If you find any errors or have suggestions, feel free to leave a comment or reaction below:</p>
+
+        <script src="https://giscus.app/client.js"
+        data-repo="yezhenqing/jupydeep"
+        data-repo-id="R_kgDOSvZSlA"
+        data-category="General"
+        data-category-id="DIC_kwDOSvZSlM4DKPiE"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+-->
+
+<!-- LikeBtn.com Anonymous Feedback and Rating Module -->
+<div class="sphinx-likebtn-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">Did you find this page helpful? Feel free to vote below:</p>
+    
+    <span class="likebtn-wrapper" 
+          data-theme="custom" 
+          data-identifier="" 
+          data-show_dislike_label="true" 
+          data-label_like="Helpful" 
+          data-label_dislike="Not helpful"
+          data-counter_clickable="true">
+    </span>
+    
+    <script>
+        (function() {
+            var wrappers = document.getElementsByClassName('likebtn-wrapper');
+            for (var i = 0; i < wrappers.length; i++) {
+                if (!wrappers[i].getAttribute('data-identifier')) {
+                    var pageId = window.location.pathname || 'index';
+                    wrappers[i].setAttribute('data-identifier', pageId);
+                }
+            }
+
+            if (!document.getElementById("likebtn_wjs")) {
+                var a = document.createElement('script');
+                a.async = true;
+                a.id = "likebtn_wjs";
+                a.src = "https://w.likebtn.com/js/w.js";
+                var m = document.getElementsByTagName('script')[0];
+                m.parentNode.insertBefore(a, m);
+            } else if (typeof(LikeBtn) !== "undefined") {
+                LikeBtn.init();
+            }
+        })();
+    </script>
+
+    
+</div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

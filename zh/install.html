@@ -80,7 +80,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">安装</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">安装</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> 安装</a></li>
 </ul>
@@ -116,6 +116,12 @@
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#toggling-context-window-management">3. Toggling Context Window Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mlflow.html">How to enable MLflow tracing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#instrumentation-in-agent-development">1. Instrumentation in Agent Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#enabling-mlflow-tracing-in-jupydeep">2. Enabling MLflow Tracing in JupyDeep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#veryfing-mlflow-tracing-in-jupydeep">3. Veryfing MLflow Tracing in JupyDeep</a></li>
 </ul>
 </li>
 </ul>
@@ -164,9 +170,9 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>安装<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
-<section id="id1">
-<h2>安装<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<span id="id1"></span><h1>安装<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>安装<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>JupyDeep 已发布至 PyPI，可以通过 pip 进行安装（包括在 uv 或 conda 环境中）。</p>
 <section id="uv-installation">
 <h3><code class="docutils literal notranslate"><span class="pre">uv</span></code> 安装<a class="headerlink" href="#uv-installation" title="Link to this heading"></a></h3>
@@ -204,23 +210,71 @@ In particular, <a class="reference external" href="https://github.com/datalayer/
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="index.html" class="btn btn-neutral float-left" title="JupyDeep：您在 Jupyter 中的 AI 伙伴" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="guide.html" class="btn btn-neutral float-right" title="用户指南" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          
+<!-- Giscus Comments and Feedback Module -->
+ <!-- 
+<div class="sphinx-giscus-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Discussion and Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">If you find any errors or have suggestions, feel free to leave a comment or reaction below:</p>
 
-  <hr/>
+        <script src="https://giscus.app/client.js"
+        data-repo="yezhenqing/jupydeep"
+        data-repo-id="R_kgDOSvZSlA"
+        data-category="General"
+        data-category-id="DIC_kwDOSvZSlM4DKPiE"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
 
-  <div role="contentinfo">
-    <p>&#169; 版权所有 2026, Zhenqing Ye。</p>
-  </div>
+</div>
+-->
 
-  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
-    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
-   
+<!-- LikeBtn.com Anonymous Feedback and Rating Module -->
+<div class="sphinx-likebtn-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">Did you find this page helpful? Feel free to vote below:</p>
+    
+    <span class="likebtn-wrapper" 
+          data-theme="custom" 
+          data-identifier="" 
+          data-show_dislike_label="true" 
+          data-label_like="Helpful" 
+          data-label_dislike="Not helpful"
+          data-counter_clickable="true">
+    </span>
+    
+    <script>
+        (function() {
+            var wrappers = document.getElementsByClassName('likebtn-wrapper');
+            for (var i = 0; i < wrappers.length; i++) {
+                if (!wrappers[i].getAttribute('data-identifier')) {
+                    var pageId = window.location.pathname || 'index';
+                    wrappers[i].setAttribute('data-identifier', pageId);
+                }
+            }
 
-</footer>
+            if (!document.getElementById("likebtn_wjs")) {
+                var a = document.createElement('script');
+                a.async = true;
+                a.id = "likebtn_wjs";
+                a.src = "https://w.likebtn.com/js/w.js";
+                var m = document.getElementsByTagName('script')[0];
+                m.parentNode.insertBefore(a, m);
+            } else if (typeof(LikeBtn) !== "undefined") {
+                LikeBtn.init();
+            }
+        })();
+    </script>
+
+    
+</div>
         </div>
       </div>
     </section>
