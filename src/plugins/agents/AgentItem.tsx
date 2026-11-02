@@ -19,7 +19,7 @@ interface IAgentsFormData {
 
 const EMPTY_ARRAY: any[] = [];
 
-interface AgentItemProps {
+interface IAgentItemProps {
   agentName: string;
   formAgentData: IAgentConfigData;
   defaultAgentData: any;
@@ -39,7 +39,7 @@ interface AgentItemProps {
   labelClass: string;
 }
 
-export const AgentItem: React.FC<AgentItemProps> = ({
+export const AgentItem: React.FC<IAgentItemProps> = ({
   agentName,
   formAgentData,
   defaultAgentData,
