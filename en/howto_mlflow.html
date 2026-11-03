@@ -171,81 +171,6 @@
              
   <section id="how-to-enable-mlflow-tracing">
 <h1>How to enable MLflow tracing<a class="headerlink" href="#how-to-enable-mlflow-tracing" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p><strong>Notice: Setting Schema Incompatibility in v0.1.12</strong></p>
-<p>Starting from version 0.1.12, JupyDeep introduces breaking changes to the JSON schemas for <code class="docutils literal notranslate"><span class="pre">global.jupyterlab-settings</span></code> and <code class="docutils literal notranslate"><span class="pre">agent.jupyterlab-settings</span></code>.
-Please refer to the <strong>Installation warning section</strong> <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>.</p>
-<p>If you have a previous installation of JupyDeep, please review your existing local configuration files and update them with the required schema properties.</p>
-<p><strong>For simplicity, you can delete these two configuration files (if they exist) prior to reinstalling JupyDeep. After installation, you will need to reconfigure them.</strong></p>
-<p>For reference only; specific parameter values in your configuration may vary:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"_root"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">"default_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wu Kong"</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"default_model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai:gpt-5.2"</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"usage_limit_usd"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"request_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"total_tokens_limit"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"tool_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"backend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LocalBackend"</span><span class="p">,</span>
-<span class="hll"><span class="w">        </span><span class="nt">"enable_system_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">"mlflow_tracking_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://127.0.0.1:5000"</span>
-</span><span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>You may need to update the parameters highlighted as above for <code class="docutils literal notranslate"><span class="pre">enable_system_mlflow</span></code> and <code class="docutils literal notranslate"><span class="pre">mlflow_tracking_uri</span></code>.</p>
-<p>And the updated agent settings schema file:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">"Wu Kong"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the master agent (Wu Kong) for the JupyDeep extension."</span><span class="p">,</span>
-<span class="hll"><span class="w">            </span><span class="nt">"enable_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span class="hll"><span class="w">            </span><span class="nt">"mlflow_experiment_suffix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run1"</span><span class="p">,</span>
-</span><span class="w">            </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openrouter:qwen3.8"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"deep_mcps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"jupyter"</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"include_plan"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_todo"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_filesystem"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"context_manager"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_liteparse"</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">"deep_skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"test/v1/tell-a-joke"</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">"Monk Tang"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the master agent (Monk Tang) for the JupyDeep extension."</span><span class="p">,</span>
-<span class="hll"><span class="w">            </span><span class="nt">"enable_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span class="hll"><span class="w">            </span><span class="nt">"mlflow_experiment_suffix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JupyDeep-{Agent}-{suffix}"</span><span class="p">,</span>
-</span><span class="w">            </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openrouter:qwen3.8"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"deep_mcps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"jupyter"</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"include_todo"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_filesystem"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_subagents"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_plan"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"include_liteparse"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"web_search"</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">"web_fetch"</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">"deep_skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">"test/v1/tell-a-joke"</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>You may need to update the parameters highlighted as above for <code class="docutils literal notranslate"><span class="pre">enable_mlflow</span></code> and <code class="docutils literal notranslate"><span class="pre">mlflow_experiment_suffix</span></code> in each agent.</p>
-</div>
 <section id="instrumentation-in-agent-development">
 <h2>1. Instrumentation in Agent Development<a class="headerlink" href="#instrumentation-in-agent-development" title="Link to this heading"></a></h2>
 <p>In building AI agent applications, instrumentation embeds collection logic
@@ -385,6 +310,81 @@ and execute a multi-step trace workflow:</p>
 the JupyDeep environment. Beyond agent conversation tracing, integrating MLflow opens up broad possibilities—including custom pipeline instrumentation,
 model registry management, hyperparameter tracking, and automated performance evaluation—empowering you to build reproducible, production-ready AI
 and machine learning solutions directly inside your interactive workspace.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Notice: Setting Schema Incompatibility in v0.1.12</strong></p>
+<p>Starting from version 0.1.12, JupyDeep introduces breaking changes to the JSON schemas for <code class="docutils literal notranslate"><span class="pre">global.jupyterlab-settings</span></code> and <code class="docutils literal notranslate"><span class="pre">agent.jupyterlab-settings</span></code>.
+Please refer to the <strong>Installation warning section</strong> <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>.</p>
+<p>If you have a previous installation of JupyDeep, please review your existing local configuration files and update them with the required schema properties.</p>
+<p><strong>For simplicity, you can delete these two configuration files (if they exist) prior to reinstalling JupyDeep. After installation, you will need to reconfigure them.</strong></p>
+<p>For reference only; specific parameter values in your configuration may vary:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"_root"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"default_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wu Kong"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"default_model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai:gpt-5.2"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"usage_limit_usd"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"request_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"total_tokens_limit"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"tool_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"backend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LocalBackend"</span><span class="p">,</span>
+<span class="hll"><span class="w">        </span><span class="nt">"enable_system_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">"mlflow_tracking_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://127.0.0.1:5000"</span>
+</span><span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You may need to update the parameters highlighted as above for <code class="docutils literal notranslate"><span class="pre">enable_system_mlflow</span></code> and <code class="docutils literal notranslate"><span class="pre">mlflow_tracking_uri</span></code>.</p>
+<p>And the updated agent settings schema file:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"Wu Kong"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the master agent (Wu Kong) for the JupyDeep extension."</span><span class="p">,</span>
+<span class="hll"><span class="w">            </span><span class="nt">"enable_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span class="hll"><span class="w">            </span><span class="nt">"mlflow_experiment_suffix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run1"</span><span class="p">,</span>
+</span><span class="w">            </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openrouter:qwen3.8"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"deep_mcps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"jupyter"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"include_plan"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_todo"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_filesystem"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"context_manager"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_liteparse"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"deep_skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"test/v1/tell-a-joke"</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"Monk Tang"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the master agent (Monk Tang) for the JupyDeep extension."</span><span class="p">,</span>
+<span class="hll"><span class="w">            </span><span class="nt">"enable_mlflow"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span class="hll"><span class="w">            </span><span class="nt">"mlflow_experiment_suffix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JupyDeep-{Agent}-{suffix}"</span><span class="p">,</span>
+</span><span class="w">            </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openrouter:qwen3.8"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"deep_mcps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"jupyter"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"include_todo"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_filesystem"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_subagents"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_plan"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"include_liteparse"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"web_search"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"web_fetch"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"deep_skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"test/v1/tell-a-joke"</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You may need to update the parameters highlighted as above for <code class="docutils literal notranslate"><span class="pre">enable_mlflow</span></code> and <code class="docutils literal notranslate"><span class="pre">mlflow_experiment_suffix</span></code> in each agent.</p>
+</div>
 </section>
 </section>
 </section>
