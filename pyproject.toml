@@ -41,7 +41,7 @@ dependencies = [
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
 [project.optional-dependencies]
-test = ["ipykernel", "pytest>=7.0", "pytest-jupyter"]
+test = ["ipykernel", "pytest>=7.0", "pytest-jupyter", "pytest-cov"]
 
 [tool.hatch.version]
 source = "nodejs"
