@@ -165,7 +165,7 @@ the Settings Editor displays the options shown below (using the built-in ``WuKon
 
 
 .. image:: _static/images/mlflow_agent.png
-   :scale: 100%
+   :scale: 80%
    :align: center
 
 |
@@ -186,7 +186,7 @@ You will find the recorded session listed under the experiment naming scheme ``J
 (for example, ``JupyDeep-WuKong-20261102-run1``).
 
 .. image:: _static/images/mlflow_experiments.png
-   :scale: 100%
+   :scale: 80%
    :align: center
 
 |
@@ -196,7 +196,7 @@ and other performance summaries.
 
 
 .. image:: _static/images/mlflow_traces.png
-   :scale: 100%
+   :scale: 80%
    :align: center
 
 |
@@ -206,7 +206,7 @@ and nested tool calls—allowing you to gather debugging data, evaluate executio
 agent capabilities.
 
 .. image:: _static/images/mlflow_trace_detail.png
-   :scale: 100%
+   :scale: 80%
    :align: center
 
 |

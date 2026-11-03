@@ -10,3 +10,10 @@
 .wy-side-nav-search input[type="text"]::placeholder {
     color: #666666;
 }
+
+.rst-content img, div.body img {
+    width: 90%;                 
+    height: auto !important;      
+    display: block;
+    margin: 1.5em auto;           
+}

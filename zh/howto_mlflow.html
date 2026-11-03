@@ -9,7 +9,7 @@
   <title>How to enable MLflow tracing &mdash; JupyDeep-Documentation 0.1.3 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cf229479" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ceb059c0" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -308,7 +308,7 @@ something like the below picture.</p>
 <p>The preceding step establishes the system-wide MLflow tracking server for JupyDeep. You can further configure
 tracing at a granular, agent-by-agent level based on your requirements. Navigating to the <strong>Agent</strong> section in
 the Settings Editor displays the options shown below (using the built-in <code class="docutils literal notranslate"><span class="pre">WuKong</span></code> agent as an example):</p>
-<a class="reference internal image-reference" href="_images/mlflow_agent.png"><img alt="_images/mlflow_agent.png" class="align-center" src="_images/mlflow_agent.png" style="width: 1286.0px; height: 1085.0px;" />
+<a class="reference internal image-reference" href="_images/mlflow_agent.png"><img alt="_images/mlflow_agent.png" class="align-center" src="_images/mlflow_agent.png" style="width: 1028.8px; height: 868.0px;" />
 </a>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -325,14 +325,14 @@ MLflow will automatically capture and trace all relevant conversational payload 
 <p>Next, open the MLflow Web UI in your browser at <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:5000</span></code> and navigate to the <strong>Experiments</strong> panel.
 You will find the recorded session listed under the experiment naming scheme <code class="docutils literal notranslate"><span class="pre">JupyDeep-{agent.name}-{date}-{suffix}</span></code>
 (for example, <code class="docutils literal notranslate"><span class="pre">JupyDeep-WuKong-20261102-run1</span></code>).</p>
-<a class="reference internal image-reference" href="_images/mlflow_experiments.png"><img alt="_images/mlflow_experiments.png" class="align-center" src="_images/mlflow_experiments.png" style="width: 1010.0px; height: 369.0px;" />
+<a class="reference internal image-reference" href="_images/mlflow_experiments.png"><img alt="_images/mlflow_experiments.png" class="align-center" src="_images/mlflow_experiments.png" style="width: 808.0px; height: 295.2px;" />
 </a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Clicking on the experiment to view its details reveals granular trace information, including token usage statistics
 and other performance summaries.</p>
-<a class="reference internal image-reference" href="_images/mlflow_traces.png"><img alt="_images/mlflow_traces.png" class="align-center" src="_images/mlflow_traces.png" style="width: 1604.0px; height: 1343.0px;" />
+<a class="reference internal image-reference" href="_images/mlflow_traces.png"><img alt="_images/mlflow_traces.png" class="align-center" src="_images/mlflow_traces.png" style="width: 1283.2px; height: 1074.4px;" />
 </a>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -340,7 +340,7 @@ and other performance summaries.</p>
 <p>You can further inspect these traces to gain complete visibility into background execution—such as internal agent control flow
 and nested tool calls—allowing you to gather debugging data, evaluate execution performance, and score prompt strategies alongside
 agent capabilities.</p>
-<a class="reference internal image-reference" href="_images/mlflow_trace_detail.png"><img alt="_images/mlflow_trace_detail.png" class="align-center" src="_images/mlflow_trace_detail.png" style="width: 1606.0px; height: 1325.0px;" />
+<a class="reference internal image-reference" href="_images/mlflow_trace_detail.png"><img alt="_images/mlflow_trace_detail.png" class="align-center" src="_images/mlflow_trace_detail.png" style="width: 1284.8000000000002px; height: 1060.0px;" />
 </a>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -395,7 +395,7 @@ and machine learning solutions directly inside your interactive workspace.</p>
           </div>
           
 <!-- Giscus Comments and Feedback Module -->
- <!-- 
+ 
 <div class="sphinx-giscus-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
     <h3>Discussion and Feedback</h3>
     <p style="color: #666; font-size: 0.9rem;">If you find any errors or have suggestions, feel free to leave a comment or reaction below:</p>
@@ -417,9 +417,10 @@ and machine learning solutions directly inside your interactive workspace.</p>
 </script>
 
 </div>
--->
+
 
 <!-- LikeBtn.com Anonymous Feedback and Rating Module -->
+<!-- 
 <div class="sphinx-likebtn-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
     <h3>Feedback</h3>
     <p style="color: #666; font-size: 0.9rem;">Did you find this page helpful? Feel free to vote below:</p>
@@ -455,9 +456,9 @@ and machine learning solutions directly inside your interactive workspace.</p>
             }
         })();
     </script>
-
-    
 </div>
+
+-->
         </div>
       </div>
     </section>
