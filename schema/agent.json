@@ -71,6 +71,17 @@
           "type": "boolean",
           "title": "Whether to enable this agent",
           "default": true
+        },
+        "enable_mlflow": {
+          "type": "boolean",
+          "title": "Whether to enable MLFlow",
+          "default": true
+        },
+        "mlflow_experiment_suffix": {
+          "type": "string",
+          "default": "",
+          "title": "MLflow experiment suffix",
+          "description": "The suffix of MLflow experiment"
         }
       },
       "additionalProperties": true

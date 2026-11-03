@@ -1,12 +1,13 @@
 import asyncio
 from pathlib import Path
 from typing import Dict, List, Any, Callable, Optional, TYPE_CHECKING
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, PrivateAttr
 from ._base import ConfigLoader
 
 if TYPE_CHECKING:
     from ..engine import AgentEngine
 
+from ..handlers.mlftest import check_mlflow_health
 from ..utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -37,6 +38,18 @@ class GlobalSetting(BaseModel):
         default=None,
         description="The maximum number of tokens allowed in requests and responses combined",
     )
+    # Check MLflow instrumentation for tracking tool calls and agents
+    enable_system_mlflow: bool = Field(
+        default=False, description="MLflow instrumentation infra"
+    )
+    # Tracking server URI for MLflow logs
+    mlflow_tracking_uri: str = Field(
+        default="http://127.0.0.1:5000",
+        description="Tracking server URL for MLflow instrumentation",
+    )
+    # Runtime private attribute to track whether MLflow connection has been successfully verified
+    # It is NOT serialized or saved into configuration files.
+    _mlflow_connected: bool = PrivateAttr(default=False)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "GlobalSetting":
@@ -56,6 +69,15 @@ class GlobalSetting(BaseModel):
     def apply_diff(self, diff: Dict[str, Any]):
         for key, value in diff.items():
             setattr(self, key, value)
+
+    @property
+    def is_mlflow_active(self) -> bool:
+        """Check if MLflow is both enabled by user and verified as connected."""
+        return bool(self.enable_system_mlflow and self._mlflow_connected)
+
+    def set_mlflow_connected(self, status: bool):
+        """Update the runtime health check status for MLflow."""
+        self._mlflow_connected = status
 
 
 class UsageTracker:
@@ -179,6 +201,21 @@ class GlobalSettingHub:
         if getattr(self._current_setting, "backend", None) is not None:
             pass
             # TODO: implement DockerBackend
+
+        # 3. check MLflow availability
+        if getattr(self._current_setting, "enable_system_mlflow", None):
+            mlflow_uri = getattr(self._current_setting, "mlflow_tracking_uri", "")
+            if not mlflow_uri:
+                logger.warning(
+                    f"MLFlow tracking url is required to enable it: {mlflow_uri}"
+                )
+            else:
+                is_healthy, message = await check_mlflow_health(mlflow_uri)
+                logger.info(f"JupyDeep - MLFlow checking: {is_healthy} - {message}")
+                if is_healthy:
+                    self._current_setting.set_mlflow_connected(True)
+                else:
+                    self._current_setting.set_mlflow_connected(False)
 
         if self._active_instances:
             self._is_initialized = True

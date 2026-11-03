@@ -17,6 +17,9 @@ from .handlers.engine import (
     SkillsUpdateHandler,
     AgentUpdateHandler,
 )
+
+from .handlers.mlftest import MLflowTestHandler
+
 from .handlers.chat import ChatStreamHandler
 from .utils.logging import setup_logging, get_logger
 
@@ -106,6 +109,7 @@ class AgentEngineExtension(ExtensionApp):
                 (url_path_join(ext_base, "catalog"), EngineCatalogHandler),
                 (url_path_join(ext_base, "engine-sse"), EngineSSEHandler),
                 (url_path_join(ext_base, "chat"), ChatStreamHandler),
+                (url_path_join(ext_base, "mlftest"), MLflowTestHandler),
             ]
         )
 

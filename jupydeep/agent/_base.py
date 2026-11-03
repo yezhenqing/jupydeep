@@ -1,5 +1,7 @@
+import os
 import json
 import time
+import datetime
 import asyncio
 from pathlib import Path
 from itertools import chain
@@ -16,6 +18,7 @@ from pydantic_deep.features.skills import SkillsToolset
 from pydantic import BaseModel, Field, ConfigDict, model_validator, model_serializer
 from pydantic_ai import AgentSpec, Agent
 
+import mlflow
 from ..engine._base import ConfigLoader
 from ..utils.logging import get_logger
 from ..handlers import get_watcher
@@ -27,6 +30,11 @@ if TYPE_CHECKING:
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
+# os.environ["MLFLOW_ASYNC_TRACE_LOGGING_MAX_SPAN_BATCH_SIZE"] = "2"
+os.environ["MLFLOW_HTTP_REQUEST_MAX_RETRIES"] = "2"
+os.environ["MLFLOW_HTTP_REQUEST_TIMEOUT"] = "3"
 
 logger = get_logger(__name__)
 
@@ -81,6 +89,9 @@ class DeepAgentOptions(BaseModel):
     deep_skills: List[str] = Field(default=[])
     deep_mcps: List[str] = Field(default=[])
     enabled: bool = True
+
+    enable_mlflow: bool = False
+    mlflow_experiment_suffix: str = Field(default="")
 
     @model_validator(mode="before")
     @classmethod
@@ -167,7 +178,14 @@ class AgentConfig:
             **(self._spec.model_settings or {}),
             **self._deep_opts.capabilities.model_dump(),
             **self._deep_opts.model_dump(
-                exclude={"deep_mcps", "deep_skills", "capabilities", "enabled"}
+                exclude={
+                    "deep_mcps",
+                    "deep_skills",
+                    "capabilities",
+                    "enabled",
+                    "enable_mlflow",
+                    "mlflow_experiment_suffix",
+                }
             ),
         }
         return _config
@@ -224,7 +242,7 @@ class DeepAgentManager:
     async def materialize(self):
         for key in self._agent_configs.keys():
             _config = self._agent_configs[key]
-            _agent, _deps = self.deep_enhanced(_config)
+            _agent, _deps = self.deep_enhanced(_config, key)
             if _agent and _deps:
                 self._agent_instances[key] = _agent
                 self._agent_deps[key] = _deps
@@ -236,7 +254,7 @@ class DeepAgentManager:
             # await asyncio.sleep(50) # for debug
             await self._notify_init_complete()
 
-    def deep_enhanced(self, config: AgentConfig):
+    def deep_enhanced(self, config: AgentConfig, agent_id: str):
         _config_dict = config.as_dict()
 
         # 1. LLM model part
@@ -336,17 +354,18 @@ class DeepAgentManager:
 
         _agent = create_deep_agent(**agent_kwargs)
 
-        """
-        _agent = create_deep_agent(
-            **_config_dict,
-            model=llm_model,
-            **ctx_mg_dict,
-            toolsets=toolsets,
-            # include_skills=True,
-            include_skills=False,  # we will set skills through SkillsToolset
-            history_processors=[processor],
-        )
-        """
+        # extra. MLflow instrumentation
+        if config.opts.enable_mlflow:
+            mlflow.pydantic_ai.autolog()
+            uri = self._parent.global_setting_hub.global_setting.mlflow_tracking_uri
+            mlflow.set_tracking_uri(uri)
+            self._configure_mlflow_experiment(config, agent_id)
+            _agent.instrument = True
+        else:
+            if hasattr(_agent, "instrument"):
+                _agent.instrument = False
+            mlflow.pydantic_ai.autolog(disable=True)
+
         _deps = self.build_deps(config.opts)
 
         # @_agent.tool
@@ -365,6 +384,28 @@ class DeepAgentManager:
         # https://github.com/vstorm-co/pydantic-deepagents/releases (0.3.45)
         deps = JupyterDeps(jupyter_context=self._jupyter_context)
         return deps
+
+    def _configure_mlflow_experiment(self, config: AgentConfig, agent_id: str):
+        try:
+            suffix = config.opts.mlflow_experiment_suffix
+            date_str = datetime.datetime.now().strftime("%Y%m%d")
+            if suffix:
+                experiment_name = f"JupyDeep-{agent_id}-{date_str}-{suffix}"
+            else:
+                experiment_name = f"JupyDeep-{agent_id}-{date_str}"
+
+            mlflow_client = mlflow.tracking.MlflowClient()
+            experiment = mlflow_client.get_experiment_by_name(experiment_name)
+            if experiment is None:
+                experiment_id = mlflow_client.create_experiment(experiment_name)
+                mlflow.set_experiment(experiment_id=experiment_id)
+            else:
+                mlflow.set_experiment(experiment_name=experiment_name)
+        except Exception as e:
+            error_msg = str(e).splitlines()[0] if str(e) else type(e).__name__
+            logger.warning(
+                f"Failed to configure MLflow experiment for {agent_id}: {error_msg}"
+            )
 
     async def update_from_dict(self, new_settings):
         """
@@ -392,7 +433,7 @@ class DeepAgentManager:
             try:
                 self._agent_configs[key].update_opts(new_settings[key])
                 _config = self._agent_configs[key]
-                _agent, _deps = self.deep_enhanced(_config)
+                _agent, _deps = self.deep_enhanced(_config, key)
                 if _agent and _deps:
                     self._agent_instances[key] = _agent
                     self._agent_deps[key] = _deps

@@ -32,6 +32,7 @@ class EngineCatalogHandler(APIHandler):
                 "skills",
                 "default_model",
                 "default_agent",
+                "is_mlflow_active",
             }
         )
 

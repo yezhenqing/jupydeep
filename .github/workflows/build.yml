@@ -48,7 +48,7 @@ jobs:
         set -eux
         python -m pip install .[test]
 
-        pytest -v -r ap -cov jupydeep
+        pytest -v -r ap --cov=jupydeep
         jupyter server extension list
         jupyter server extension list 2>&1 | grep -ie "jupydeep.*OK"
 

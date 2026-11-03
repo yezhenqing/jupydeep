@@ -31,7 +31,7 @@ class BaseComponent(ABC):
         """
         Synchronous hook to define the component's target configuration state.
 
-        Subclasses must implement this logic to capture and validate intent 
+        Subclasses must implement this logic to capture and validate intent
         before downstream asynchronous materialization occurs.
         """
         pass
@@ -41,7 +41,7 @@ class BaseComponent(ABC):
         """
         Asynchronous hook to instantiate and activate heavy component resources.
 
-        Subclasses must implement this logic to transition the component from its 
+        Subclasses must implement this logic to transition the component from its
         declared intent (configured target state) into a live, active instance.
 
         Returns:
@@ -54,7 +54,7 @@ class BaseComponent(ABC):
         """
         Asynchronously decommission and delete a specific active instance by its key.
 
-        Must be overridden by subclasses to handle concrete resource cleanup, 
+        Must be overridden by subclasses to handle concrete resource cleanup,
         such as terminating specific WebSocket sessions, freeing specific GPU memory,
         or killing downstream sub-processes.
 
@@ -64,15 +64,14 @@ class BaseComponent(ABC):
         pass
 
     def compute_diff(
-        self, new_settings: Dict[str, Dict], 
-        ignore_keys: list[str] = []
+        self, new_settings: Dict[str, Dict], ignore_keys: list[str] = []
     ) -> Dict:
         """
         Calculate the configuration delta between current and incoming settings.
 
         Args:
             new_settings (Dict[str, Dict]): The incoming target configuration state.
-            ignore_keys (list[str], optional): Top-level keys to exclude from the evaluation 
+            ignore_keys (list[str], optional): Top-level keys to exclude from the evaluation
                 (e.g., runtime-only singletons). Defaults to [].
 
         Returns:
@@ -121,9 +120,13 @@ class BaseComponent(ABC):
                 # Audit and report any failures inside the pipeline
                 for key, result in zip(active_keys, results):
                     if isinstance(result, Exception):
-                        logger.warning(f"[{self.__class__.__name__}] ERROR: Failed to decommission instance '{key}': {result}")          
+                        logger.warning(
+                            f"[{self.__class__.__name__}] ERROR: Failed to decommission instance '{key}': {result}"
+                        )
             except Exception as e:
-               logger.warning(f"[{self.__class__.__name__}] CRITICAL: Unexpected pipeline breakdown during gather: {e}")
+                logger.warning(
+                    f"[{self.__class__.__name__}] CRITICAL: Unexpected pipeline breakdown during gather: {e}"
+                )
 
             # Flush in-memory runtime cache explicitly
             self._active_instances.clear()
@@ -132,7 +135,9 @@ class BaseComponent(ABC):
         self._is_initialized = False
         self._is_configured = False
 
-        logger.info(f"[{self.__class__.__name__}] Shutdown sequence completed successfully.")
+        logger.info(
+            f"[{self.__class__.__name__}] Shutdown sequence completed successfully."
+        )
 
 
 class JupyterContext(BaseModel):
@@ -170,6 +175,7 @@ class JupyterContext(BaseModel):
 
 
 T = TypeVar("T")
+
 
 class ConfigLoader:
     """
@@ -267,7 +273,7 @@ class ConfigLoader:
     ) -> Dict[str, Any]:
         """
         Core method: Read given list of Paths and merge all configurations
-        
+
         :param setting_paths: List of Path objects found via glob (or None)
         :param expand_env: Whether to expand environment variables
         :return: Merged configuration dictionary

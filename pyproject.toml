@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.5.0", "jupyterlab>=4.5.8,<5", "hatch-nodejs-version>=0.3.2"]
+requires = ["hatchling>=1.5.0", "jupyter-builder>=1.0.0", "hatch-nodejs-version>=0.3.2"]
 build-backend = "hatchling.build"
 
 [project]
@@ -28,19 +28,20 @@ dependencies = [
     "jupyter-kernel-client>=0.9.0",
     "jupyter-collaboration>=4.3.0",
     "matplotlib>=3.10.8",
-    "pydantic-deep[all,liteparse]>=0.3.50",
-    "pydantic-ai>=2.54.0",
+    "pydantic-deep[all,liteparse]==0.3.50",
+    "pydantic-ai==2.54.0",
     "fastmcp>=3.2.0",
     "mcp>=1.27.0, <2",
     "deepdiff>=9.0.0",
     "jupyter-mcp-server",
     "seaborn>=0.13.2",
     "pre-commit>=4.6.0",
+    "mlflow==3.17.2",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
 [project.optional-dependencies]
-test = ["ipykernel", "pytest>=7.0", "pytest-jupyter"]
+test = ["ipykernel", "pytest>=7.0", "pytest-jupyter", "pytest-cov"]
 
 [tool.hatch.version]
 source = "nodejs"
@@ -106,8 +107,11 @@ jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.g
 dev = [
     "pre-commit>=4.6.0",
     "ruff>=0.15.12",
-    "jupyter-builder>=0.0.3",
+    "jupyter-builder>=1.0.0",
     "jupyter-console>=6.6.3",
+    "pytest>=9.1.1",
+    "pytest-jupyter[server]>=0.11.0",
+    "pytest-cov>=7.1.0",
 ]
 
 [tool.pytest.ini_options]
@@ -116,3 +120,4 @@ filterwarnings = [
     "ignore::DeprecationWarning:jupyter_server",
     "ignore::DeprecationWarning:traitlets",
 ]
+testpaths = ["jupydeep/tests"]
