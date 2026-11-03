@@ -109,6 +109,9 @@ dev = [
     "ruff>=0.15.12",
     "jupyter-builder>=1.0.0",
     "jupyter-console>=6.6.3",
+    "pytest>=9.1.1",
+    "pytest-jupyter[server]>=0.11.0",
+    "pytest-cov>=7.1.0",
 ]
 
 [tool.pytest.ini_options]
@@ -117,3 +120,4 @@ filterwarnings = [
     "ignore::DeprecationWarning:jupyter_server",
     "ignore::DeprecationWarning:traitlets",
 ]
+testpaths = ["jupydeep/tests"]

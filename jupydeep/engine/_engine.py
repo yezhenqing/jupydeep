@@ -87,6 +87,11 @@ class _RuntimeView:
     @property
     def is_mlflow_active(self) -> bool:
         global_setting = self._engine.global_setting_hub.global_setting
+        if isinstance(global_setting, dict):
+            return bool(
+                global_setting.get("enable_system_mlflow")
+                and global_setting.get("mlflow_connected")
+            )
         return global_setting.is_mlflow_active
 
     def to_dict(self) -> Dict[str, Any]:
