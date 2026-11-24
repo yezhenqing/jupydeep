@@ -8,8 +8,7 @@ export const queryKeys = {
   engineCatalog: ['engineCatalog'] as const,
   contextWindow: ['contextWindow'] as const,
   conversations: (limit: number) => ['conversations', limit] as const,
-  conversationMessages: (id: string) =>
-    ['conversationMessages', id] as const,
+  conversationMessages: (id: string) => ['conversationMessages', id] as const
 };
 
 export const getSettings = () => ServerConnection.makeSettings();

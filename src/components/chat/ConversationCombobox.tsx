@@ -5,12 +5,12 @@ import {
   ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
-  ComboboxList,
+  ComboboxList
 } from '../ui/combobox';
 
 import type { IConversationOption } from '../../datasync';
 
-interface Conversation {
+interface IConversation {
   id: string;
   title: string;
 }
@@ -22,21 +22,31 @@ interface IConversationComboboxProps {
   disabled?: boolean;
 }
 
-const NEW_CONVERSATION: Conversation = {
+const NEW_CONVERSATION: IConversation = {
   id: '__new__',
-  title: '+ New Conversation -- JupyDeep AI Partner',
+  title: '+ New Conversation -- JupyDeep AI Partner'
 };
 
 function detectIsDarkTheme(): boolean {
-  if (typeof document === 'undefined') return false;
+  if (typeof document === 'undefined') {
+    return false;
+  }
 
   const body = document.body;
-  if (body.classList.contains('jp-mod-dark')) return true;
-  if (body.classList.contains('jp-mod-light')) return false;
+  if (body.classList.contains('jp-mod-dark')) {
+    return true;
+  }
+  if (body.classList.contains('jp-mod-light')) {
+    return false;
+  }
 
   const themeLightAttr = body.getAttribute('data-jp-theme-light');
-  if (themeLightAttr === 'false') return true;
-  if (themeLightAttr === 'true') return false;
+  if (themeLightAttr === 'false') {
+    return true;
+  }
+  if (themeLightAttr === 'true') {
+    return false;
+  }
 
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
 }
@@ -45,7 +55,7 @@ export default function ConversationCombobox({
   options,
   selected,
   onSelect,
-  disabled = false,
+  disabled = false
 }: IConversationComboboxProps) {
   const [inputValue, setInputValue] = useState<string>(NEW_CONVERSATION.title);
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -75,7 +85,7 @@ export default function ConversationCombobox({
     const observer = new MutationObserver(updateTheme);
     observer.observe(document.body, {
       attributes: true,
-      attributeFilter: ['class', 'data-jp-theme-light'],
+      attributeFilter: ['class', 'data-jp-theme-light']
     });
 
     const mediaQuery = window.matchMedia?.('(prefers-color-scheme: dark)');
@@ -105,7 +115,7 @@ export default function ConversationCombobox({
       value={selected}
       open={isOpen}
       inputValue={inputValue}
-      onOpenChange={(nextOpen) => {
+      onOpenChange={nextOpen => {
         if (disabled && nextOpen) {
           return;
         }
@@ -124,18 +134,24 @@ export default function ConversationCombobox({
           setIsSearching(true);
         }
       }}
-      onValueChange={(value) => {
+      onValueChange={value => {
         if (disabled) {
           return;
         }
         const next = value as IConversationOption | null;
-        if (next) onSelect(next.id);
+        if (next) {
+          onSelect(next.id);
+        }
       }}
-      itemToStringValue={(conv) => (typeof conv === 'string' ? conv : conv.title)}
+      itemToStringValue={conv => (typeof conv === 'string' ? conv : conv.title)}
       filter={(itemValue, query) => {
-        if (!isSearching) return true;
+        if (!isSearching) {
+          return true;
+        }
         const q = query.trim().toLowerCase();
-        if (!q) return true;
+        if (!q) {
+          return true;
+        }
         const title =
           typeof itemValue === 'string' ? itemValue : itemValue.title;
         return title.toLowerCase().includes(q);
@@ -157,7 +173,7 @@ export default function ConversationCombobox({
         style={{
           backgroundColor: dropdownBg,
           borderColor: 'var(--jp-border-color2)',
-          color: 'var(--jp-ui-font-color1)',
+          color: 'var(--jp-ui-font-color1)'
         }}
         className="min-w-[16rem] w-max max-w-[26rem] border shadow-lg"
       >
@@ -172,7 +188,7 @@ export default function ConversationCombobox({
               style={{
                 color: 'var(--jp-ui-font-color1)',
                 ['--item-highlight-bg' as string]: highlightBg,
-                ['--item-selected-bg' as string]: selectedBg,
+                ['--item-selected-bg' as string]: selectedBg
               }}
               className="text-xs whitespace-nowrap pr-6 cursor-pointer rounded-sm
                          data-[selected]:[background-color:var(--item-selected-bg)]

@@ -38,7 +38,6 @@ export function useMlflowTest() {
   return useMutation({ mutationFn: testMlflowConnection });
 }
 
-
 export const NEW_CONVERSATION_ID = '__new__';
 
 export interface IConversationOption {
@@ -108,14 +107,11 @@ export function useConversation(limit = 50) {
 
   const bindNewConversation = useCallback(
     (realId: string, title: string | null) => {
-      queryClient.setQueryData(
-        queryKeys.conversationMessages(realId),
-        {
-          conversation_id: realId,
-          title,
-          messages: []
-        } satisfies IConversationMessages
-      );
+      queryClient.setQueryData(queryKeys.conversationMessages(realId), {
+        conversation_id: realId,
+        title,
+        messages: []
+      } satisfies IConversationMessages);
       setSelectedId(realId);
       queryClient.invalidateQueries({
         queryKey: queryKeys.conversations(limit)
@@ -185,7 +181,6 @@ export function useConversation(limit = 50) {
     messagesError: messagesQuery.error,
 
     bindNewConversation
-
   };
 }
 

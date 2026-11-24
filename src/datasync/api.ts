@@ -48,8 +48,6 @@ export async function testMlflowConnection(
   return result;
 }
 
-
-
 // ============================================================================
 // Conversation section
 // ============================================================================
@@ -65,10 +63,9 @@ export interface IConversationSummary {
 export async function fetchConversations(
   limit = 50
 ): Promise<{ conversations: IConversationSummary[] }> {
-  const res = await buildRequest(
-    `jupydeep/conversations?limit=${limit}`,
-    { method: 'GET' }
-  );
+  const res = await buildRequest(`jupydeep/conversations?limit=${limit}`, {
+    method: 'GET'
+  });
   if (!res.ok) {
     throw new Error('JupyDeep: Unable to list conversations');
   }
@@ -76,7 +73,6 @@ export async function fetchConversations(
   const data = await res.json();
   return data;
 }
-
 
 export interface IConversationMessages {
   conversation_id: string;
@@ -93,9 +89,7 @@ export async function fetchConversationMessages(
   );
 
   if (!res.ok) {
-    throw new Error(
-      `JupyDeep: Unable to load conversation ${conversationId}`
-    );
+    throw new Error(`JupyDeep: Unable to load conversation ${conversationId}`);
   }
 
   return res.json();
@@ -124,11 +118,14 @@ export async function deleteConversation(
       const errData = await res.json();
       if (typeof errData?.error === 'string' && errData.error.trim()) {
         message = errData.error;
-      } else if (typeof errData?.message === 'string' && errData.message.trim()) {
+      } else if (
+        typeof errData?.message === 'string' &&
+        errData.message.trim()
+      ) {
         message = errData.message;
       }
     } catch {
-   
+      // Keep the default error message if the response body is not valid JSON
     }
     throw new Error(message);
   }

@@ -10,7 +10,7 @@ import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
 //import { Shimmer } from '../components/ai-elements/shimmer';
 import CountdownTimer from '../components/extra/CountdownTimer';
-import ConversationCombobox from '../components/chat/ConversationCombobox'
+import ConversationCombobox from '../components/chat/ConversationCombobox';
 
 const prozenIcon = new LabIcon({
   name: 'jupydeep:prozen',
@@ -24,9 +24,7 @@ const prozenIcon = new LabIcon({
 
 import ChatBot from '../components/chat/ChatBot';
 
-const ChatPanel = (
-  { app }: { app: JupyterFrontEnd}
-): JSX.Element => {  
+const ChatPanel = ({ app }: { app: JupyterFrontEnd }): JSX.Element => {
   const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(prozenSvgstr)}`;
   const [futureTime] = useState(() => Date.now() + 2 * 60 * 1000);
   const [seconds, setSeconds] = useState(0);
@@ -79,7 +77,7 @@ const ChatPanel = (
                   px-2.5 py-1 w-full min-w-0"
       >
         <div className="flex items-center flex-1 min-w-0">
-          <ConversationCombobox 
+          <ConversationCombobox
             options={conversation.options}
             selected={conversation.selected}
             onSelect={conversation.select}
@@ -127,8 +125,8 @@ const ChatPanel = (
               !isReady ? 'pointer-events-none opacity-85 select-none' : ''
             }`}
           >
-            <ChatBot 
-              conversation={conversation} 
+            <ChatBot
+              conversation={conversation}
               onStreamingChange={setIsStreaming}
             />
           </div>
