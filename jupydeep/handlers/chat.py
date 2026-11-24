@@ -23,8 +23,10 @@ from pydantic_ai import Agent
 from ..engine import AgentEngine
 from ..agent import JupyterDeps
 from ..utils.user_scope import extract_user_scope, resolve_current_user
-from . import get_watcher
+from ..utils.stream_errors import sanitize_stream_error
 from ..utils.logging import get_logger
+
+from . import get_watcher
 
 logger = get_logger(__name__)
 
@@ -195,16 +197,15 @@ class ChatStreamHandler(APIHandler):
                 kwargs["usage_limits"] = self.usage_limits
             # if on_complete:
             #    kwargs["on_complete"] = on_complete
+
             event_stream = adapter.run_stream(**kwargs)
             sse_stream = adapter.encode_stream(event_stream)
-
             chunk_count = 0
             async for sse_chunk in sse_stream:
                 if sse_chunk:
                     self.write(sse_chunk)
                     await self.flush()
                     chunk_count += 1
-
             if chunk_count == 0:
                 logger.warning("No chunks were generated from the adapter stream.")
 
@@ -217,11 +218,20 @@ class ChatStreamHandler(APIHandler):
                 "Client disconnected during streaming: agent_id=%s", self.agent_id
             )
         except Exception as e:
-            logger.exception(f"Streaming error in _run_adapter_stream: {e}")
+            error_code, safe_msg = sanitize_stream_error(e)
+            logger.exception(
+                "Streaming error in _run_adapter_stream [error_code=%s, conversation_id=%s]: %s",
+                error_code,
+                conversation_id,
+                e,
+            )
             # If not finished yet, try to send error message
             if not self._finished:
                 payload = json.dumps(
-                    {"type": "error", "error": str(e)},
+                    {
+                        "type": "error",
+                        "errorText": f"[{error_code}] {safe_msg}",
+                    },
                     ensure_ascii=False,
                 )
                 self.write(f"data: {payload}\n\n")
@@ -271,7 +281,6 @@ class ChatStreamHandler(APIHandler):
     async def _update_title(
         self, conversation_id: str, scope: str, agent: Agent, user_text: str
     ) -> None:
-        print(f"[title-debug] start conversation_id={conversation_id} scope={scope}")
         if self._store is None or not conversation_id:
             return
         try:
@@ -279,14 +288,13 @@ class ChatStreamHandler(APIHandler):
             if not title:
                 logger.warning("Title agent returned empty for %s", conversation_id)
                 return
-            print(f"[title-debug] generated title={title!r} for {conversation_id}")
             updated = await self._store.set_title(
                 conversation_id,
                 title,
                 scope=scope,
                 only_if_empty=True,
             )
-            print(
+            logger.info(
                 f"[title-debug] set_title updated={updated} title={title!r} for {conversation_id}"
             )
             if updated:
@@ -300,9 +308,8 @@ class ChatStreamHandler(APIHandler):
                     },
                 })
                 watcher.notify(notify_obj)
-                print(f"[title-debug] notified watcher for {conversation_id}")
+                logger.info(f"[title-debug] notified watcher for {conversation_id}")
         except Exception as e:
-            print(f"[title-debug] error for {conversation_id}: {e!r}")
             logger.warning("Failed to update title for %s: %s", conversation_id, e)
 
     def _schedule_title_update(

@@ -17,6 +17,7 @@ from pydantic_deep import (
 from pydantic_deep.features.skills import SkillsToolset
 from pydantic import BaseModel, Field, ConfigDict, model_validator, model_serializer
 from pydantic_ai import AgentSpec, Agent
+#from pydantic_ai import RunContext
 
 import mlflow
 from ..engine._base import ConfigLoader
@@ -368,11 +369,10 @@ class DeepAgentManager:
 
         _deps = self.build_deps(config.opts)
 
-        # @_agent.tool
-        # def test_error_tool(ctx: RunContext) -> str:
+        #@_agent.tool
+        #def test_error_tool(ctx: RunContext) -> str:
         #    """Test usage: Force tool error injection"""
         #    print("==================Agent RunContext==============")
-        #    print(ctx.deps.jupyter_context)
         #    raise Exception("Forced tool error for testing UI error handling")
 
         return _agent, _deps
