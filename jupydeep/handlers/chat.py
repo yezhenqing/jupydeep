@@ -2,11 +2,12 @@
 import json
 import time
 import uuid
+import asyncio
 
 # from datetime import datetime
 import tornado
 from enum import Enum
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from dataclasses import dataclass, field
 from pydantic import ValidationError
 from starlette.requests import Request
@@ -15,72 +16,20 @@ from pydantic_ai.usage import UsageLimits
 from pydantic_ai.ui import SSE_CONTENT_TYPE
 from pydantic_ai.ui.vercel_ai import VercelAIAdapter
 from jupyter_server.base.handlers import APIHandler
+from pydantic_ai.conversation import Conversation
+from pydantic_ai.conversation_store import ConversationConflict
+from pydantic_ai import Agent
 
 from ..engine import AgentEngine
 from ..agent import JupyterDeps
-
+from ..utils.user_scope import extract_user_scope, resolve_current_user
+from . import get_watcher
 from ..utils.logging import get_logger
 
 logger = get_logger(__name__)
 
 
 SSE_DONE = "data: [DONE]\n\n"
-TRIGGER_SUBMIT = "submit-message"
-TRIGGER_REGENERATE = "regenerate-message"
-VALID_TRIGGERS = {TRIGGER_SUBMIT, TRIGGER_REGENERATE}
-
-
-class DataEventType(Enum):
-    """Data event types - output to frontend"""
-
-    STATUS = "status"
-    STATUS_WARNING = "warning"
-    STATUS_ERROR = "error"
-    PROGRESS = "progress"
-    THINKING = "thinking"
-    TEXT_CHUNK = "text_chunk"
-    TOOL_CALL = "tool_call"
-    TOOL_RESULT = "tool_result"
-    DONE = "done"
-
-
-@dataclass
-class DataEvent:
-    """Data stream event - with sequence number to ensure ordering"""
-
-    type: DataEventType
-    message: str
-    sequence: int = 0  # Global sequence number to ensure ordering
-    timestamp: float = field(default_factory=time.time)
-    metadata: Dict[str, Any] = field(default_factory=dict)
-
-    def to_sse(self) -> str:
-        payload = json.dumps(
-            {
-                "type": self.type.value,
-                "message": self.message,
-                "sequence": self.sequence,
-                "metadata": self.metadata,
-            }
-        )
-        return f"data: {payload}\n\n"
-
-    def to_vercel_format(self) -> Dict[str, Any]:
-        """Convert to Vercel AI SDK format (for useChat)"""
-        if self.type == DataEventType.TEXT_CHUNK:
-            return {"choices": [{"delta": {"content": self.message}, "index": 0}]}
-        elif self.type == DataEventType.THINKING:
-            return {
-                "choices": [{"delta": {"reasoning_content": self.message}, "index": 0}]
-            }
-        else:
-            # Other events as metadata
-            return {
-                "type": self.type.value,
-                "message": self.message,
-                "metadata": self.metadata,
-            }
-
 
 class ChatStreamHandler(APIHandler):
     """
@@ -101,6 +50,12 @@ class ChatStreamHandler(APIHandler):
         self.agent_id: str | None = None
         self.session_id: str | None = None
 
+        self._background_tasks: set[asyncio.Task[Any]] = set()
+
+    @property
+    def _store(self):
+        return self._engine.conversation_store
+
     def set_default_headers(self):
         """Set SSE response headers"""
         self.set_header("Content-Type", SSE_CONTENT_TYPE)
@@ -111,9 +66,16 @@ class ChatStreamHandler(APIHandler):
     async def prepare(self):
         self.session_id = self.get_argument("session_id", None)
         self.agent_id = self.get_argument("agent_id", None)
+        self.current_user = await resolve_current_user(self)
+
+    async def current_user_id(self) -> str:
+        if getattr(self, "current_user", None) is None:
+            self.current_user = await resolve_current_user(self)
+        return extract_user_scope(self.current_user)
 
     async def post(self):
         """Handle POST request - streaming response"""
+        
         try:
             body = self.request.body
             if not body:
@@ -129,8 +91,14 @@ class ChatStreamHandler(APIHandler):
         agent_id = data.get("agent_id") or self.agent_id
         self.agent_id = agent_id
         self.session_id = data.get("session_id") or self.session_id
+        _messages = data.get("messages")
+
         if not agent_id:
             self._send_error("Missing agent_id", 400)
+            return
+
+        if not _messages:
+            self._send_error("Missing message", 400)
             return
 
         try:
@@ -140,11 +108,16 @@ class ChatStreamHandler(APIHandler):
             self._send_error("Unknown agent_id", 404)
             return
 
+        scope = await self.current_user_id()
         tornado_request = TornadoVercelBridge(self.request)
 
         try:
             adapter = await VercelAIAdapter.from_request(
-                tornado_request, agent=_agent, sdk_version=6
+                tornado_request, 
+                agent=_agent, 
+                sdk_version=6,
+                conversation_store=self._store,
+                conversation_scope=scope
             )
         except ValidationError as v_err:
             logger.warning(f"Protocol Validation Failed: {v_err}")
@@ -155,9 +128,34 @@ class ChatStreamHandler(APIHandler):
             self._send_error("Failed to build adapter", 400)
             return
 
-        await self._run_adapter_stream(adapter, _deps)
+        conversation_id = getattr(adapter, "conversation_id", None)
 
-    async def _run_adapter_stream(self, adapter: VercelAIAdapter, deps: JupyterDeps):
+        emit_conversation_id = bool(
+            conversation_id and tornado_request.id_generated
+        )
+
+        user_text = self._extract_user_text(_messages)
+
+        await self._run_adapter_stream(
+            adapter = adapter, 
+            deps = _deps,
+            agent=_agent,
+            user_text=user_text,
+            conversation_id=conversation_id,
+            emit_conversation_id=emit_conversation_id,
+            scope=scope,
+        )
+
+    async def _run_adapter_stream(
+        self, 
+        adapter: VercelAIAdapter, 
+        deps: JupyterDeps,
+        agent: Agent,
+        user_text: str,
+        conversation_id: str | None = None,
+        emit_conversation_id: bool = False,
+        scope: str = "",
+    ):
         """
         # for debug: to capture all_messages
         captured_messages = None
@@ -181,9 +179,17 @@ class ChatStreamHandler(APIHandler):
 
             # on_complete can return additional protocol events
             return []
-
         """
+        completed_normally = False
         try:
+            if emit_conversation_id:
+                init_sse = self._format_custom_data_event(
+                    "conversation",
+                    {"conversation_id": str(conversation_id)},
+                )
+                self.write(init_sse)
+                await self.flush()
+
             kwargs = {"deps": deps}
             if self.usage_limits:
                 kwargs["usage_limits"] = self.usage_limits
@@ -205,31 +211,130 @@ class ChatStreamHandler(APIHandler):
             # Send termination signal according to Vercel specification
             self.write(SSE_DONE)
             await self.flush()
+            completed_normally = True
         except tornado.iostream.StreamClosedError:
             logger.info(
                 "Client disconnected during streaming: agent_id=%s", self.agent_id
             )
-
         except Exception as e:
             logger.exception(f"Streaming error in _run_adapter_stream: {e}")
             # If not finished yet, try to send error message
             if not self._finished:
-                # self.write(f'data: {{"error": "{str(e)}"}}\n\n')
                 payload = json.dumps(
                     {"type": "error", "error": str(e)},
                     ensure_ascii=False,
                 )
                 self.write(f"data: {payload}\n\n")
                 await self.flush()
+        # after stream
+        if (
+            completed_normally
+            and emit_conversation_id
+            and conversation_id
+            and user_text
+        ):
+            self._schedule_title_update(
+                conversation_id=conversation_id,
+                scope=scope,
+                agent=agent,
+                user_text=user_text,
+            )
 
-    def _send_sse_event(self, event: DataEvent):
-        self.write(event.to_sse())
+    def _extract_user_text(self, messages) -> str:
+        texts = []
+        for msg in messages:
+            if not isinstance(msg, dict) or msg.get("role") != "user":
+                continue
+            for part in msg.get("parts") or []:
+                if isinstance(part, dict) and part.get("type") == "text":
+                    t = part.get("text")
+                    if isinstance(t, str) and t.strip():
+                        texts.append(t.strip())
+        return "\n".join(texts)
+
+    async def _generate_conversation_title_by_agent(
+        self, agent: Agent, user_text: str
+    ) -> str:
+        title_agent = Agent(
+            agent.model, 
+            output_type=str,
+            system_prompt=(
+                "Generate a short conversation title based on the user's first message. "
+                "Keep it under 10 words, no trailing punctuation, no quotation marks. "
+                "Return only the title text, with no prefix."
+            ),
+            retries={"output": 1},
+        )
+        result = await title_agent.run(user_text)
+        return (result.output or "Unknown title").strip()
+
+    async def _update_title(
+        self, conversation_id: str, scope: str, agent: Agent, user_text: str
+    ) -> None:
+        print(f"[title-debug] start conversation_id={conversation_id} scope={scope}")
+        if self._store is None or not conversation_id:
+            return
+        try:
+            title = await self._generate_conversation_title_by_agent(agent, user_text)
+            if not title:
+                logger.warning("Title agent returned empty for %s", conversation_id)
+                return
+            print(f"[title-debug] generated title={title!r} for {conversation_id}")
+            updated = await self._store.set_title(
+                conversation_id,
+                title,
+                scope=scope,
+                only_if_empty=True,
+            )
+            print(
+                f"[title-debug] set_title updated={updated} title={title!r} for {conversation_id}"
+            )
+            if updated:
+                watcher = await get_watcher()
+                notify_obj = json.dumps({
+                    "event": "conversation_title",
+                    "payload": {
+                        "conversation_id": conversation_id,
+                        "title": title,
+                        "scope": scope,
+                    },
+                })
+                watcher.notify(notify_obj)
+                print(f"[title-debug] notified watcher for {conversation_id}")
+        except Exception as e:
+            print(f"[title-debug] error for {conversation_id}: {e!r}")
+            logger.warning("Failed to update title for %s: %s", conversation_id, e)
+
+    def _schedule_title_update(
+        self, conversation_id: str, scope: str, agent: Agent, user_text: str
+    ) -> None:
+        print(f"[title-debug] schedule conversation_id={conversation_id} scope={scope}")
+        task = asyncio.create_task(
+            self._update_title(conversation_id, scope, agent, user_text)
+        )
+        self._background_tasks.add(task)
+
+        def _on_done(t: asyncio.Task[Any]) -> None:
+            self._background_tasks.discard(t)
+            if not t.cancelled() and (exc := t.exception()) is not None:
+                logger.warning("[title-debug] task crashed: %r", exc)
+
+        task.add_done_callback(_on_done)
+        
 
     def _send_error(self, message: str, status_code: int):
         self.set_status(status_code)
         self.set_header("Content-Type", "application/json")
         self.write(json.dumps({"error": message}))
         self.finish()
+
+    @staticmethod
+    def _format_custom_data_event(event_name: str, data: Dict[str, Any]) -> str:
+        payload = {
+            "type": f"data-{event_name}",
+            "data": data,
+        }
+        return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n"
 
 
 class TornadoVercelBridge(Request):
@@ -239,6 +344,7 @@ class TornadoVercelBridge(Request):
     """
 
     def __init__(self, request: HTTPServerRequest) -> None:
+        self.id_generated: bool = False
         # 1. Clean and upgrade data before initialization
         self.processed_body = self._prepare_vercel_payload(request.body)
 
@@ -273,6 +379,7 @@ class TornadoVercelBridge(Request):
         Convert raw payload to the strict format required by VercelAIAdapter.
         """
         if not raw_body:
+            self.id_generated = True
             return b'{"trigger": "submit-message", "messages": []}'
 
         try:
@@ -285,8 +392,11 @@ class TornadoVercelBridge(Request):
                 data["trigger"] = "submit-message"
 
             # B. Fill root ID
-            if "id" not in data:
+            if "id" not in data or not data.get("id"):
                 data["id"] = str(uuid.uuid4())
+                self.id_generated = True
+            else:
+                self.id_generated = False
 
             # C. Deep convert message structure
             if "messages" in data and isinstance(data["messages"], list):
@@ -300,7 +410,7 @@ class TornadoVercelBridge(Request):
                     if "parts" not in msg and "content" in msg:
                         content_val = msg.pop("content")
                         msg["parts"] = [{"type": "text", "text": str(content_val)}]
-
+                    
             return json.dumps(data).encode("utf-8")
 
         except Exception as e:

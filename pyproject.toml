@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "jupydeep"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
     "Framework :: Jupyter",
     "Framework :: Jupyter :: JupyterLab",
@@ -29,7 +29,7 @@ dependencies = [
     "jupyter-collaboration>=4.3.0",
     "matplotlib>=3.10.8",
     "pydantic-deep[all,liteparse]==0.3.50",
-    "pydantic-ai==2.54.0",
+    "pydantic-ai==2.70.0",
     "fastmcp>=3.2.0",
     "mcp>=1.27.0, <2",
     "deepdiff>=9.0.0",
@@ -37,6 +37,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "pre-commit>=4.6.0",
     "mlflow==3.17.2",
+    "aiosqlite>=0.22.1",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
@@ -99,9 +100,9 @@ before-build-python = ["jlpm clean:all"]
 ignore = ["W002"]
 
 [tool.uv.sources]
-jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.git" }
+# jupyter-mcp-server = { git = "https://github.com/yezhenqing/jupyter-mcp-server.git" }
 # local debug model
-#jupyter-mcp-server = { path = "../jupyter-mcp-server_myown", editable = true }
+jupyter-mcp-server = { path = "../jupyter-mcp-server", editable = true }
 
 [dependency-groups]
 dev = [

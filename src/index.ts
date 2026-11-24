@@ -23,7 +23,7 @@ const mainPlugin: JupyterFrontEndPlugin<void> = {
     // keep this line untouched for ui-test
     console.log('JupyterLab extension JupyDeep is activated!');
 
-    const chatWidget = new ChatWidget();
+    const chatWidget = new ChatWidget(app);
     labShell.add(chatWidget, 'right', { rank: 1000 });
   }
 };
