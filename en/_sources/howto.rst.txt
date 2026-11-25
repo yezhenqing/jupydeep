@@ -8,3 +8,4 @@ How To
    howto_agent
    howto_ctx
    howto_mlflow
+   howto_conv

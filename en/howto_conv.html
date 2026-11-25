@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to manage conversations &mdash; JupyDeep-Documentation 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ceb059c0" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=360bc84d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer Guide" href="developer.html" />
+    <link rel="prev" title="How to enable MLflow tracing" href="howto_mlflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: lightgray" >
+    
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JupyDeep-Documentation
+              <img src="_static/jupydeep.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    
+    <div class="language-switcher" style="
+        padding: 8px 12px; 
+        margin: 10px 0; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px; 
+        font-size: 13px;
+        border: 1px solid rgba(0,0,0,0.1);
+    ">
+        <span style="color: #555;">🌐 语言/Language: </span>
+        <span id="lang-zh"><a href="#" style="color: #2980b9; text-decoration: none;">中文</a></span>
+        <span style="color: #ccc; margin: 0 4px;">|</span> 
+        <span id="lang-en"><a href="#" style="color: #2980b9; text-decoration: none;">English</a></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUrl = window.location.href;
+            var zhContainer = document.getElementById('lang-zh');
+            var enContainer = document.getElementById('lang-en');
+            if (currentUrl.includes('/zh/')) {
+
+                zhContainer.innerHTML = '<span style="font-weight: bold; color: #333;">中文</span>';
+                enContainer.querySelector('a').href = currentUrl.replace('/zh/', '/en/');
+            } else {
+                enContainer.innerHTML = '<span style="font-weight: bold; color: #333;">English</span>';
+                zhContainer.querySelector('a').href = currentUrl.replace('/en/', '/zh/');
+            }
+        });
+    </script>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id2">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#uv-installation"><code class="docutils literal notranslate"><span class="pre">uv</span></code> installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#conda-installation"><code class="docutils literal notranslate"><span class="pre">conda</span></code> installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#locate-settings">1. Locate Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-llm">2. Configure Your LLM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#configure-your-mcp">3. Configure Your MCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#meet-your-built-in-agents">4. Meet Your Built-in Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#global-setting">5. Global Setting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="howto.html">How To</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="howto_llm.html">How to add extra LLM models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_openrouter.html">OpenRouter Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_llm_ollama.html">Ollama Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mcp.html">How to add extra MCP servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_skill.html">How to add extra skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_agent.html">How to Customize Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#core-architecture-of-a-custom-agent">2. Core Architecture of a Custom Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_agent.html#step-by-step-guide-creating-your-first-custom-agent">3. Step-by-Step Guide: Creating Your First Custom Agent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_ctx.html">How to config context window</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#key-benefits">1. Key Benefits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#how-to-configure">2. How to Configure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_ctx.html#toggling-context-window-management">3. Toggling Context Window Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_mlflow.html">How to enable MLflow tracing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#instrumentation-in-agent-development">1. Instrumentation in Agent Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#enabling-mlflow-tracing-in-jupydeep">2. Enabling MLflow Tracing in JupyDeep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_mlflow.html#veryfing-mlflow-tracing-in-jupydeep">3. Veryfing MLflow Tracing in JupyDeep</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to manage conversations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stateful-conversations-in-agent-workflows">1. Stateful Conversations in Agent Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#managing-conversations-in-jupydeep">2. Managing Conversations in JupyDeep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inspecting-local-storage-and-programmatically-operating-conversation-data">3. Inspecting Local Storage and Programmatically Operating Conversation Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#how-to-contribute-codes">How to contribute codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gallery.html">JupyDeep Gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gallery.html#computational-biology">Computational Biology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/bioenv.html">Conda Env for NVIDIA-BioNeMo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/genmol.html">GenMol Skill Demonstration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/biology/openfold3.html">OpenFold3 Skill Demonstration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gallery.html#miscellaneous">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/misc/rkernel.html">R Kernel Spec Demonstration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: lightgray" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JupyDeep-Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="howto.html">How To</a></li>
+      <li class="breadcrumb-item active">How to manage conversations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/howto_conv.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-to-manage-conversations">
+<h1>How to manage conversations<a class="headerlink" href="#how-to-manage-conversations" title="Link to this heading"></a></h1>
+<section id="stateful-conversations-in-agent-workflows">
+<h2>1. Stateful Conversations in Agent Workflows<a class="headerlink" href="#stateful-conversations-in-agent-workflows" title="Link to this heading"></a></h2>
+<p>In interactive AI agent environments, maintaining continuity across multi-turn
+reasoning and iterative data analysis is essential. Without persistent storage,
+session context is volatile—a browser refresh, kernel restart, or workspace
+reconnection discards valuable prompt histories, intermediate tool outputs,
+and reasoning chains.</p>
+<p>To address this, JupyDeep introduces built-in <strong>Conversation Persistence and Management</strong>.
+Backed by a lightweight, local SQLite storage engine (<code class="docutils literal notranslate"><span class="pre">chat.sqlite</span></code>) with Write-Ahead
+Logging (WAL) and user-scoped isolation, JupyDeep automatically captures and organizes
+every conversation thread directly within your project workspace—requiring zero external
+database setup.</p>
+<p><strong>With conversation persistence enabled, users gain seamless session continuity,
+automatic AI-generated conversation titles, instant keyword search across past
+threads, and safeguarded double-click deletion.</strong> Whether you are resuming yesterday’s
+analysis, switching between parallel threads, or cleaning up outdated sessions, JupyDeep
+keeps your workspace dialogue organized and immediately accessible.</p>
+</section>
+<section id="managing-conversations-in-jupydeep">
+<h2>2. Managing Conversations in JupyDeep<a class="headerlink" href="#managing-conversations-in-jupydeep" title="Link to this heading"></a></h2>
+<p>Conversation persistence is enabled out of the box once JupyDeep is installed
+and running in JupyterLab. No manual database initialization is required;
+JupyDeep automatically provisions the local conversation store upon engine startup.</p>
+<p>Suppose you start JupyterLab using the following command (adapt the parameters to
+match your environment):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>lab<span class="w"> </span>--ip<span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span>--no-browser<span class="w"> </span>--notebook-dir<span class="o">=</span><span class="s2">"/home/yezhq/workspace"</span>
+</pre></div>
+</div>
+<p>Upon startup, you will find <code class="docutils literal notranslate"><span class="pre">chat.sqlite</span></code> automatically created under
+<code class="docutils literal notranslate"><span class="pre">/home/yezhq/workspace/.agents/</span></code>.</p>
+<p>The conversation management workflow consists of three core capabilities
+accessible directly from the JupyDeep chat sidebar:</p>
+<section id="starting-a-conversation-and-automatic-title-generation">
+<h3>2.1 Starting a Conversation and Automatic Title Generation:<a class="headerlink" href="#starting-a-conversation-and-automatic-title-generation" title="Link to this heading"></a></h3>
+<p>Open the JupyDeep panel in the right sidebar of JupyterLab. By default, the
+top header selector displays <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span> <span class="pre">Conversation</span> <span class="pre">--</span> <span class="pre">JupyDeep</span> <span class="pre">AI</span> <span class="pre">Partner</span></code>.</p>
+<a class="reference internal image-reference" href="_images/conv_combo.png"><img alt="_images/conv_combo.png" class="align-center" src="_images/conv_combo.png" style="width: 755.2px; height: 1126.4px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Select your preferred agent from the bottom combobox, enter your initial
+message, and send it. Once the first response completes:</p>
+<ol class="arabic simple">
+<li><p>JupyDeep persists both your prompt and the agent’s full response payload
+to <code class="docutils literal notranslate"><span class="pre">chat.sqlite</span></code> under your authenticated user scope.</p></li>
+<li><p>An asynchronous background task invokes a lightweight title-generation agent
+to summarize your initial prompt into a concise title (under 10 words).</p></li>
+<li><p>The top conversation selector updates automatically via Server-Sent Events
+(SSE), replacing the placeholder label with the newly generated title.</p></li>
+</ol>
+</section>
+<section id="searching-and-resuming-historical-conversations">
+<h3>2.2 Searching and Resuming Historical Conversations:<a class="headerlink" href="#searching-and-resuming-historical-conversations" title="Link to this heading"></a></h3>
+<p>To revisit an earlier discussion, click the <strong>Conversation Combobox</strong> at the
+top of the JupyDeep chat panel. A dropdown menu lists up to your 50 most
+recently updated conversations, ordered by latest activity.</p>
+<p>You can locate and resume any thread using the following controls:</p>
+<ul class="simple">
+<li><p><strong>Keyword Filtering:</strong> Start typing directly into the top combobox input
+field to filter historical conversations by title in real time.</p></li>
+<li><p><strong>Seamless Context Restoration:</strong> Selecting a conversation from the list
+loads its persisted message history into the chat viewport, allowing you
+to inspect prior outputs and continue the dialogue with full context.</p></li>
+<li><p><strong>Start Fresh Anytime:</strong> Selecting <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span> <span class="pre">Conversation</span> <span class="pre">--</span> <span class="pre">JupyDeep</span> <span class="pre">AI</span> <span class="pre">Partner</span></code>
+at the top of the list resets the viewport for a clean session without
+affecting saved threads.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While an agent is actively streaming a response, the top conversation
+switcher is temporarily locked to prevent accidental context switches
+mid-generation.</p>
+</div>
+</section>
+<section id="deleting-conversations-with-double-click-protection">
+<h3>2.3 Deleting Conversations with Double-Click Protection:<a class="headerlink" href="#deleting-conversations-with-double-click-protection" title="Link to this heading"></a></h3>
+<p>To remove outdated or unwanted sessions, locate the <strong>Trash (Delete)</strong> icon
+on the left side of the bottom input toolbar (refer to the screenshot above).</p>
+<p>To prevent accidental data loss during active work, deletion requires a
+<strong>double-click</strong>:</p>
+<ol class="arabic simple">
+<li><p>Hover over the trash icon next to the agent selector.</p></li>
+<li><p><strong>Double-click</strong> the icon to confirm deletion.</p></li>
+<li><p>If a response is currently streaming, JupyDeep halts generation first,
+removes the conversation record and associated message entries from
+<code class="docutils literal notranslate"><span class="pre">chat.sqlite</span></code> using optimistic revision checks, and resets the panel
+to a new conversation state.</p></li>
+</ol>
+</section>
+</section>
+<section id="inspecting-local-storage-and-programmatically-operating-conversation-data">
+<h2>3. Inspecting Local Storage and Programmatically Operating Conversation Data<a class="headerlink" href="#inspecting-local-storage-and-programmatically-operating-conversation-data" title="Link to this heading"></a></h2>
+<p>All conversation metadata and message entries are stored locally inside your
+workspace’s agent directory at <code class="docutils literal notranslate"><span class="pre">&lt;workspace&gt;/.agents/chat.sqlite</span></code>. Every
+record is tagged with the authenticated Jupyter user scope and protected by
+SQLite WAL mode alongside optimistic revision checks, ensuring multi-user
+isolation and concurrency safety across browser tabs.</p>
+<p>Because you have direct access to this standard SQLite database file, you can
+inspect, query, and manipulate stored conversation records and message entries
+using the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> CLI or standard Python database libraries. For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>your_path_to/.agents/chat.sqlite
+sqlite&gt;<span class="w"> </span>.tables
+conversation_entries<span class="w">  </span>conversation_records
+
+sqlite&gt;<span class="w"> </span>.schema<span class="w"> </span>conversation_records
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>conversation_records<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>conversation_id<span class="w"> </span>TEXT<span class="w"> </span>PRIMARY<span class="w"> </span>KEY,
+<span class="w">    </span>head_id<span class="w">         </span>TEXT,
+<span class="w">    </span>scope<span class="w">           </span>TEXT,
+<span class="w">    </span>title<span class="w">           </span>TEXT,
+<span class="w">    </span>usage_json<span class="w">      </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL,
+<span class="w">    </span>deferred_json<span class="w">   </span>TEXT,
+<span class="w">    </span>forked_from<span class="w">     </span>TEXT,
+<span class="w">    </span>forked_at<span class="w">       </span>TEXT,
+<span class="w">    </span>branches_json<span class="w">   </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL<span class="w"> </span>DEFAULT<span class="w"> </span><span class="s1">'[]'</span>,
+<span class="w">    </span>revision<span class="w">        </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL,
+<span class="w">    </span>updated_at<span class="w">      </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL,
+<span class="w">    </span>format_version<span class="w">  </span>INTEGER<span class="w"> </span>NOT<span class="w"> </span>NULL<span class="w"> </span>DEFAULT<span class="w"> </span><span class="m">1</span>
+<span class="o">)</span><span class="p">;</span>
+CREATE<span class="w"> </span>INDEX<span class="w"> </span>idx_record_scope
+<span class="w">    </span>ON<span class="w"> </span>conversation_records<span class="o">(</span>scope,<span class="w"> </span>updated_at<span class="w"> </span>DESC<span class="o">)</span><span class="p">;</span>
+
+sqlite&gt;<span class="w"> </span>.schema<span class="w"> </span>conversation_entries
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>conversation_entries<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>id<span class="w">              </span>TEXT<span class="w"> </span>PRIMARY<span class="w"> </span>KEY,
+<span class="w">    </span>conversation_id<span class="w"> </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL,
+<span class="w">    </span>parent_id<span class="w">       </span>TEXT,
+<span class="w">    </span>kind<span class="w">            </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL<span class="w"> </span>DEFAULT<span class="w"> </span><span class="s1">'message'</span>,
+<span class="w">    </span>message_json<span class="w">    </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL,
+<span class="w">    </span>created_at<span class="w">      </span>TEXT<span class="w"> </span>NOT<span class="w"> </span>NULL
+<span class="o">)</span><span class="p">;</span>
+CREATE<span class="w"> </span>INDEX<span class="w"> </span>idx_entry_conv<span class="w"> </span>ON<span class="w"> </span>conversation_entries<span class="o">(</span>conversation_id<span class="o">)</span><span class="p">;</span>
+
+sqlite&gt;<span class="w"> </span>SELECT<span class="w"> </span>COUNT<span class="o">(</span>*<span class="o">)</span><span class="w"> </span>FROM<span class="w"> </span>conversation_records<span class="p">;</span>
+<span class="m">4</span>
+
+sqlite&gt;<span class="w"> </span>SELECT<span class="w"> </span>conversation_id,<span class="w"> </span>title<span class="w"> </span>FROM<span class="w"> </span>conversation_records<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span>updated_at<span class="w"> </span>DESC<span class="w"> </span>LIMIT<span class="w"> </span><span class="m">5</span><span class="p">;</span>
+f5888da9-95ba-4bc5-b83e-e1f263bdf773<span class="p">|</span>Analyze<span class="w"> </span>chat.sqlite<span class="w"> </span>with<span class="w"> </span>Jupyter<span class="w"> </span>notebook
+a570cbd4-0d33-4b57-b0ce-6f5b5ae0dedb<span class="p">|</span>Generate<span class="w"> </span>sine.ipynb<span class="w"> </span>notebook<span class="w"> </span>with<span class="w"> </span>Matplotlib<span class="w"> </span>plot
+440fcc2c-44f0-4aa9-9c7d-1742d53f29b9<span class="p">|</span>Tell<span class="w"> </span>Me<span class="w"> </span>a<span class="w"> </span>Hilarious<span class="w"> </span>Tale
+f03f3902-47ae-4cd8-b8d7-749c86c76d4c<span class="p">|</span>Liquid<span class="w"> </span>Foundation<span class="w"> </span>Model<span class="w"> </span>Overview
+</pre></div>
+</div>
+<p>Furthermore, you can instruct your JupyDeep agents directly to query this
+SQLite database and analyze the raw conversation records in natural language.
+For instance, the screenshot below demonstrates an agent summarizing the
+existing conversation history stored in <code class="docutils literal notranslate"><span class="pre">chat.sqlite</span></code> using <code class="docutils literal notranslate"><span class="pre">deepseek-v4.1-flash</span></code>
+with the following prompt:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Can you create a Jupyter notebook using sqlite3 to analyze .agents/chat.sqlite
+and briefly and neatly summarize the conversations?
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/conv_analysis.png"><img alt="_images/conv_analysis.png" class="align-center" src="_images/conv_analysis.png" style="width: 1016.8000000000001px; height: 1016.8000000000001px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This direct access empowers developers and researchers to analyze historical
+conversation data, conduct deep behavioral audits of agent execution from raw
+records, and programmatically inspect or transform message trajectories—serving
+as a lightweight, complementary observability approach alongside full runtime
+instrumentation (such as MLflow Tracing).</p>
+<section id="remarks">
+<h3>Remarks<a class="headerlink" href="#remarks" title="Link to this heading"></a></h3>
+<p>Built-in conversation persistence transforms JupyDeep from a transient chat
+assistant into a durable workspace companion for iterative research and
+engineering. Because conversations are stored locally in standard SQLite tables
+(<code class="docutils literal notranslate"><span class="pre">conversation_records</span></code> and <code class="docutils literal notranslate"><span class="pre">conversation_entries</span></code>), your prompt histories
+and notebook analysis context remain private on your machine or server—without
+relying on external cloud storage. Combined with automatic AI titling, keyword
+search, and direct SQLite queryability, teams and individual researchers can
+maintain clean, auditable records of data exploration, code generation, and
+debugging workflows across long-running projects.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+<!-- Giscus Comments and Feedback Module -->
+ 
+<div class="sphinx-giscus-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Discussion and Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">If you find any errors or have suggestions, feel free to leave a comment or reaction below:</p>
+
+        <script src="https://giscus.app/client.js"
+        data-repo="yezhenqing/jupydeep"
+        data-repo-id="R_kgDOSvZSlA"
+        data-category="General"
+        data-category-id="DIC_kwDOSvZSlM4DKPiE"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+
+
+<!-- LikeBtn.com Anonymous Feedback and Rating Module -->
+<!-- 
+<div class="sphinx-likebtn-container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eaeaea;">
+    <h3>Feedback</h3>
+    <p style="color: #666; font-size: 0.9rem;">Did you find this page helpful? Feel free to vote below:</p>
+    
+    <span class="likebtn-wrapper" 
+          data-theme="custom" 
+          data-identifier="" 
+          data-show_dislike_label="true" 
+          data-label_like="Helpful" 
+          data-label_dislike="Not helpful"
+          data-counter_clickable="true">
+    </span>
+    
+    <script>
+        (function() {
+            var wrappers = document.getElementsByClassName('likebtn-wrapper');
+            for (var i = 0; i < wrappers.length; i++) {
+                if (!wrappers[i].getAttribute('data-identifier')) {
+                    var pageId = window.location.pathname || 'index';
+                    wrappers[i].setAttribute('data-identifier', pageId);
+                }
+            }
+
+            if (!document.getElementById("likebtn_wjs")) {
+                var a = document.createElement('script');
+                a.async = true;
+                a.id = "likebtn_wjs";
+                a.src = "https://w.likebtn.com/js/w.js";
+                var m = document.getElementsByTagName('script')[0];
+                m.parentNode.insertBefore(a, m);
+            } else if (typeof(LikeBtn) !== "undefined") {
+                LikeBtn.init();
+            }
+        })();
+    </script>
+</div>
+
+-->
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
