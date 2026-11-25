@@ -315,7 +315,7 @@ class ChatStreamHandler(APIHandler):
     def _schedule_title_update(
         self, conversation_id: str, scope: str, agent: Agent, user_text: str
     ) -> None:
-        print(f"[title-debug] schedule conversation_id={conversation_id} scope={scope}")
+        #print(f"[title-debug] schedule conversation_id={conversation_id} scope={scope}")
         task = asyncio.create_task(
             self._update_title(conversation_id, scope, agent, user_text)
         )

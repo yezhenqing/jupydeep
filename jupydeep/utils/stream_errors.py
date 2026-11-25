@@ -117,5 +117,5 @@ def sanitize_stream_error(exc: BaseException) -> tuple[StreamErrorCode, str]:
 
     return (
         StreamErrorCode.INTERNAL_ERROR,
-        "An internal error occurred while processing your request. Please check the system status.",
+        "Internal error. Please check or submit an issue.",
     )
