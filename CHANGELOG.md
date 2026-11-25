@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.13
+
+([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.12...eaa4fda566d7e3dfcd1f06782bb927aa0841b228))
+
+### Enhancements made
+
+- Added conversation persistence, auto-titling, and history management, please refer to docs [#16](https://github.com/yezhenqing/jupydeep/pull/16) ([@yezhenqing](https://github.com/yezhenqing))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-11-03&to=2026-11-25&type=c))
+
+@yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-11-03..2026-11-25&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.12
 
 ([Full Changelog](https://github.com/yezhenqing/jupydeep/compare/v0.1.11...b67c714944ceb46e1d6486ee557d1928c093b8da))
@@ -18,8 +37,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/yezhenqing/jupydeep/graphs/contributors?from=2026-10-08&to=2026-11-03&type=c))
 
 @yezhenqing ([activity](https://github.com/search?q=repo%3Ayezhenqing%2Fjupydeep+involves%3Ayezhenqing+updated%3A2026-10-08..2026-11-03&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.11
 
