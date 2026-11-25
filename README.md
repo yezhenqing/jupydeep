@@ -1,7 +1,7 @@
 # JupyDeep: Your AI partner in Jupyter
 
 [![Build](https://github.com/yezhenqing/jupydeep/actions/workflows/build.yml/badge.svg)](https://github.com/yezhenqing/jupydeep/actions/workflows/build.yml)
-[![PyPI Package](https://badge.fury.io/py/runpod.svg)](https://badge.fury.io/py/runpod)
+[![PyPI Package](https://badge.fury.io/py/jupydeep.svg)](https://badge.fury.io/py/jupydeep)
 [![Downloads](https://static.pepy.tech/personalized-badge/jupydeep?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/jupydeep)
 
 **JupyDeep** is an AI-native extension for JupyterLab, your always-on intelligent partner powered by Pydantic AI/Agents and beyond.
