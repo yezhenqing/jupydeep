@@ -7,7 +7,8 @@ import { IFormRendererRegistry } from '@jupyterlab/ui-components';
 import { SettingsSyncer } from '../lib/utils';
 import { Notification } from '@jupyterlab/apputils';
 import { Debouncer } from '@lumino/polling';
-import { queryClient, fetchEngine } from '../hooks/useEngine';
+//import { queryClient, fetchEngine } from '../hooks/useEngine';
+import { queryClient, queryKeys, fetchEngine } from '../datasync';
 import AgentsField from './AgentsField';
 import { QueryClientProvider } from '@tanstack/react-query';
 
@@ -40,7 +41,8 @@ const agentPlugin: JupyterFrontEndPlugin<void> = {
     let engineInfo: any = null;
     try {
       engineInfo = await queryClient.ensureQueryData({
-        queryKey: ['engine-catalog'],
+        //queryKey: ['engine-catalog'],
+        queryKey: queryKeys.engineCatalog,
         queryFn: fetchEngine
       });
     } catch (error) {

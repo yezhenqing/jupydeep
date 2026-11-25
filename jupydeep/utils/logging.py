@@ -17,7 +17,7 @@ def setup_logging(debug: bool = False, log_to_file: bool = True) -> None:
         log_to_file: Whether to also write logs to a file (default True)
     """
     # Get the root logger for this extension
-    top_logger = logging.getLogger("jupyter_agents_gateway")
+    top_logger = logging.getLogger("jupydeep")
 
     # Set level based on debug flag
     level = logging.DEBUG if debug else logging.INFO

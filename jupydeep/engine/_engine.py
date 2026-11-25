@@ -1,5 +1,6 @@
 import asyncio
 from pydantic import BaseModel
+from pathlib import Path
 from typing import Dict, Any, Optional, Union
 
 from ._base import BaseComponent, JupyterContext
@@ -9,6 +10,7 @@ from ..agent import DeepAgentManager
 from ._mcp import MCPComponent
 from ._llm import LLMComponent
 from ._skill import SkillComponent
+from ._store import StoreComponent, SQLiteConversationStore
 
 from ..utils.logging import get_logger
 
@@ -148,6 +150,13 @@ class AgentEngine:
         return self._deep_agent_manager
 
     @property
+    def conversation_store(self) -> SQLiteConversationStore:
+        comp = self._components.get("store")
+        if comp is None:
+            raise RuntimeError("conversation store not registered")
+        return comp.store
+
+    @property
     def jupyter_context(self) -> Optional[JupyterContext]:
         return self._jupyter_context
 
@@ -187,7 +196,11 @@ class AgentEngine:
         skill_component = SkillComponent(skill_setting_paths, self)
         self.register("skill", skill_component)
 
-        # 5. DeepAgent Manager
+        # 5. Conversation store
+        store_path = Path(jupyter_context.prj_agent_dir) / "chat.sqlite"
+        self.register("store", StoreComponent(store_path))
+
+        # 6. DeepAgent Manager
         agent_spec_paths = jupyter_context.agent_spec_dirs
         deep_opts_paths = get_setting_paths(
             jupyter_context.setting_json_dirs, prefix="agent"
@@ -222,7 +235,13 @@ class AgentEngine:
             try:
                 await self._global_setting_hub.materialize()
                 tasks = [comp.materialize() for _, comp in self._components.items()]
-                await asyncio.gather(*tasks, return_exceptions=True)
+                results = await asyncio.gather(*tasks, return_exceptions=True)
+                # Fail hard on store errors; preserve existing semantics for other components
+                for (name, _), r in zip(self._components.items(), results):
+                    if isinstance(r, Exception):
+                        logger.error("component %s materialize failed: %s", name, r)
+                        if name == "store":
+                            raise r
                 await self._deep_agent_manager.materialize()
             except Exception as e:
                 logger.error(

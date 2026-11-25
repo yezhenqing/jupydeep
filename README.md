@@ -1,6 +1,8 @@
 # JupyDeep: Your AI partner in Jupyter
 
 [![Build](https://github.com/yezhenqing/jupydeep/actions/workflows/build.yml/badge.svg)](https://github.com/yezhenqing/jupydeep/actions/workflows/build.yml)
+[![PyPI Package](https://badge.fury.io/py/jupydeep.svg)](https://badge.fury.io/py/jupydeep)
+[![Downloads](https://static.pepy.tech/personalized-badge/jupydeep?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/jupydeep)
 
 **JupyDeep** is an AI-native extension for JupyterLab, your always-on intelligent partner powered by Pydantic AI/Agents and beyond.
 
@@ -16,6 +18,10 @@ JupyDeep bridges the gap between large language models and complex, high-perform
 > ⚠️ **Note:** JupyDeep is an active proof of concept under rapid development. Because its underlying foundation—including Pydantic AI/Agents—is also evolving quickly, unexpected issues may arise. We appreciate your patience as we lay the groundwork for a mature future.
 
 ## 🔥 News & Highlights
+
+- **[2026-11-25] v0.1.13 Release:**
+  - 💬 Added conversation persistence, auto-titling, and history management, please refer to docs [**Conversation management**](https://yezhenqing.github.io/jupydeep/en/howto_conv.html).
+  - ⚠️ Sanitized stream errors with structured error codes, and other improvements.
 
 - **[2026-11-01] v0.1.12 Release:**
   - 🧭 Introduced MLflow instrumentation support, please refer to docs [**MLflow tracing**](https://yezhenqing.github.io/jupydeep/en/howto_mlflow.html).

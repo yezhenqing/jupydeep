@@ -17,7 +17,11 @@ from .handlers.engine import (
     SkillsUpdateHandler,
     AgentUpdateHandler,
 )
-
+from .handlers.conversation import (
+    ConversationsListHandler, 
+    ConversationMessagesHandler,
+    ConversationDeleteHandler
+)
 from .handlers.mlftest import MLflowTestHandler
 
 from .handlers.chat import ChatStreamHandler
@@ -110,6 +114,16 @@ class AgentEngineExtension(ExtensionApp):
                 (url_path_join(ext_base, "engine-sse"), EngineSSEHandler),
                 (url_path_join(ext_base, "chat"), ChatStreamHandler),
                 (url_path_join(ext_base, "mlftest"), MLflowTestHandler),
+
+                (url_path_join(ext_base, "conversations"), ConversationsListHandler),
+                (
+                    url_path_join(ext_base, "conversations", r"(?P<conversation_id>[^/]+)", "messages"),
+                    ConversationMessagesHandler,
+                ),
+                (
+                    url_path_join(ext_base, "conversations", r"(?P<conversation_id>[^/]+)"),
+                    ConversationDeleteHandler,
+                ),
             ]
         )
 

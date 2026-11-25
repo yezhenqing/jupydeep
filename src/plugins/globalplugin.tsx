@@ -7,7 +7,8 @@ import { IFormRendererRegistry } from '@jupyterlab/ui-components';
 import { SettingsSyncer } from '../lib/utils';
 import { Notification } from '@jupyterlab/apputils';
 import { Debouncer } from '@lumino/polling';
-import { queryClient } from '../hooks/useEngine';
+//import { queryClient } from '../hooks/useEngine';
+import { queryClient } from '../datasync';
 import { QueryClientProvider } from '@tanstack/react-query';
 import GlobalField from './GlobalField';
 

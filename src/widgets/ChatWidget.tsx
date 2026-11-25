@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { ReactWidget } from '@jupyterlab/ui-components';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient, closeSSE, useEngineCatalog } from '../hooks/useEngine';
+//import { queryClient, closeSSE, useEngineCatalog } from '../hooks/useEngine';
+import { queryClient, useEngineCatalog, useConversation } from '../datasync';
 
+import { JupyterFrontEnd } from '@jupyterlab/application';
 import prozenSvgstr from '../../style/icons/jupydeep.svg';
 //import githubSvgstr from '../../style/icons/github.svg';
-import { Shimmer } from '../components/ai-elements/shimmer';
+//import { Shimmer } from '../components/ai-elements/shimmer';
 import CountdownTimer from '../components/extra/CountdownTimer';
+import ConversationCombobox from '../components/chat/ConversationCombobox';
 
 const prozenIcon = new LabIcon({
   name: 'jupydeep:prozen',
@@ -21,12 +24,14 @@ const prozenIcon = new LabIcon({
 
 import ChatBot from '../components/chat/ChatBot';
 
-const ChatPanel = (): JSX.Element => {
+const ChatPanel = ({ app }: { app: JupyterFrontEnd }): JSX.Element => {
   const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(prozenSvgstr)}`;
   const [futureTime] = useState(() => Date.now() + 2 * 60 * 1000);
   const [seconds, setSeconds] = useState(0);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const { data: engineData, isLoading } = useEngineCatalog();
+  const conversation = useConversation();
 
   useEffect(() => {
     if (isReady) {
@@ -48,6 +53,7 @@ const ChatPanel = (): JSX.Element => {
     }
   }, [engineData]);
 
+  const isComboboxDisabled = !isReady || isStreaming;
   const isTimeout = seconds >= 120;
 
   return (
@@ -60,41 +66,45 @@ const ChatPanel = (): JSX.Element => {
         boxSizing: 'border-box'
       }}
     >
-      <p
+      <div
         style={{
           marginTop: '2px',
-          opacity: 0.8,
+          opacity: 0.9,
           backgroundColor: 'var(--jp-layout-color2)',
           borderColor: 'var(--jp-border-color1)'
         }}
-        className="flex items-center justify-center gap-1 border-2 rounded-full
-                   p-1 flex-nowrap whitespace-nowrap max-w-full overflow-hidden"
+        className="flex items-center justify-between gap-2 border-2 rounded-full
+                  px-2.5 py-1 w-full min-w-0"
       >
-        <Shimmer
-          className="text-[var(--jp-ui-font-color3)] text-xs"
-          duration={1.2}
-          spread={0.25}
-        >
-          JupyDeep: Your AI partner in Jupyter
-        </Shimmer>
-        <a
-          href="https://github.com/yezhenqing/jupydeep"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--jp-ui-font-color1)] hover:opacity-70
-                     inline-flex items-center justify-center flex-shrink-0"
-          title="View on GitHub"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="w-[1rem] h-[1rem] flex-shrink-0"
-            fill="currentColor"
+        <div className="flex items-center flex-1 min-w-0">
+          <ConversationCombobox
+            options={conversation.options}
+            selected={conversation.selected}
+            onSelect={conversation.select}
+            disabled={isComboboxDisabled}
+          />
+        </div>
+
+        <div className="flex items-center gap-2 ml-3 flex-shrink-0 pr-0.5">
+          <a
+            href="https://github.com/yezhenqing/jupydeep"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--jp-ui-font-color1)] hover:opacity-70
+                      inline-flex items-center justify-center flex-shrink-0"
+            title="View on GitHub"
           >
-            <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"></path>
-          </svg>
-        </a>
-      </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="w-[1rem] h-[1rem] flex-shrink-0"
+              fill="currentColor"
+            >
+              <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
 
       <div
         style={{
@@ -115,7 +125,10 @@ const ChatPanel = (): JSX.Element => {
               !isReady ? 'pointer-events-none opacity-85 select-none' : ''
             }`}
           >
-            <ChatBot />
+            <ChatBot
+              conversation={conversation}
+              onStreamingChange={setIsStreaming}
+            />
           </div>
 
           {/* 2. Transparent overlay: Floating loading content */}
@@ -171,8 +184,11 @@ const ChatPanel = (): JSX.Element => {
 };
 
 export class ChatWidget extends ReactWidget {
-  constructor() {
+  private _app: JupyterFrontEnd;
+
+  constructor(app: JupyterFrontEnd) {
     super();
+    this._app = app;
     this.id = 'jupydeep-agents';
 
     this.title.label = '';
@@ -183,7 +199,7 @@ export class ChatWidget extends ReactWidget {
   render(): JSX.Element {
     return (
       <QueryClientProvider client={queryClient}>
-        <ChatPanel />
+        <ChatPanel app={this._app} />
       </QueryClientProvider>
     );
   }
@@ -192,9 +208,8 @@ export class ChatWidget extends ReactWidget {
     if (this.isDisposed) {
       return;
     }
-    closeSSE();
-    queryClient.clear();
     super.dispose();
+    queryClient.clear();
   }
 }
 
